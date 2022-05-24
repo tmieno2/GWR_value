@@ -5,7 +5,7 @@
 # fig.cap = "Simulated field layout with spatial unit definitions",
 # fig.dim = c(6, 6)
 
-field_with_design <- readRDS(here("Data/field_with_design.rds"))
+field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
 field_sf <- field_with_design[1, ]$field_sf[[1]]
 
 plot_sf <-
@@ -95,7 +95,7 @@ g_layout <- g_field / g_inside_plot
 # fig.cap = "Experiment design of nitrogen (N) rates"
 
 reg_data <-
-  readRDS(here("Data/LatinSquareFixed_144.rds")) %>%
+  readRDS(here("Shared/Data/LatinSquareFixed_144.rds")) %>%
   pull(reg_data) %>%
   .[[1]] %>%
   .[1]
@@ -135,7 +135,7 @@ g_exp <-
 # fig.id = "pi-dif-dist",
 # fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-# results <- readRDS(here("Results/pi_data.rds"))%>%
+# results <- readRDS(here("Shared/Results/pi_data.rds"))%>%
 #   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
 mean_data <- 
@@ -168,7 +168,7 @@ g_value <-
 
 #* read the simulation data for a sigle simulationused for illustration
 single_sim <-
-  here("Results", "aunit_sim_single.rds") %>%
+  here("Shared", "Results", "aunit_sim_single.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
@@ -256,7 +256,7 @@ g_bias <-
 # /*+++++++++++++++++++++++++++++++++++
 #' # Prepare parameters
 # /*+++++++++++++++++++++++++++++++++++
-field_parameters <- readRDS(here("Data/field_parameters.rds"))
+field_parameters <- readRDS(here("Shared/Data/field_parameters.rds"))
 
 pCorn <- field_parameters$pCorn
 pN <- pCorn * field_parameters$pRatio_ls[[1]][2]     # medium price scenario
@@ -265,7 +265,7 @@ pN <- pCorn * field_parameters$pRatio_ls[[1]][2]     # medium price scenario
 #' # Prepare yield response curves
 # /*+++++++++++++++++++++++++++++++++++
 il_data_oe <-
-  readRDS(here("Results/il_data_oe.rds")) %>%
+  readRDS(here("Shared/Results/il_data_oe.rds")) %>%
   .[,
     lapply(.SD, mean),
     by = aunit_id,

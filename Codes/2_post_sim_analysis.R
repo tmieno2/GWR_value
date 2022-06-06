@@ -28,7 +28,7 @@ library(here)
 setwd(here())
 
 #* Load functions
-fs::dir_ls(here("Codes", "Functions"), full.names = TRUE) %>%
+fs::dir_ls(here("GitControlled", "Codes", "Functions"), full.names = TRUE) %>%
   lapply(., function(x) source(x))
 
 # /*===========================================================
@@ -36,9 +36,9 @@ fs::dir_ls(here("Codes", "Functions"), full.names = TRUE) %>%
 # /*===========================================================
 
 #* load generated parameters
-field_data <- readRDS(here("Data/field_data.rds"))
-field_with_design <- readRDS(here("Data/field_with_design.rds"))
-field_parameters <- readRDS(here("Data/field_parameters.rds"))
+field_data <- readRDS(here("Shared/Data/field_data.rds"))
+field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
+field_parameters <- readRDS(here("Shared/Data/field_parameters.rds"))
 
 #* cell-level true data (sprange=600 scenario)
 cell_data <- field_parameters %>%
@@ -61,7 +61,7 @@ rowwise() %>%
 # cell_data <- cell_data[field_dt[, .(cell_id, aunit_id)], on = "cell_id"]
 
 #* load simulation results data
-mc_sim_results <- readRDS(file = here("Results/mc_sim_results.rds"))
+mc_sim_results <- readRDS(file = here("Shared/Results/mc_sim_results.rds"))
 
 #* aunit-level estimated data
 ## -------------------------------------
@@ -174,7 +174,7 @@ pi_data <- rbindlist(pi_data_ls) %>%
   .[, pRatio := (pN / pCorn) %>% round(2) ] %>% 
   .[, pLabel := factor(pRatio, 
                        levels = str_sort(unique(pRatio), numeric = TRUE))] 
-saveRDS(pi_data, here("Results/pi_data.rds"))
+saveRDS(pi_data, here("Shared/Results/pi_data.rds"))
 
 
 
@@ -204,7 +204,7 @@ il_data_oe <-
   .[sim == sim_id, ] %>%
   .[transfer == 1, ] 
 
-saveRDS(il_data_oe, here("Results/il_data_oe.rds"))
+saveRDS(il_data_oe, here("Shared/Results/il_data_oe.rds"))
 
 # /*===========================================================
 #' # Find extreme cases of simulation results
@@ -237,7 +237,7 @@ sim_id <-
 # === sim=644 seems to have the worst predicted N results ===#
 aunit_sim_single <- aunit_results[sim == sim_id, ]
 
-saveRDS(aunit_sim_single, here("Results/aunit_sim_single.rds"))
+saveRDS(aunit_sim_single, here("Shared/Results/aunit_sim_single.rds"))
 
 # === single simulation results graphing ===#
 {

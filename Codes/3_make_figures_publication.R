@@ -141,7 +141,7 @@ g_exp <-
 mean_data <- 
   results %>%
   .[, .(pi_diff = mean(pi_diff)),
-    by=c("field_col", "pLabel", "type")] %>%
+    by=c("field_col", "pLabelName", "pLabel", "type")] %>%
   print()
 
 g_value <-
@@ -151,10 +151,11 @@ g_value <-
   geom_vline(data = mean_data, aes(xintercept = pi_diff), 
              color = "red", linetype = 8, size = 1) +
   geom_text(data = mean_data, color = "red",
-            aes(x = pi_diff, y = 200,
-                label = paste0("mean = ", round(pi_diff, 2))),
+            aes(x = pi_diff + 10, y = 200,
+                label = paste0(round(pi_diff, 2))),
             angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
-  facet_grid(pLabel ~ type) +
+  facet_nested(pLabelName + pLabel ~ type,
+               nest_line = element_line(linetype = 1)) +
   scale_y_continuous(expand = c(0, 0)) +
   xlab("The value of VRA over URA ($ per ha)") +
   ylab("Number of Simulation Cases")
@@ -225,7 +226,7 @@ mean_data <-
   results %>%
   .[, bias := pi_diff_est - pi_diff] %>%
   .[, .(bias = mean(bias)),
-    by=c("field_col", "pLabel", "type")] %>%
+    by=c("field_col", "pLabelName", "pLabel", "type")] %>%
   print()
 
 g_bias <-
@@ -238,9 +239,9 @@ g_bias <-
              color = "red", linetype = 8, size = 1) +
   geom_text(data = mean_data, color = "red",
             aes(x = bias, y = 200,
-                label = paste0("mean = ", round(bias, 2))),
+                label = paste0(round(bias, 2))),
             angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
-  facet_grid(pLabel ~ type) +
+  facet_nested(pLabelName + pLabel ~ type) +
   scale_y_continuous(expand = c(0, 0)) +
   xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
   ylab("Number of Simulation Cases")

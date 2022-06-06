@@ -55,6 +55,8 @@ library(sf)
 library(lfe)
 library(modelsummary)
 library(patchwork)
+library(ggplot2)
+library(ggh4x)
 ```
 
 ```{r figure_setup, cache = F}
@@ -117,7 +119,13 @@ results <-
   here("Shared", "Results", "pi_data.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
-  .[, bias := pi_diff_est - pi_diff]
+  .[, bias := pi_diff_est - pi_diff] %>% 
+  #=== label price ratio
+  .[, pLabelName := "Price Ratio (N/corn)"]
+  # .[, pLabel := "Middle"] %>% 
+  # .[pRatio==min(pRatio), pLabel := "Low"] %>% 
+  # .[pRatio==max(pRatio), pLabel := "High"] %>% 
+  # .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
 
 pi_dif_gwr <-
   results[, .(pi_dif = mean(pi_diff)), by = type] %>%
@@ -271,7 +279,15 @@ $$bias = \hat{\Delta}_{gwr-m} - \Delta_{gwr-m}$$
 
 ## Comparing the values of GWR-based VRA and SCAM-based URA
 
-Figure \@ref(fig:pi-dif-dist) shows the distribution of $\hat{\Delta}_{gwr-m}$, profit difference between the GWR-based VRA and the SCAM-based URA. The distribution of the value of VRA from GWR-R is centered around 0, indicating that VRA based on GWR-R is on average no more profitable than SCAM-based URA. This result comes from GWR-R's highly inaccurate estimation of the subplot-level $N$ and $N^2$ coefficients, which led to unreliable subplot-specific nitrogen rate recommendations. Figure \@ref(fig:true-vs-estimated-coef-gwr-r) illustrates the accuracy of GWR-R in estimating the $N$ and $N^2$ coefficients in one simulation round. Estimates of the $N^2$ coefficients are positive for some subplots, indicating an increasing marginal product of the nitrogen rate, which contradicts a well-established agronomic property. The result is consistent with the bottom panel of Figure 12 in @rakshit2020 as well as the widely criticized poor coefficient estimation accuracy of GWR model in the literature [@griffith2008spatial; @paez2011simulation; @da2016multiple; @harris2019simulation]. Figure \@ref(fig:true-vs-estimated-optn-gwr-r) plots the estimated cell-specific optimal N against the true optimal N for the same simulation round, and again shows that GWR-R can be highly unreliable, and consequently that basing variable rate management on GWR-R may be no better than taking a simple URA approach. Basically, not enough information is available locally to estimate reliably the coefficients on both $N$ and $N^2$ by subplot.
+Figure \@ref(fig:pi-dif-dist) shows the distribution of $\hat{\Delta}_{gwr-m}$, profit difference between the GWR-based VRA and the SCAM-based URA.
+
+, for the two GWR models and three N/corn price ratios. The 
+
+Three price ratios (nitrogen fertilizer price divided by corn price, both in $/kg) were used in the simulations: 4.16 (low), 6.56 (medium), and 10.35 (high). They were obtained by taking the 5%, 50%, and 95% of historical monthly price ratios from 1990 to 2022. The recent period (April 2022) corn price of about $0.28/kg was used in the simulation results. Our main scenario to discuss was the medium price ratio, where the nitrogen fertilizer price was $1.8/kg (that was close to the recent market price). Note that this setting may generate some extreme prices. For example, the high price ratio scenario was corresponding to nitrogen price of $2.85/kg, which was unrealistic in history. But that did not affect the EONR estimations since they were only affected by the relative nitrogen-corn price ratio rather than absolute the prices. The final profit values 〖∆Π〗_^* could be over- or under-estimated by extreme prices, but those over- or under-estimations were linear scale-up or scale-down of the actual profit values and would not affect the economic performance rankings of trial designs.
+
+
+
+The distribution of the value of VRA from GWR-R is centered around 0, indicating that VRA based on GWR-R is on average no more profitable than SCAM-based URA. This result comes from GWR-R's highly inaccurate estimation of the subplot-level $N$ and $N^2$ coefficients, which led to unreliable subplot-specific nitrogen rate recommendations. Figure \@ref(fig:true-vs-estimated-coef-gwr-r) illustrates the accuracy of GWR-R in estimating the $N$ and $N^2$ coefficients in one simulation round. Estimates of the $N^2$ coefficients are positive for some subplots, indicating an increasing marginal product of the nitrogen rate, which contradicts a well-established agronomic property. The result is consistent with the bottom panel of Figure 12 in @rakshit2020 as well as the widely criticized poor coefficient estimation accuracy of GWR model in the literature [@griffith2008spatial; @paez2011simulation; @da2016multiple; @harris2019simulation]. Figure \@ref(fig:true-vs-estimated-optn-gwr-r) plots the estimated cell-specific optimal N against the true optimal N for the same simulation round, and again shows that GWR-R can be highly unreliable, and consequently that basing variable rate management on GWR-R may be no better than taking a simple URA approach. Basically, not enough information is available locally to estimate reliably the coefficients on both $N$ and $N^2$ by subplot.
 
 The GWR-T approach, however, performed better than SCAM-URA in majority of cases, with some cases showing values-added exceeding \$10 ha$^{-1}$. This may seem surprising as the model estimated in the GWR-T approach is more restrictive than that in the GWR-R approach because the coefficient on $N^2$ is assumed to be global. However, unlike GWR-R, this restriction helps avoid estimating positive subplot-level coefficients on $N^2$. This result implies that the value of avoiding highly unreliable estimates of coefficients on $N^2$ subplot-specifically was greater than loss of local flexibility in the coefficients on $N^2$.
 

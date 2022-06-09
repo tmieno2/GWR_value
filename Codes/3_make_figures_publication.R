@@ -151,7 +151,7 @@ g_value <-
   geom_vline(data = mean_data, aes(xintercept = pi_diff), 
              color = "red", linetype = 8, size = 1) +
   geom_text(data = mean_data, color = "red",
-            aes(x = pi_diff + 10, y = 200,
+            aes(x = pi_diff + 5, y = 200,
                 label = paste0(round(pi_diff, 2))),
             angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
   facet_nested(pLabelName + pLabel ~ type,
@@ -238,7 +238,7 @@ g_bias <-
   geom_vline(data = mean_data, aes(xintercept = bias), 
              color = "red", linetype = 8, size = 1) +
   geom_text(data = mean_data, color = "red",
-            aes(x = bias, y = 200,
+            aes(x = bias + 10, y = 150,
                 label = paste0(round(bias, 2))),
             angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
   facet_nested(pLabelName + pLabel ~ type) +

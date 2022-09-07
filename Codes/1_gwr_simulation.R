@@ -40,7 +40,7 @@ setwd(here())
 
 # === load functions ===#
 #* source all the functions in the Functions folder
-fs::dir_ls(here("Codes", "Functions"), full.names = TRUE) %>%
+fs::dir_ls(here("GitControlled", "Codes", "Functions"), full.names = TRUE) %>%
   lapply(., function(x) source(x))
 
 
@@ -78,19 +78,19 @@ field_data <-
       )
     ),
     #* price ratio scenarios
-    pCorn = 4 / 25.4, # $/kg
-    pRatio_ls = list(c(4.16, 6.56, 10.35))
+    pCorn = 7 / 25.4, # $/kg
+    pRatio_ls = list(c(4.16, 5.44, 6.56, 7.67, 10.35))
   )
 
 #* save the fields
-saveRDS(field_data, here("Data/field_data.rds"))
+saveRDS(field_data, here("Shared/Data/field_data.rds"))
 
 
 
 # /*===========================================================
 #' # Add trial design layout
 # /*===========================================================
-field_data <- readRDS(here("Data/field_data.rds"))
+field_data <- readRDS(here("Shared/Data/field_data.rds"))
 
 #* (use the fixed Latin Square design)
 field_with_design <-
@@ -123,21 +123,21 @@ field_with_design <-
         stringr::str_replace_all(design_name, " ", ""),
         "_", field_col, ".rds"
       ) %>%
-        here("Data", .)
+        here("Shared", "Data", .)
   )
 
 #* save the fields with designs
-saveRDS(field_with_design, here("Data/field_with_design.rds"))
+saveRDS(field_with_design, here("Shared/Data/field_with_design.rds"))
 
 
 
 # /*===========================================================
 #' # Generate true field parameters
 # /*===========================================================
-field_with_design <- readRDS(here("Data/field_with_design.rds"))
+field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
 
 field_parameters <-
-  readRDS(here("Data/field_data.rds")) %>%
+  readRDS(here("Shared/Data/field_data.rds")) %>%
   mutate(field_pars = list(
     gen_field_pars(
       sp_range = sp_range,
@@ -148,7 +148,7 @@ field_parameters <-
   ))
 
 #* save the field parameters
-saveRDS(field_parameters, here("Data/field_parameters.rds"))
+saveRDS(field_parameters, here("Shared/Data/field_parameters.rds"))
 
 
 
@@ -157,7 +157,7 @@ saveRDS(field_parameters, here("Data/field_parameters.rds"))
 # /*===========================================================
 #* create regression data for each trial specification
 
-field_parameters <- readRDS(here("Data/field_parameters.rds"))
+field_parameters <- readRDS(here("Shared/Data/field_parameters.rds"))
 
 tic()
 lapply(
@@ -181,4 +181,4 @@ mc_sim_results <-
 toc()
 
 #* save the field parameters
-saveRDS(mc_sim_results, here("Results/mc_sim_results.rds"))
+saveRDS(mc_sim_results, here("Shared/Results/mc_sim_results.rds"))

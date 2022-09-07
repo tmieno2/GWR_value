@@ -55,6 +55,8 @@ library(sf)
 library(lfe)
 library(modelsummary)
 library(patchwork)
+library(ggplot2)
+library(ggh4x)
 ```
 
 ```{r figure_setup, cache = F}
@@ -117,7 +119,15 @@ results <-
   here("Shared", "Results", "pi_data.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
-  .[, bias := pi_diff_est - pi_diff]
+  .[, bias := pi_diff_est - pi_diff] %>% 
+  #only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
+  .[pRatio %in% c(5.44, 6.56, 7.67), ] %>% 
+  #=== label price ratio
+  .[, pLabelName := "Price Ratio (N/corn)"] %>% 
+  .[pRatio==5.44, pLabel := "Low"] %>%
+  .[pRatio==6.56, pLabel := "Middle"] %>%
+  .[pRatio==7.67, pLabel := "High"] %>%
+  .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
 
 pi_dif_gwr <-
   results[, .(pi_dif = mean(pi_diff)), by = type] %>%
@@ -255,6 +265,7 @@ The true value of the GWR-based VRA compared to the SCAM-based URA is defined by
 $$\Delta_{gwr-m} = \Pi_{gwr-m} - \Pi_{scam} .$$
 
 To find the bias in estimating the value of VRA, the l rofitsof the SCAM-based URA and GWR-based VRA were calculated by plugging in the estimated optimal nitrogen rates into the cell-specific yield response functions estimated by GWR. Estimated per-ha net revenues for SCAM-based URA and GWR-based VRA are found as follows:
+To find the bias in estimating the value of VRA, the "estimated" profits of the SCAM-based URA and GWR-based VRA were calculated by plugging in the estimated optimal nitrogen rates into the cell-specific yield response functions estimated by GWR. Estimated per-ha net revenues for SCAM-based URA and GWR-based VRA are found as follows:
 
 $$\hat{\Pi}_{scam}^* = 1/8640 \sum_{j=1}^{1440} \sum_{k=1}^6 \big[p\hat{f}^{gwr}_{j, k} (\hat{N}_{scam}^* )-w\hat{N}_{scam}^*\big]$$
 

@@ -34,13 +34,14 @@ fs::dir_ls(here("GitControlled", "Codes", "Functions"), full.names = TRUE) %>%
 # /*===========================================================
 #' # Load simulated data
 # /*===========================================================
-
 #* load generated parameters
+field_data <- readRDS(here("Shared/Data/field_data.rds"))
+field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
+field_parameters <- readRDS(here("Shared/Data/field_parameters.rds"))
 
 #* cell-level true data (sprange=600 scenario)
 cell_data <- field_parameters %>%
   rowwise() %>%
-rowwise() %>%
   # === match cell_id and aunit_id ===#
   mutate(
     field_pars = list(
@@ -59,6 +60,7 @@ rowwise() %>%
 # cell_data <- cell_data[field_dt[, .(cell_id, aunit_id)], on = "cell_id"]
 
 #* load simulation results data
+mc_sim_results <- readRDS(file = here("Shared/Results/mc_sim_results.rds"))
 
 #* aunit-level estimated data
 ## -------------------------------------
@@ -97,12 +99,8 @@ for (i in 1:nrow(est_data)) {
     .[[1]]
 
   econ_data_ls[[i]] <-
-    pull(field_pars) %>% .[[1]]
-  
-  econ_data_ls[[i]] <- 
     est_data[i, ] %>%
     rowwise() %>%
-    rowwise() %>% 
     # === merge est data (aunit) with true pars (cell) ===#
     mutate(
       data = list(
@@ -125,7 +123,7 @@ for (i in 1:nrow(est_data)) {
           .[, yield_opt := gen_yield_QP(b0, b1, b2, Nk, opt_N)] %>%
           .[, pi_opt := pCorn * yield_opt - pN * opt_N] %>%
           ## ======based on true response parameters======##
-          ##======based on true response parameters======##
+          ## ======based on true response parameters======##
           #--- SCAM ---#
           .[, yield_scam := gen_yield_QP(b0, b1, b2, Nk, opt_N_scam)] %>%
           .[, pi_scam := pCorn * yield_scam - pN * opt_N_scam] %>%
@@ -137,7 +135,7 @@ for (i in 1:nrow(est_data)) {
           #--- GWR gain over SCAM ---#
           .[, pi_diff := pi_gwr - pi_scam] %>%
           ## ======based on estimated response parameters======##
-          ##======based on estimated response parameters======##
+          ## ======based on estimated response parameters======##
           #--- SCAM ---#
           .[, yield_scam_est := gen_yield_QD(b0_hat, b1_hat, b2_hat, opt_N_scam)] %>%
           .[, pi_scam_est := pCorn * yield_scam_est - pN * opt_N_scam] %>%
@@ -148,7 +146,6 @@ for (i in 1:nrow(est_data)) {
           .[, pi_diff_est := pi_gwr_est - pi_scam_est]
       )
     )
-
 }
 
 
@@ -156,12 +153,10 @@ for (i in 1:nrow(est_data)) {
 # Field level profit
 # -------------------
 pi_data_ls <- list()
+
 for (i in 1:length(econ_data_ls)) {
   pi_data_ls[[i]] <-
     econ_data_ls[[i]] %>%
-for (i in 1:length(econ_data_ls)){
-  pi_data_ls[[i]] <- 
-    econ_data_ls[[i]] %>% 
     mutate(
       data = list(
         data[, lapply(.SD, mean),
@@ -169,26 +164,23 @@ for (i in 1:length(econ_data_ls)){
           .SDcols = c(
             "pi_diff", "pi_diff_est", "opt_N_scam"
           )
-             by = .(sim, transfer),
-             .SDcols = c(
-               "pi_diff", "pi_diff_est", "opt_N_scam"
-             )
         ]
       )
     )
 }
 
 # === convert to data table format ===#
-pi_data <- rbindlist(pi_data_ls) %>%
+pi_data <-
+  rbindlist(pi_data_ls) %>%
   unnest(data) %>%
-  data.table() %>% 
-  #=== retrieve price ratio ===#
-  .[, pRatio := (pN / pCorn) %>% round(2) ] %>% 
-  .[, pLabel := factor(pRatio, 
-                       levels = str_sort(unique(pRatio), numeric = TRUE))] 
+  data.table() %>%
+  # === retrieve price ratio ===#
+  .[, pRatio := (pN / pCorn) %>% round(2)] %>%
+  .[, pLabel := factor(pRatio,
+    levels = str_sort(unique(pRatio), numeric = TRUE)
+  )]
+
 saveRDS(pi_data, here("Shared/Results/pi_data.rds"))
-
-
 
 # /*===========================================================
 #' # Find an illustrative sim case for overestimation
@@ -197,8 +189,6 @@ saveRDS(pi_data, here("Shared/Results/pi_data.rds"))
 # price scenario
 pratio_ls <- unique(pi_data$pRatio)
 r <- 2
-pratio_ls = unique(pi_data$pRatio)
-r = 2
 
 sim_id <-
   pi_data %>%
@@ -213,11 +203,6 @@ econ_data <-
   unnest(data) %>%
   data.table()
 
-econ_data <- 
-  econ_data_ls[[r]] %>% 
-  unnest(data) %>% 
-  data.table() 
-  
 il_data_oe <-
   econ_data %>%
   .[sim == sim_id, ] %>%

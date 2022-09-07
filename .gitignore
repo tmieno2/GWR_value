@@ -2,6 +2,7 @@ Data/*
 Notes/*
 Graph/*
 Literature/*
+*.DS_Store
 Results/*
 *.docx
 .Rproj.user/*

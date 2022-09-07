@@ -138,27 +138,76 @@ g_exp <-
 # results <- readRDS(here("Shared/Results/pi_data.rds"))%>%
 #   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
-mean_data <- 
+mean_data_value <-
   results %>%
-  .[, .(pi_diff = mean(pi_diff)),
-    by=c("field_col", "pLabel", "type")] %>%
+  .[, .(pi_diff = median(pi_diff)),
+    by = c("field_col", "pLabel", "type")
+  ] %>%
   print()
 
 g_value <-
   results %>%
   ggplot(data = .) +
-  geom_histogram(aes(x = pi_diff), fill = NA, color = "black") +
-  geom_vline(data = mean_data, aes(xintercept = pi_diff), 
-             color = "red", linetype = 8, size = 1) +
-  geom_text(data = mean_data, color = "red",
-            aes(x = pi_diff, y = 200,
-                label = paste0("mean = ", round(pi_diff, 2))),
-            angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
+  geom_histogram(
+    aes(x = pi_diff),
+    fill = NA,
+    color = "blue",
+    bins = 50,
+    size = 0.2
+  ) +
+  geom_vline(
+    data = mean_data_value,
+    aes(xintercept = pi_diff),
+    color = "red",
+    size = 0.5
+  ) +
+  geom_text(
+    data = mean_data_value, color = "red",
+    aes(
+      x = ifelse(pi_diff < 65, pi_diff + 5, pi_diff - 20), y = 150,
+      label = paste0("Median = ", round(pi_diff, 2))
+    ),
+    angle = 0, hjust = -0.1, vjust = 0, size = 3
+  ) +
   facet_grid(pLabel ~ type) +
   scale_y_continuous(expand = c(0, 0)) +
+  scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
   xlab("The value of VRA over URA ($ per ha)") +
   ylab("Number of Simulation Cases")
 
+
+# /*===========================================================
+#' # EONR estimation tendency
+# /*===========================================================
+
+# ggplot(est_data) +
+# geom_histogram(aes(x = opt_N_scam)) +
+# facet_grid(round(pN, digits = 2) ~ .)
+
+est_data <-
+  readRDS(here("Shared/Results/est_data.rds")) %>%
+  unnest() %>%
+  data.table() %>%
+  .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
+
+eorn_ratio_data <-
+  est_data %>%
+  .[, pn_pc := pN / pCorn] %>%
+  .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pn_pc)]
+
+g_eonr_bias <-
+  ggplot(data = eorn_ratio_data) +
+  geom_histogram(
+    aes(x = eonr_ratio),
+    color = "blue",
+    fill = NA,
+    bins = 50,
+    size = 0.2
+  ) +
+  geom_vline(xintercept = 1, color = "red") +
+  facet_grid(pn_pc ~ type) +
+  xlab("Number of Simulation Cases") +
+  xlab("Average Ratio of Estimated EONR to true EONR")
 
 # /*===========================================================
 #' # Comparison of Estimated and True Coefficients
@@ -204,15 +253,20 @@ g_comp_coef <- g_b1 / g_b2
 # fig.id = "true-vs-estimated-optn-gwr-r",
 # fig.cap = "Comparison of Estimated and True EONR"
 
+# est_data[sim == 1 & pn_pc == 10.35, ] %>%
+#   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
+#   ggplot(data = .) +
+#     geom_histogram(aes(x = opt_N_gwr)) +
+#     facet_grid(. ~ type)
+
 g_comp_eonr <-
   single_sim %>%
-  .[type == "GWR-R", ] %>%
-  .[, .(aunit_id, opt_N, opt_N_gwr)] %>%
   ggplot(data = .) +
   geom_point(aes(y = opt_N_gwr, x = opt_N), size = 0.3) +
   geom_abline(slope = 1, color = "red") +
   xlab("True Optimal Nitrogen Rate (kg/ha)") +
   ylab("Estimated Optimal Nitrogen Rate (kg/ha)") +
+  facet_grid(. ~ type) +
   coord_equal()
 
 # /*===========================================================
@@ -221,25 +275,41 @@ g_comp_eonr <-
 # fig.id = "bias-est-pi",
 # fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-mean_data <- 
+# mean_data_bias[type == "GWR-T" & pLabel == 10.35, bias] %>% hist
+
+median_bias_data <-
   results %>%
   .[, bias := pi_diff_est - pi_diff] %>%
-  .[, .(bias = mean(bias)),
-    by=c("field_col", "pLabel", "type")] %>%
+  .[, .(bias = median(bias)),
+    by = c("field_col", "pLabel", "type")
+  ] %>%
   print()
 
 g_bias <-
   results %>%
   .[, bias := pi_diff_est - pi_diff] %>%
-  .[bias < 100, ] %>%
+  .[bias < 150, ] %>%
   ggplot(data = .) +
-  geom_histogram(aes(x = bias), fill = NA, color = "black") +
-  geom_vline(data = mean_data, aes(xintercept = bias), 
-             color = "red", linetype = 8, size = 1) +
-  geom_text(data = mean_data, color = "red",
-            aes(x = bias, y = 200,
-                label = paste0("mean = ", round(bias, 2))),
-            angle = 0, hjust = -0.1, vjust = 0, size = 3 ) +
+  geom_histogram(
+    aes(x = bias),
+    fill = NA,
+    color = "blue",
+    size = 0.2,
+    bins = 50
+  ) +
+  geom_vline(
+    data = median_bias_data, aes(xintercept = bias),
+    color = "red",
+    size = 0.5
+  ) +
+  geom_text(
+    data = median_bias_data, color = "red",
+    aes(
+      x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
+      label = paste0("Median = ", round(bias, 2))
+    ),
+    angle = 0, hjust = -0.1, vjust = 0, size = 3
+  ) +
   facet_grid(pLabel ~ type) +
   scale_y_continuous(expand = c(0, 0)) +
   xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
@@ -259,7 +329,7 @@ g_bias <-
 field_parameters <- readRDS(here("Shared/Data/field_parameters.rds"))
 
 pCorn <- field_parameters$pCorn
-pN <- pCorn * field_parameters$pRatio_ls[[1]][2]     # medium price scenario
+pN <- pCorn * field_parameters$pRatio_ls[[1]][2] # medium price scenario
 
 # /*+++++++++++++++++++++++++++++++++++
 #' # Prepare yield response curves
@@ -393,10 +463,14 @@ point_data_gwr <-
 g_yield <-
   ggplot() +
   geom_line(data = curv_data, aes(y = yield, x = N, linetype = type)) +
-  geom_point(data = true_yield_data, 
-             aes(y = yield, x = N, color = type, shape = type)) +
-  geom_point(data = point_data_gwr, 
-             aes(y = yield, x = N, color = type, shape = type)) +
+  geom_point(
+    data = true_yield_data,
+    aes(y = yield, x = N, color = type, shape = type)
+  ) +
+  geom_point(
+    data = point_data_gwr,
+    aes(y = yield, x = N, color = type, shape = type)
+  ) +
   ylab("Yield (ton/ha)") +
   xlab("Nitrogen Rate (kg/ha)") +
   scale_color_discrete(name = "EONR") +
@@ -407,10 +481,14 @@ g_yield <-
 g_profit <-
   ggplot() +
   geom_line(data = curv_data, aes(y = profit / 1000, x = N, linetype = type)) +
-  geom_point(data = true_yield_data, 
-             aes(y = profit / 1000, x = N, color = type, shape = type)) +
-  geom_point(data = point_data_gwr, 
-             aes(y = profit / 1000, x = N, color = type, shape = type)) +
+  geom_point(
+    data = true_yield_data,
+    aes(y = profit / 1000, x = N, color = type, shape = type)
+  ) +
+  geom_point(
+    data = point_data_gwr,
+    aes(y = profit / 1000, x = N, color = type, shape = type)
+  ) +
   ylab("Partial Profit ($1000/ha)") +
   xlab("Nitrogen Rate (kg/ha)") +
   scale_color_discrete(name = "EONR") +

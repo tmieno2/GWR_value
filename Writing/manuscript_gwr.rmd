@@ -322,7 +322,7 @@ g_exp
 g_value
 ```
 
-```{r fig.id = "true-vs-estimated-coef-gwr-r", fig.cap = "Comparison of Estimated and True Coefficients", eval = F}
+```{r fig.id = "true-vs-estimated-coef-gwr-r", fig.cap = "Comparison of Estimated and True Coefficients"}
 g_comp_coef
 ```
 

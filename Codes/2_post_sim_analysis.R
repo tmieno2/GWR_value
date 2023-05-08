@@ -59,8 +59,14 @@ cell_data <- field_parameters %>%
 # field_dt <- field_parameters$field_sf[[1]] %>% data.table()
 # cell_data <- cell_data[field_dt[, .(cell_id, aunit_id)], on = "cell_id"]
 
+
 #* load simulation results data
-mc_sim_results <- readRDS(file = here("Shared/Results/mc_sim_results.rds"))
+#*************************************
+# choose the kernel used for GWR from:
+#   "gaussian", "bisquare", "exponential", "tricube", "boxcar"
+#*************************************
+kernel_choice = "boxcar"
+mc_sim_results <- readRDS(here("Shared", "Results", kernel_choice, "mc_sim_results.rds"))
 
 #* aunit-level estimated data
 ## -------------------------------------
@@ -79,7 +85,7 @@ est_data <-
   unnest(sim_results) %>%
   rowwise()
 
-saveRDS(est_data, here("Shared/Results/est_data.rds"))
+saveRDS(est_data, here("Shared", "Results", kernel_choice, "est_data.rds"))
 
 
 # /*===========================================================
@@ -180,7 +186,8 @@ pi_data <-
     levels = str_sort(unique(pRatio), numeric = TRUE)
   )]
 
-saveRDS(pi_data, here("Shared/Results/pi_data.rds"))
+saveRDS(pi_data, here("Shared", "Results", kernel_choice, "pi_data.rds"))
+
 
 # /*===========================================================
 #' # Find an illustrative sim case for overestimation
@@ -208,7 +215,7 @@ il_data_oe <-
   .[sim == sim_id, ] %>%
   .[transfer == 1, ]
 
-saveRDS(il_data_oe, here("Shared/Results/il_data_oe.rds"))
+saveRDS(il_data_oe, here("Shared", "Results", kernel_choice, "il_data_oe.rds"))
 
 # /*===========================================================
 #' # Find extreme cases of simulation results
@@ -241,7 +248,7 @@ sim_id <-
 # === sim=644 seems to have the worst predicted N results ===#
 aunit_sim_single <- aunit_results[sim == sim_id, ]
 
-saveRDS(aunit_sim_single, here("Shared/Results/aunit_sim_single.rds"))
+saveRDS(aunit_sim_single, here("Shared", "Results", kernel_choice, "aunit_sim_single.rds"))
 
 # === single simulation results graphing ===#
 {

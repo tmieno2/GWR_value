@@ -135,9 +135,6 @@ g_exp <-
 # fig.id = "pi-dif-dist",
 # fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-# results <- readRDS(here("Shared/Results/pi_data.rds"))%>%
-#   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
-
 mean_data_value <-
   results %>%
   .[, .(pi_diff = median(pi_diff)),

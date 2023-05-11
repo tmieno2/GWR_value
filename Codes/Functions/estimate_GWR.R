@@ -21,10 +21,10 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
   #   reg_formula,
   #   data=reg_data_sp,
   #   approach="AICc",
-  #   kernel="gaussian",
+  #   kernel= kernel_choice,
   #   adaptive=T
   # )
-  obw=18
+  obw=obw_choice
 
   #=== loop over transfer coefficients ===#
   b2_hat_ls <- seq(min(reg_data_sp$b2), max(reg_data_sp$b2), by=0.05)
@@ -40,7 +40,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
         reg_formula,
         data = reg_data_sp,
         bw = obw,
-        kernel = "gaussian",
+        kernel = kernel_choice,
         adaptive = T
       )
     
@@ -65,7 +65,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
         reg_formula,
         data = reg_data_sp,
         bw = obw,
-        kernel = "gaussian",
+        kernel = kernel_choice,
         adaptive = T
       )
   }
@@ -134,10 +134,10 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
   #   reg_formula,
   #   data=reg_data_sp,
   #   approach="AICc",
-  #   kernel="gaussian",
+  #   kernel=kernel_choice,
   #   adaptive=T
   # )
-  obw=18
+  obw=obw_choice
 
   #=== gwr estimation (use the chosen obw) ===#
   gwr_est <-
@@ -145,7 +145,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
       reg_formula,
       data = reg_data_sp,
       bw = obw,
-      kernel = "gaussian",
+      kernel = kernel_choice,
       adaptive = T
     )
   

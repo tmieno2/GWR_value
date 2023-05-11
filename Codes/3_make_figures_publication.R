@@ -135,9 +135,6 @@ g_exp <-
 # fig.id = "pi-dif-dist",
 # fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-# results <- readRDS(here("Shared/Results/pi_data.rds"))%>%
-#   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
-
 mean_data_value <-
   results %>%
   .[, .(pi_diff = median(pi_diff)),
@@ -185,15 +182,23 @@ g_value <-
 # facet_grid(round(pN, digits = 2) ~ .)
 
 est_data <-
-  readRDS(here("Shared/Results/est_data.rds")) %>%
+  readRDS(here("Shared", "Results", kernel_choice, "est_data.rds")) %>%
   unnest() %>%
   data.table() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
 eorn_ratio_data <-
-  est_data %>%
-  .[, pn_pc := pN / pCorn] %>%
-  .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pn_pc)]
+    est_data %>%
+    .[, pRatio := pN / pCorn] %>%
+    # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
+    .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+    # === label price ratio
+    .[, pLabelName := "Price Ratio (N/corn)"] %>%
+    .[pRatio == 5.44, pLabel := "Low"] %>%
+    .[pRatio == 6.56, pLabel := "Middle"] %>%
+    .[pRatio == 7.67, pLabel := "High"] %>%
+    .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>% 
+    .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
 
 g_eonr_bias <-
   ggplot(data = eorn_ratio_data) +
@@ -205,9 +210,10 @@ g_eonr_bias <-
     size = 0.2
   ) +
   geom_vline(xintercept = 1, color = "red") +
-  facet_grid(pn_pc ~ type) +
+  facet_grid(pLabel ~ type) +
   xlab("Number of Simulation Cases") +
   xlab("Average Ratio of Estimated EONR to true EONR")
+
 
 # /*===========================================================
 #' # Comparison of Estimated and True Coefficients
@@ -217,7 +223,7 @@ g_eonr_bias <-
 
 #* read the simulation data for a sigle simulationused for illustration
 single_sim <-
-  here("Shared", "Results", "aunit_sim_single.rds") %>%
+  here("Shared", "Results", kernel_choice, "aunit_sim_single.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 

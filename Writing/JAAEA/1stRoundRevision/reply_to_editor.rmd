@@ -1,0 +1,78 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+# Reply to the editor
+
+Blur blur, . Your comments are in blue, and our responses are in black.
+
+<span style = "color: blue;"> Based on the reviews and your email response, I have decided to give you the opportunity to revise the manuscript and respond to reviewer comments. One major point is that your true DGP assumed a quadratic plateau, but the estimated models use quadratic. This will lead the estimated models to give biased results. In your email response you indicate that you used quadratic plateau as the “true” functional form based on agronomy studies. If the dominant approach in recent literature is to use quadratic functions, then it does seem valuable to quantify the bias from using quadratic rather than quadratic plateau. Please document clearly in the manuscript that quadratic is the common practice (__point 1__). However, the title of your paper is about an economic evaluation of GWR analysis, and the choice of quadratic or quadratic-plateau is not an issue with GWR and this needs to be clear (__point 2__). Also reading through your discussion section, the implications are primarily framed about how GWR performed, but it might completely be an issue with functional form, but the current simulations don't inform us about the source of bias. Ideally, you would compare a GWR model that is quadratic with a GWR model that is quadratic-plateau functional form (__point 3__). </span>
+
+
+Reply to <span style = "color: blue;"> __point 1__ </span>:
+
+Actually, the dominant functional form used in the literature is quadratic-plateau for non-GWR (regualr parametric) regression because agronomists have long known that it better represents corn-nitrogen relationship. Application of GWR is very new to the field and GWR is not currently flexible in funcional form. There is no readily available statistical software or packages that lets researchers to use quadratic-plateau functionl form under the GWR framework. That is the primary reason that both Trevisan et al () and Rakshit et al () are using quadratic functional form. So, their choice of functional form is not coming from agronomic facts, rather from technical limitations. We are trying to point out this can be a problem with GWR just like it is a problem for regular regression framework. So, our paper is imporatnt because many use quadratic-plateau in regular regression framework, but the GWR promoted by the two studies use quadratic just because it is hard to do so. We believe it is imporatnt that this technical limitation is not trivial and would like to avoid practitioners or researcher to believe GWR is better than it truly is. We further suggest that it is important to develope a statistical package that allows to model yield-input relationship more flexibly.
+
+Reply to <span style = "color: blue;"> __point 2__ </span>:
+
+We fully agree with this point. We are assuming that readers know yield-nitrogen relationship is better represented by quadaratic-plateau and that point was kept implicit tghroughout the article. We made significant modifications to the manuscript so that we are not trying to blame GWR itself. 
+
+Reply to <span style = "color: blue;"> __point 3__ </span>:
+
+This is a problem of our writing and we apologize for that. Our objective is not to evaluate the problem of GWR itself, rather the current practice of using GWR with quadratic form when the true underlying true relationship is quadratic-plateau as in Trevisan et al (). But, we agree fully that it is interesting to see how GWR performs when the assumed funtional form in regression and true functional form in the data generating process are the same. However, please note that quadratic-plateu is a non-linear model and GWR with quadratic-plate cannot be estimated readily as of now. 
+
+<span style = "color: blue;"> The other major critique of reviewer #1 is that the “true” DGP of the parameters does not correspond with a GWR. For example, reviewer #1 argues that the spatial distribution of parameters described in lines 173-193 does not correspond with a GWR DGP. Is there evidence from the agronomy literature that the DGP (aside from the functional form assumption) follows the process that you specify? Or alternatively, is there evidence from the agronomy literature that the DGP does not follow the GWR DGP described by reviewer #1 in comment #5? My guess is that the agronomy literature has little or nothing to say about this (compared to the functional form assumption), but maybe I'm wrong about that. If there is no evidence to support your proposed DGP or the GWR DGP as “true,” then it is difficult to critique GWR for not correctly estimating your proposed DGP (__specific point 1__). In your email response you state “Our choice of true yield response function is deliberate and just as valid as the data generating process Reviewer #1 recommends.” But if the DGP that you used and the DGP recommended by reviewer #1 are equally valid, then why critique GWR for not correctly estimating your DGP? To critique GWR, you need to argue that your DGP is more valid than the GWR DGP (__specific point 2__). Or you can estimate if GWR is robust to alternative, but equally valid, DGPs.
+
+</span>
+
+Fiest, it is important to reiterate that we are not interested in evaluating GWR itself even though our writing did give that impression, rather we are interested in evaluating GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. This point alone addresses lots of your and reviwer 1's comments (as we discussed above, this is an important problem to address). We are critiqing the use of GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. 
+
+Second, the data generating process suggested by reviewer is not even very different from our DGP in principle even though you seem to have an impression that they are vastly different. 
+
+While it may look complicated, the DGP suggested by the reviewer is basically the same as ours at the core (except functional form). Here is what the reviewer suggested.
+
+$$
+\begin{aligned}
+y^* = X(X'W(s)X)^{-1}X'W(s)y + e^*
+\end{aligned}
+$$
+
+Another way of writing this is simply
+
+$$
+\begin{aligned}
+y_i = X_i\beta_i + e_i
+\end{aligned}
+$$
+
+as shown in Leung, Y., Mei, C. L., & Zhang, W. X. (2000), where $\beta_i$ is the coefficient specific to observation $i$. $W(s)$ ensures that $\beta$ are spatially correlated. The choice of $W(s)$ is arbitrary and if you use the same $W(s)$ used in DGP for GWR regression as well, then you would be cheating, giving an unfair advantage to GWR because we (researchers) never know $W(s)$ in reality just like we do not know the weight matrix in spatial econometric approaches like spatial error model. This is the "correct" GWR DGP only if you know what $W(s)$ is priori.
+
+In our DGP, we generate parameters (alpha, ... in equation )for individual $i$ in a spatially correlated manner (as opposed to what the reviewer thought). So, aside from the functional form, the only difference is in the spatial pattern of parameters. It is kind of like, we are using a different $W(s)$ in the above equation, which is an arbitrary parameter chosen by the researcher running MC simulations in the first place. In this sense, our DGP is just as "valid" as the GWR DGP.
+
+Indeed, I would say our DGP is superior because ours is much more flexible. The DGP suggested by the reviewer cannot even accommodate non-linear model, while our DGP can use any functional relationship between $Y$ and $X$ as evident in our paper. Indeed, this is critical to our study because the data generating process <span style = "color: red;"> needs </span> to be quadratic-plateau to better represent the actual functional relationship exhibited by corn-nitogen response.
+
+You are right that no agronomic studies suggest eigher our or the reviewer's DGP as a better DGP. However, our DGP has been used in an article in a prominent agronomy and precision agriculture journal (cite), meaning that our DGP was accepted by agronomists who reviewed them. On the other hand, the data generating process suggested by the reviewer has never been applied in the cotext of precision agriculture. Of course, we are not saying that our DGP is correct. And, this is not the main reason why we do not use the DGP suggested by the reviewer.
+
+The reviewer clearly did not spend time trying to understand our DGP as the reviewer suggested him/herself. Also, the reviewer's criticism is based on his understanding that we are trying to test GWR itself and also test the its accuracy in parameter estimation, not EONR and profit estimation. Our impression of this reviewer from his/her comments is that he/she lacks domain knowledge and also economics. 
+
+Reply to <span style = "color: blue;"> __specific point 1__ </span>:
+
+It seems that you have an impression that the GWR DGP is the "correct" DGP if we are estimating with GWR. But, as I argued above, there is no such thing as the "correct" DGP. In GWR DGP, the choice of $W(s)$ is arbitrary and no researchers should know it. In that sense, you are destined to misspecify the underlying DGP in a realistic situation. The most important part of the DGP is by far the functinal form of yield and nitrogen.
+
+We will not use the GWR DGP process for two reasons. First, as we mentioned, we are not interested in criticizing GWR itself, but GWR with quadratic form when the true yield response function is better represented by quadratic-plateau (we aruged why this is important in our replies above). Also, the GWR DGP process suggested by the reviewer is limited to linear-in-parmeter model (like quadratic model). It simply cannot be used for quadratic-plateau. If we were to use quadratic functional form for our true yield-nitrogen response, then this study is completely useless and loses its significance in the literature of precision agriculture.
+
+Reply to <span style = "color: blue;"> __specific point 2__ </span>:
+
+First, as we have communicated in our message to you ealier, we are not interested in evaluating GWR itself. So, I do not think your comments really apply to our manuscript. 
+
+But, suppose we are interested in evaluating GWR itself. And, also suppose our DGP and the GWR DGP are very different even though they are in reality very similar as argued above. Even then, we can definitely criticize GWR by using our DGP. Nobody knows the true data generating process of OFPE in the real world. If we use the GWR DGP and find out that GWR performs well, then does that mean GWR performs well in the real world? No. It says that GWR performs well if the data generated in OFEP indeed follow GWR DGP, which of course may not be the true DGP in real world. If GWR does not perform well for a single DGP that is just as valid as GWR DGP, then that would mean we need to be careful applying GWR in the real world. This is not to say, GWR is always bad. But, it is enough to warrant researchers and practitioners that GWR <span style = "color: red;"> may </span> fail. If we show that GWR does not work well with "a" valid DGP, then it is enought to warn people about its potential danger. 
+
+<span style = "color: blue;"> In general, it is important in your paper to clarify how much of the bias you estimate is due to the functional form assumption versus the assumption about the DGP. Also, you need to more clearly defend the DGP you choose as the “true” DGP or compare results with alternative DGPs. It seems to me that you will need to rethink your simulations so that you can more clearly sort out the sources of bias. </span>
+
+Reply:
+
+It is not important in this paper to distinguish and isolate the sources of bias. Our interest is in showing the bias of using GWR with quadratic form (because of technical limitation) even though the underlying relatinship is quadratic-plateau (like corn-nitrogen) as done by Trevisan et al (). It is actually impossible in our paper to isolate them and we are not interested in doing so either. Also, please note that functional form is part of DGP and indeed the most important part of a DGP. There is no such thing as isolating the source of bias of funcitonal form assumption and DGP assumption. 
+
+If our interest is understanding the problem of estiamtion inaccurcy by GWR alone, then we should have used quadratic-plateau in our GWR estimation so that the functional forms match. But, this is not our interest at least in this paper and it is also technically too cumbersome at the moment because there is no readily available statistical software to implement it. We are criticizing the practice that has been used by a researcher that can have false impression about how valuable GWR is for variable rate nitrogen application in the OFEP setting. 
+

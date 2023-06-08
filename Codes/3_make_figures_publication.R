@@ -341,7 +341,7 @@ pN <- pCorn * field_parameters$pRatio_ls[[1]][2] # medium price scenario
 #' # Prepare yield response curves
 # /*+++++++++++++++++++++++++++++++++++
 il_data_oe <-
-  readRDS(here("Shared/Results/il_data_oe.rds")) %>%
+  readRDS(here("Shared", "Results", kernel_choice, "il_data_oe.rds")) %>%
   .[,
     lapply(.SD, mean),
     by = aunit_id,
@@ -408,7 +408,7 @@ g_why_bias_many <-
   theme(
     legend.position = "bottom"
   ) +
-  scale_color_discrete(name = "Estiamted EONR")
+  scale_color_discrete(name = "Estimated EONR")
 
 # /*===========================================================
 #' # An illustration of over-estimation of the value of GWR-based VRA over SCAM-based URA

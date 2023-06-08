@@ -33,17 +33,17 @@ options(stringsAsFactors = FALSE)
 # === Set working directory ===#
 setwd(here())
 
-
-
+# =================================#
 # choose the kernel used for GWR
-# choice: "gaussian", "bisquare", "exponential", "tricube", "boxcar"
-kernel_choice = "gaussian"
+# choices: "gaussian", "exponential", "boxcar", "bisquare", "tricube"
+kernel_choice = "tricube"
+# =================================#
 
 # load estimation results
 results <-
     here("Shared", "Results", kernel_choice, "pi_data.rds") %>%
     readRDS() %>%
-    .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
+    .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
     .[, bias := pi_diff_est - pi_diff] %>%
     # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
     .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
@@ -66,7 +66,6 @@ mean_data_value <-
       by = c("field_col", "pLabel", "type")
     ] %>%
     print()
-
 ggplot(data = results) +
     geom_histogram(
         aes(x = pi_diff),
@@ -84,7 +83,7 @@ ggplot(data = results) +
     geom_text(
         data = mean_data_value, color = "red",
         aes(
-            x = ifelse(pi_diff < 65, pi_diff + 5, pi_diff - 20), y = 100,
+            x = ifelse(pi_diff < 65, pi_diff + 4, pi_diff - 20), y = 100,
             label = paste0("Median = ", round(pi_diff, 2))
         ),
         angle = 0, hjust = -0.1, vjust = 0, size = 3
@@ -93,10 +92,106 @@ ggplot(data = results) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
     xlab("The value of VRA over URA ($ per ha)") +
-    ylab("Number of Simulation Cases")
+    ylab("Number of Simulation Cases") +
+    theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(fill = NA)
+    )
 ggsave(here("Shared", "Figures", paste0("g_value_", kernel_choice, ".png")),
-       height=6, width=6)
+       height = 4, width = 5)
 
+# /*===========================================================
+#' # Bias in the estimation of the value of GWR-based VRA over SCAM-based URA
+# /*===========================================================
+# fig.id = "bias-est-pi",
+# fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
+
+# mean_data_bias[type == "GWR-T" & pLabel == 10.35, bias] %>% hist
+
+median_bias_data <-
+    results %>%
+    .[, bias := pi_diff_est - pi_diff] %>%
+    .[, .(bias = median(bias)),
+      by = c("field_col", "pLabel", "type")
+    ] %>%
+    print()
+results %>%
+    .[, bias := pi_diff_est - pi_diff] %>%
+    # .[bias < 150, ] %>%
+    ggplot(data = .) +
+    geom_histogram(
+        aes(x = bias),
+        fill = NA,
+        color = "blue",
+        size = 0.2,
+        bins = 50
+    ) +
+    geom_vline(
+        data = median_bias_data, aes(xintercept = bias),
+        color = "red",
+        size = 0.5
+    ) +
+    geom_text(
+        data = median_bias_data, color = "red",
+        aes(
+            x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
+            label = paste0("Median = ", round(bias, 2))
+        ),
+        angle = 0, hjust = -0.1, vjust = 0, size = 3
+    ) +
+    facet_grid(pLabel ~ type) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_x_continuous(breaks = 30 * (-1:8), limits = c(-20, 160)) +
+    xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
+    ylab("Number of Simulation Cases") +
+    theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(fill = NA)
+    )
+ggsave(here("Shared", "Figures", paste0("g_bias_", kernel_choice, ".png")),
+       height = 4, width = 5)
+
+
+# /*===========================================================
+#' # Shapes of kernel functions
+# /*===========================================================
+
+# === kernel data set ===#
+kernel_data <- CJ(
+    name = c("Gaussian", "Exponential", "Box-car", "Bi-square", "Tri-cube"),
+    x = seq(-1.5, 1.5, by = 0.01)
+    ) %>% 
+    .[, name := factor(name, levels = c("Gaussian", "Exponential", "Box-car", 
+                                       "Bi-square", "Tri-cube"))] %>% 
+    .[name=="Gaussian", kernel := exp(-0.5*x^2)] %>% 
+    .[name=="Exponential", kernel := exp(-abs(x))] %>% 
+    .[name=="Box-car", kernel := as.numeric(abs(x)<1)] %>% 
+    .[name=="Bi-square", kernel := as.numeric(abs(x)<1) * (1 - x^2)^2] %>% 
+    .[name=="Tri-cube", kernel := as.numeric(abs(x)<1) * (1 - abs(x)^3)^3]
+ggplot(data = kernel_data) +
+    geom_line(aes(x = x, y = kernel)) +
+    facet_wrap(.~name, ncol = 1, scales = "free") +
+    theme_bw() +
+    scale_y_continuous(breaks = c(0, 0.5, 1), limits = c(0, 1.1)) +
+    theme(
+        panel.grid = element_blank(),
+        strip.background = element_blank(),
+        strip.text.x = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_text(colour="black")
+    )
+ggsave(here("Shared", "Figures", "kernel_functions.png"),
+       height = 5, width = 2, units = "in", dpi = 300)
+
+
+
+################################################################################
+################################################################################
+################################################################################
 
 # /*===========================================================
 #' # EONR estimation tendency
@@ -200,53 +295,6 @@ g_comp_eonr <-
     facet_grid(. ~ type) +
     coord_equal()
 
-# /*===========================================================
-#' # Bias in the estimation of the value of GWR-based VRA over SCAM-based URA
-# /*===========================================================
-# fig.id = "bias-est-pi",
-# fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
-
-# mean_data_bias[type == "GWR-T" & pLabel == 10.35, bias] %>% hist
-
-median_bias_data <-
-    results %>%
-    .[, bias := pi_diff_est - pi_diff] %>%
-    .[, .(bias = median(bias)),
-      by = c("field_col", "pLabel", "type")
-    ] %>%
-    print()
-
-results %>%
-    .[, bias := pi_diff_est - pi_diff] %>%
-   # .[bias < 150, ] %>%
-    ggplot(data = .) +
-    geom_histogram(
-        aes(x = bias),
-        fill = NA,
-        color = "blue",
-        size = 0.2,
-        bins = 50
-    ) +
-    geom_vline(
-        data = median_bias_data, aes(xintercept = bias),
-        color = "red",
-        size = 0.5
-    ) +
-    geom_text(
-        data = median_bias_data, color = "red",
-        aes(
-            x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
-            label = paste0("Median = ", round(bias, 2))
-        ),
-        angle = 0, hjust = -0.1, vjust = 0, size = 3
-    ) +
-    facet_grid(pLabel ~ type) +
-    scale_y_continuous(expand = c(0, 0)) +
-    scale_x_continuous(breaks = 20 * (-1:8), limits = c(-20, 160)) +
-    xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
-    ylab("Number of Simulation Cases")
-ggsave(here("Shared", "Figures", paste0("g_bias_", kernel_choice, ".png")),
-       height=6, width=6)
 
 
 # /*===========================================================

@@ -8,6 +8,7 @@ output:
     toc_depth: 1
     number_sections: true
     reference_docx: "word_template.docx"
+    base_format: "bookdown::word_document2"
     plots:
       style: Normal
       align: center
@@ -117,7 +118,7 @@ fs::dir_ls(here("GitControlled", "Codes", "Functions"), full.names = TRUE) %>%
 
 #* read the results rds file
 results <-
-  here("Shared", "Results", "pi_data.rds") %>%
+  here("Shared/Results/gaussian/pi_data.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
   .[, bias := pi_diff_est - pi_diff] %>%

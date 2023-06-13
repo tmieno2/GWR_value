@@ -33,8 +33,6 @@ library(tictoc)
 library(here)
 options(stringsAsFactors = FALSE)
 
-
-
 # === Set working directory ===#
 setwd(here())
 
@@ -43,14 +41,10 @@ setwd(here())
 fs::dir_ls(here("GitControlled", "Codes", "Functions"), full.names = TRUE) %>%
   lapply(., function(x) source(x))
 
-
-
 # /*===========================================================
 #' # Load simulated regression data
 # /*===========================================================
 field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
-
-
 
 # /*===========================================================
 #' # GWR estimation of MC simulation data
@@ -60,22 +54,23 @@ field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
 # choose the kernel used for GWR from:
 #   "gaussian", "bisquare", "exponential", "tricube", "boxcar"
 #*************************************
-kernel_choice = "bisquare"
-obw_choice = ifelse(kernel_choice %in% c("gaussian", "exponential"), 
-                    # continuous kernel
-                    18, 
-                    # discontinuous kernel
-                    100)
 
-tic()
+kernel_choice <- "gaussian"
+obw_choice <-
+  ifelse(
+    kernel_choice %in% c("gaussian", "exponential"),
+    # continuous kernel
+    18,
+    # discontinuous kernel
+    100
+  )
+
 mc_sim_results <-
-    lapply(
-        1:nrow(field_with_design),
-        function(x) run_mc_sim(x, field_with_design)
-    ) %>%
-    rbindlist()
-toc()
+  lapply(
+    1:nrow(field_with_design),
+    function(x) run_mc_sim(x, field_with_design)
+  ) %>%
+  rbindlist()
 
 #* save the field parameters
 saveRDS(mc_sim_results, here("Shared", "Results", kernel_choice, "mc_sim_results.rds"))
-

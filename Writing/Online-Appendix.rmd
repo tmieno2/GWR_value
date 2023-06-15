@@ -197,7 +197,7 @@ Overall, the economic evaluation results of GWR models presented in this study a
 # Figures
 
 ```{r, fig.id = "kernel_des", fig.cap = "Figure A1. Different kernel functions for GWR modeling. In the curve diagrams of the right panel, the y-axis is the kernel weight, and the x-axis is the ratio of (d_ab/h)."}
-#
+knitr::include_graphics(here("Shared/Figures/kernel_functions.png"))
 ```
 
 ```{r, fig.id = "pi-dif-dist", fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWRR and GWRT", fig.subcap = c("Gaussian", "Exponential"), fig.height = 5, out.width="50%", fig.asp=1, fig.ncol = 2}

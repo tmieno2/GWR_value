@@ -200,6 +200,13 @@ $$
 
 In each simulation, six trial N rates were assigned by calculating the 0%, 20%, 40%, 60%, 80%, and 100% quantiles of the simulation's true cell-specific optimal N rates. When using the historical average corn and N prices (past 20 years, 2002-2021), the means of these trial N rates across simulations were approximately, {80, 130, 154, 184, 219, and 270} kg ha$^{-1}$.
 
+under the price ratio w/p=6.56
+
+Sets of targeted N rates differed only slightly across simulations, and averaged approximately 
+
+
+
+
 ## Yield Data Generation
 
 In each simulation, for each cell $(j, k)$, the simulation's true yield $y_{j, k}$ was generated based on the cell's assigned application rate $N_{j,k}$, true response parameters $c_{j,k} = (\alpha_{j,k}, \beta_{j,k}, \gamma_{j,k}, \tau_{j,k})$, and error term $\varepsilon_{j,k}$. This procedure generated a field-level, cell-specific data set, $\{(y_{j, k},N_{j, k} ):j=1,\dots,1440;k=1,\dots, 6 \}$. To maintain consistency with real-world OFPEs, it was assumed that harvesting equipment could only record yields accurately at an 18m $\times$ 12m (subplot) resolution. Since every cell in a plot received the same N application rate, then so did every cell within a subplot, so $N_{j,1} = N_{j,2}= \dots = N_{j,6} = N_j$ for each subplot $j$. Letting $\mu_j$ denote the mean of the yields of the cells in subplot $j$, the analysis of each round's data was based on 1440 $(\mu_j,N_j )$ observations.

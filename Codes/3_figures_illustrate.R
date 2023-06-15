@@ -179,13 +179,14 @@ ggplot(data = kernel_data) +
     scale_y_continuous(breaks = c(0, 0.5, 1), limits = c(0, 1.1)) +
     theme(
         panel.grid = element_blank(),
+        panel.spacing = unit(1, "lines"),
         strip.background = element_blank(),
         strip.text.x = element_blank(),
         axis.title = element_blank(),
         axis.text = element_text(colour="black")
     )
 ggsave(here("Shared", "Figures", "kernel_functions.png"),
-       height = 5, width = 2, units = "in", dpi = 300)
+       height = 6, width = 2, units = "in", dpi = 300)
 
 
 

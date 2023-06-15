@@ -5,11 +5,14 @@ output:
 ---
 # Reply to the Reviewer #2
 
+__Other changes__
+1. Subscript (j,k) changed to (j,i). k is already used in spline notation. 
+
 Your comments are in blue, and our responses are in black.
 
 <span style = "color: blue;">This study examines the economic value associated with three statistical methods used to generate site-specific nitrogen application rates: 1) geographically weighted regressions using the method of Rakshit et al. (2020) denoted as GWR-R, 2) geographically weighted regressions using the method of Trevisan et al. (2021) denoted as GWR-T, and 3) shape-constrained additive models (SCAM). Using straightforward Monte Carlo simulations, the two GWR methods are used to determine the economically optimal nitrogen rate (EONR) and profits from variable rate applications (VRA), while the SCAM methodology is used to determine the EONRs and profits for uniform rate applications (URA). These rates are based on estimations of site-specific corn yield functions for six cells across 1,440 subplots. The authors find the GWR-T outperforms GWR-R when the nitrogen price (relative to corn) is low, but GWR-R outperforms GWR-T when the nitrogen price is relatively high. This is because of the relative over- and underestimation of the EONRs. The study also finds that both GWR-T and GWR-R may have substantially overestimated the economic value of VRA; the net benefit of VRA over URA is much smaller, roughly $2 per acre (just over $5 per hectare, on average).
 For convenience, my review below is organized into a set of general comments, specific comments, and comments related to the exposition and writing, with each being arranged in order of page number. All comments are designed to strengthen the research.</span>  
-General reply: We are very grateful 
+General reply: We would like to express our sincere gratitude for the reviewer's careful and thorough review of our research paper. The insightful comments and suggestions have significantly contributed to improving the clarity, detail, and overall strength of our manuscript. We truly appreciate the time and effort the reviewer has dedicated to this review process. We have carefully addressed each of the comments and incorporated the necessary revisions into the manuscript.  
 
 <br>
 
@@ -24,7 +27,7 @@ More discussion, literature review, is added on page xx, lines xxx.
 One of the most important questions in the literature relates to how variable rate technologies (VRT) can reduce negative externalities like fertilizer and chemical runoff and leaching. Clearly, this is not the research objective, and addressing a much more burning question in the literature would involve additional terms in the equation on p. 10, line 294 that represent the negative environmental externalities. The authors should clarify early on that “economically optimal” means “privately optimal” rather than “socially optimal.”
 Reply: That is correct. Thank you for the reminder. We modified the writing and made it more explicit that the economically optimal VRT is privately optimal which only considers farmer’s private profit. Environmental externalities were not considered in this study.
 
-It strikes me as odd that, even with a minor clause on line 207 of p. 10, there is no real discussion of the corn price or nitrogen price in the methods section. What are the summary statistics and/or assumptions about p and w? What is the underlying intuition regarding the dependence of the relative performance of GWRR/GWRT to the corn-to-nitrogen price ratio (though this is partially explained in the paragraph on pages 15-16)? Any intuition about the ratios of 4.2, 5.4, and 10.4?
+<span style = "color: blue;">It strikes me as odd that, even with a minor clause on line 207 of p. 10, there is no real discussion of the corn price or nitrogen price in the methods section. What are the summary statistics and/or assumptions about p and w? What is the underlying intuition regarding the dependence of the relative performance of GWRR/GWRT to the corn-to-nitrogen price ratio (though this is partially explained in the paragraph on pages 15-16)? Any intuition about the ratios of 4.2, 5.4, and 10.4?</span>  
 Response: That is our ignorance. Thank you for pointing it out. We added the historical summary of p and w. We choose the historically high (10 or 7), middle, and low price ratio.
 Reply: Figure of historical price trend in the appendix; argue that our partial explanation is sufficient.
 

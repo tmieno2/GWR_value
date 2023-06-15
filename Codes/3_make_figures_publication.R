@@ -188,17 +188,17 @@ est_data <-
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
 eorn_ratio_data <-
-    est_data %>%
-    .[, pRatio := pN / pCorn] %>%
-    # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
-    .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
-    # === label price ratio
-    .[, pLabelName := "Price Ratio (N/corn)"] %>%
-    .[pRatio == 5.44, pLabel := "Low"] %>%
-    .[pRatio == 6.56, pLabel := "Middle"] %>%
-    .[pRatio == 7.67, pLabel := "High"] %>%
-    .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>% 
-    .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
+  est_data %>%
+  .[, pRatio := pN / pCorn] %>%
+  # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
+  .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+  # === label price ratio
+  .[, pLabelName := "Price Ratio (N/corn)"] %>%
+  .[pRatio == 5.44, pLabel := "Low"] %>%
+  .[pRatio == 6.56, pLabel := "Middle"] %>%
+  .[pRatio == 7.67, pLabel := "High"] %>%
+  .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>%
+  .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
 
 g_eonr_bias <-
   ggplot(data = eorn_ratio_data) +

@@ -182,7 +182,7 @@ g_value <-
 # facet_grid(round(pN, digits = 2) ~ .)
 
 est_data <-
-  readRDS(here("Shared", "Results", kernel_choice, "est_data.rds")) %>%
+  readRDS(here("Shared/Results/Gaussian/est_data.rds")) %>%
   unnest() %>%
   data.table() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
@@ -223,7 +223,7 @@ g_eonr_bias <-
 
 #* read the simulation data for a sigle simulationused for illustration
 single_sim <-
-  here("Shared", "Results", kernel_choice, "aunit_sim_single.rds") %>%
+  here("Shared/Results/Gaussian/aunit_sim_single.rds") %>%
   readRDS() %>%
   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
 
@@ -341,7 +341,7 @@ pN <- pCorn * field_parameters$pRatio_ls[[1]][2] # medium price scenario
 #' # Prepare yield response curves
 # /*+++++++++++++++++++++++++++++++++++
 il_data_oe <-
-  readRDS(here("Shared", "Results", kernel_choice, "il_data_oe.rds")) %>%
+  readRDS(here("Shared/Results/Gaussian/il_data_oe.rds")) %>%
   .[,
     lapply(.SD, mean),
     by = aunit_id,

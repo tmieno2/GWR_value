@@ -39,7 +39,7 @@ We do not see the problem with it for the reason we mentioned right above.
 
 <span style = "color: blue;"> 7. GWR kernels matters. You use a Gaussian kernel that assumes all observations are correlated. Kernels that are more parsimonious include the Epanechnikov and bi-square kernels, which are local, rather than global, smoothers. Yield response to inputs is probably more aptly modeled as local spatial processes or local moving averages, but not global ones. </span>
 
-Both Trevisan and Rakshit use Gaussian kernels. So, we use Gaussian kernels as our main results. Even though the Gaussian kernel is global, it give almost negligible weights to observations that are far. For other kernels, please see the supplementary appendix, which provides the results using the Bi-square, Exponential, Boxcar, and Tri-cube kernels. Our most important qualitative findings are unchanged: GWR with quadratic funcitonal form significantly over-estiamtes its true value as a method to generate VRA recommendation. The Epanechnikov kernel is not available at the moment for GWR regression either in the GWmodel pacakge or .
+Both Trevisan and Rakshit use Gaussian kernels. So, we use Gaussian kernels as our main results. Even though the Gaussian kernel is global, it give almost negligible weights to observations that are far. For other kernels, please see the supplementary appendix, which provides the results using the Bi-square, Exponential, Boxcar, and Tri-cube kernels. Our most important qualitative findings are unchanged: GWR with quadratic funcitonal form significantly over-estiamtes its true value as a method to generate VRA recommendation. The Epanechnikov kernel is not available at the moment for GWR regression.
 
 ## Minor issues:
 

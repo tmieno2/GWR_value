@@ -1,6 +1,5 @@
 ---
 output:
-  word_document: default
   html_document: default
 ---
 # Reply to the editor
@@ -12,7 +11,7 @@ Blur blur, . Your comments are in blue, and our responses are in black.
 
 Reply to <span style = "color: blue;"> __point 1__ </span>:
 
-Actually, the dominant functional form used in the literature is quadratic-plateau for non-GWR (regualr parametric) regression because agronomists have long known that it better represents corn-nitrogen relationship. Application of GWR is very new to the field and GWR is not currently flexible in funcional form. There is no readily available statistical software or packages that lets researchers to use quadratic-plateau functionl form under the GWR framework. That is the primary reason that both Trevisan et al () and Rakshit et al () are using quadratic functional form. So, their choice of functional form is not coming from agronomic facts, rather from technical limitations. We are trying to point out this can be a problem with GWR just like it is a problem for regular regression framework. So, our paper is imporatnt because many use quadratic-plateau in regular regression framework, but the GWR promoted by the two studies use quadratic just because it is hard to do so. We believe it is imporatnt that this technical limitation is not trivial and would like to avoid practitioners or researcher to believe GWR is better than it truly is. We further suggest that it is important to develope a statistical package that allows to model yield-input relationship more flexibly.
+Actually, the dominant functional form used in the literature is quadratic-plateau for <span style = "color: red;"> non-</span>GWR (regualr parametric) regression because agronomists have long known that it better represents corn-nitrogen relationship. Application of GWR is very new to the field and GWR is not currently flexible in funcional form. There is no readily available statistical software or packages that lets researchers use the quadratic-plateau functionl form under the GWR framework. That is the primary reason that both Trevisan et al () and Rakshit et al () are using quadratic functional form. So, their choice of functional form is not coming from agronomic facts, rather from technical limitations. We are trying to point out this can be dangerous with GWR just like it is a problem for regular regression framework. So, our paper is imporatnt because many use quadratic-plateau in regular regression framework for corn-nitrogen yield response function estimation, but the GWR promoted by the two studies use quadratic just because it is hard to do so. We believe that this technical limitation is not trivial and would like to avoid practitioners or researcher believing GWR is better than it truly is. We further suggest that it is important to develope a statistical package that allows to model yield-input relationship more flexibly.
 
 Reply to <span style = "color: blue;"> __point 2__ </span>:
 
@@ -26,7 +25,7 @@ This is a problem of our writing and we apologize for that. Our objective is not
 
 </span>
 
-Fiest, it is important to reiterate that we are not interested in evaluating GWR itself even though our writing did give that impression, rather we are interested in evaluating GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. This point alone addresses lots of your and reviwer 1's comments (as we discussed above, this is an important problem to address). We are critiqing the use of GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. 
+First, it is important to reiterate that we are not interested in evaluating GWR itself even though our writing did give that impression, rather we are interested in evaluating GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. This point alone addresses lots of your and reviwer 1's comments (as we discussed above, this is an important problem to address). We are critiqing the use of GWR with quadratic functional form when the true underlying relationship is quadratic-plateau. 
 
 Second, the data generating process suggested by reviewer is not even very different from our DGP in principle even though you seem to have an impression that they are vastly different. 
 
@@ -48,7 +47,7 @@ $$
 
 as shown in Leung, Y., Mei, C. L., & Zhang, W. X. (2000), where $\beta_i$ is the coefficient specific to observation $i$. $W(s)$ ensures that $\beta$ are spatially correlated. The choice of $W(s)$ is arbitrary and if you use the same $W(s)$ used in DGP for GWR regression as well, then you would be cheating, giving an unfair advantage to GWR because we (researchers) never know $W(s)$ in reality just like we do not know the weight matrix in spatial econometric approaches like spatial error model. This is the "correct" GWR DGP only if you know what $W(s)$ is priori.
 
-In our DGP, we generate parameters (alpha, ... in equation )for individual $i$ in a spatially correlated manner (as opposed to what the reviewer thought). So, aside from the functional form, the only difference is in the spatial pattern of parameters. It is kind of like, we are using a different $W(s)$ in the above equation, which is an arbitrary parameter chosen by the researcher running MC simulations in the first place. In this sense, our DGP is just as "valid" as the GWR DGP.
+In our DGP, we generate parameters (alpha, ... in equation )for individual $i$ in a spatially correlated manner (as opposed to what the reviewer 1 thought). So, aside from the functional form, the only difference is in the spatial pattern of parameters. It is kind of like, we are using a different $W(s)$ in the above equation, which is an arbitrary parameter chosen by the researcher running MC simulations in the first place. In this sense, our DGP is just as "valid" as the GWR DGP.
 
 Indeed, I would say our DGP is superior because ours is much more flexible. The DGP suggested by the reviewer cannot even accommodate non-linear model, while our DGP can use any functional relationship between $Y$ and $X$ as evident in our paper. Indeed, this is critical to our study because the data generating process <span style = "color: red;"> needs </span> to be quadratic-plateau to better represent the actual functional relationship exhibited by corn-nitogen response.
 

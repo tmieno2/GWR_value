@@ -47,6 +47,7 @@ opts_chunk$set(
 #--- packages ---#
 library(data.table)
 library(tidyverse)
+library(patchwork)
 library(flextable)
 library(stringr)
 library(sf)
@@ -82,15 +83,15 @@ theme_update(
   #--- legend ---#
   legend.text =
     element_text(
-      size = 10, angle = 0, hjust = 0, vjust = 0, family = "Times"
+      size = 9, angle = 0, hjust = 0, vjust = 0, family = "Times"
     ),
   legend.title =
     element_text(
-      size = 10, angle = 0, hjust = 0, vjust = 0, family = "Times"
+      size = 9, angle = 0, hjust = 0, vjust = 0, family = "Times"
     ),
   legend.key.size = unit(0.5, "cm"),
   #--- strip (for faceting) ---#
-  strip.text = element_text(size = 10),
+  strip.text = element_text(size = 10, family = "Times"),
   #--- plot title ---#
   plot.title = element_text(family = "Times", face = "bold", size = 12),
   #--- margin ---#
@@ -103,14 +104,14 @@ theme_update(
 )
 ```
 
-```{r include = FALSE}
+```{r results-plots, include = FALSE}
 kernel_ls <- c("gaussian", "exponential", "boxcar", "bisquare", "tricube")
 
 gg_appendix <-
   data.frame(kernel = kernel_ls) %>%
   rowwise() %>%
   mutate(results = list(
-    here("Shared", "Results", kernel, "pi_data.rds") %>%
+    here("Shared/Results", kernel, "pi_data.rds") %>%
       readRDS() %>%
       .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
       .[, bias := pi_diff_est - pi_diff] %>%
@@ -121,7 +122,8 @@ gg_appendix <-
       .[pRatio == 5.44, pLabel := "Low"] %>%
       .[pRatio == 6.56, pLabel := "Middle"] %>%
       .[pRatio == 7.67, pLabel := "High"] %>%
-      .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
+      .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>%
+      .[, p_ratio_text := paste0("Price Ratio (N/Corn) \n = ", pRatio, " (", pLabel, ")")]
   )) %>%
   #* ===========================================================
   #* Plots of the value of GWR
@@ -129,7 +131,7 @@ gg_appendix <-
   mutate(median_data_value = list(
     results %>%
       .[, .(pi_diff = median(pi_diff)),
-        by = c("field_col", "pLabel", "type")
+        by = .(field_col, p_ratio_text, type)
       ]
   )) %>%
   mutate(g_value = list(
@@ -155,11 +157,15 @@ gg_appendix <-
           y = 150,
           label = paste0("Median = ", round(pi_diff, 2))
         ),
-        angle = 0, hjust = -0.1, vjust = 0, size = 3
+        angle = 0, hjust = -0.1, vjust = 0, size = 3,
+        family = "Times"
       ) +
-      facet_grid(pLabel ~ type) +
+      facet_grid(p_ratio_text ~ type) +
       scale_y_continuous(expand = c(0, 0), limits = c(NA, 200)) +
-      scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
+      scale_x_continuous(breaks = 20 * (-2:4), limits = c(-45, 80)) +
+      theme(
+        panel.spacing.y = unit(0.3, "cm")
+      ) +
       xlab("The value of VRA over URA ($ per ha)") +
       ylab("Number of Simulation Cases")
   )) %>%
@@ -170,7 +176,7 @@ gg_appendix <-
     results %>%
       .[, bias := pi_diff_est - pi_diff] %>%
       .[, .(bias = median(bias)),
-        by = c("field_col", "pLabel", "type")
+        by = .(field_col, p_ratio_text, type)
       ]
   )) %>%
   mutate(g_bias = list(
@@ -196,10 +202,14 @@ gg_appendix <-
           x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
           label = paste0("Median = ", round(bias, 2))
         ),
-        angle = 0, hjust = -0.1, vjust = 0, size = 3
+        angle = 0, hjust = -0.1, vjust = 0, size = 3,
+        family = "Times"
       ) +
-      facet_grid(pLabel ~ type) +
+      facet_grid(p_ratio_text ~ type) +
       scale_y_continuous(expand = c(0, 0)) +
+      theme(
+        panel.spacing.y = unit(0.3, "cm")
+      ) +
       xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
       ylab("Number of Simulation Cases")
   )) %>%
@@ -208,10 +218,75 @@ gg_appendix <-
 
 # Appendix I: Historical Corn and Nitrogen Prices {-}
 
+```{r price-history-plot, include = FALSE}
+# read the data
+price_ratio_data <- readRDS(here("Shared/Data/price_ratio_data.rds"))
+
+# continuous time variable
+price_ratio_data[, Time := Year + Month / 12]
+
+# color legend
+color_legend <- c("Corn" = "black")
+
+# corn price
+g1 <-
+  ggplot(data = price_ratio_data) +
+  geom_line(aes(x = Time, y = pCorn), color = "black", linewidth = 0.6) +
+  ggtitle("Corn price ($/kg)") +
+  ylab("") +
+  xlab("Year") +
+  theme(
+    legend.title = element_blank(),
+    plot.title = element_text(hjust = 0.5, vjust = -1, size = 9),
+    axis.text = element_text(color = "black"),
+    axis.title.x = element_text(hjust = 1)
+  )
+
+# N price
+g2 <-
+  ggplot(data = price_ratio_data) +
+  geom_line(
+    aes(x = Time, y = pN, color = Ntype, linetype = Ntype),
+    linewidth = 0.6
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  ggtitle("Nitrogen price ($/kg)") +
+  ylab("") +
+  xlab("Year") +
+  labs(color = "Nitrogen type", linetype = "Nitrogen type") +
+  theme(
+    plot.title = element_text(hjust = 0.5, vjust = -1, size = 9),
+    axis.text = element_text(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    legend.key.width = unit(1, "cm")
+  )
+
+# price ratio
+g3 <-
+  ggplot(data = price_ratio_data) +
+  geom_line(
+    aes(x = Time, y = pRatio, color = Ntype, linetype = Ntype),
+    linewidth = 0.6
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  ggtitle("Nitrogen-Corn price ratio") +
+  ylab("") +
+  xlab("Year") +
+  labs(color = "Nitrogen type", linetype = "Nitrogen type") +
+  theme(
+    plot.title = element_text(hjust = 0.5, vjust = -1, size = 9),
+    axis.text = element_text(color = "black"),
+    axis.title.x = element_text(hjust = 1),
+    legend.key.width = unit(1, "cm")
+  )
+
+g_prices <- g1 / g2 / g3
+```
+
 Figure A\@ref(fig:price) illustrates the historical prices of corn ($p$) and nitrogen fertilizer ($w$), along with the corresponding nitrogen-corn price ratios, during the two-decade period from 2002 to 2022. 
 
-```{r, fig.id = "price", fig.cap = "Historical monthly variations in corn price, nitrogen fertilizer price, and the corresponding nitrogen-corn price ratio, 2002-2022"}
-knitr::include_graphics("price_ratio_history.png")
+```{r, fig.id = "price", fig.cap = "Historical monthly variations in corn price, nitrogen fertilizer price, and the corresponding nitrogen-corn price ratio, 2002-2022", fig.width = 6, fig.height = 6}
+g_prices
 ```
 
 Corn prices were sourced from the USDA National Agricultural Statistics Service [@NASS2022] in monthly frequency from 2002 to 2022. As shown in the top panel of Figure A1, the corn prices fluctuated between \$0.07/kg and \$0.30/kg, with an average of $0.15/kg. 
@@ -253,41 +328,49 @@ Figures A\@ref(fig:value-kernel-exp) through A\@ref(fig:value-kernel-tricube) sh
 
 Using the Gaussian kernel, we found that GWRR performs better as the price ratio increases, and GWRT performs better as the price ratio decreases (see Figure 3 of the main text). This holds true across all the other kernel function choices. Although there are some variations in the magnitudes of $\Delta^{GWR}$ among different kernel function choices, these differences do not significantly affect the conclusions drawn in the main text.
 
-```{r, fig.id = "value-kernel-exp", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Exponential kernel function", fig.height = 3.5}
+```{r, fig.id = "value-kernel-exp", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Exponential kernel function", fig.height = 6}
 gg_appendix$g_value[[2]]
 ```
 
-```{r, fig.id = "value-kernel-boxcar", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Boxcar kernel function", fig.height = 3.5}
+```{r, fig.id = "value-kernel-boxcar", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Boxcar kernel function", fig.height = 6}
 gg_appendix$g_value[[3]]
 ```
 
-```{r, fig.id = "value-kernel-bs", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Bi-square kernel function", fig.height = 3.5}
+```{r, fig.id = "value-kernel-bs", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Bi-square kernel function", fig.height = 6}
 gg_appendix$g_value[[4]]
 ```
 
-```{r, fig.id = "value-kernel-tricube", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Tri-cube kernel function", fig.height = 3.5}
+```{r, fig.id = "value-kernel-tricube", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Tri-cube kernel function", fig.height = 6}
 gg_appendix$g_value[[5]]
 ```
 
-
+`r run_pagebreak()`
 
 ## Bias in the estimation of the value of GWR-based VRA {-}
 
 Figures A\@ref(fig:bias-kernel-exp) through A\@ref(fig:bias-kernel-tricube) show the distribution of the bias in the estimated economic value of GWR. Similar to the findings from using the Gaussian kernel presented in Figure 6 under the Gaussian kernel, the GWRR consistently exhibits significant over-estimation of the value of GWR-based VRA across all other kernel function choices. Also, the GWRT demonstrates smaller over-estimation at low price ratios compared to GWRR, while the over-estimation increases as price ratio rises. The presence of a similar fat tail in the GWRT bias distribution is also evident. The magnitudes of the estimation bias vary across kernel function choices, but the differences are not substantial and do not affect qualitatively our conclusions drawn in the main text.
 
-```{r, fig.id = "bias-kernel-exp", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Exponential kernel function", fig.height = 3.5}
+```{r, fig.id = "bias-kernel-exp", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Exponential kernel function", fig.height = 6}
 gg_appendix$g_bias[[2]]
 ```
 
-```{r, fig.id = "bias-kernel-boxcar", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Boxcar kernel function", fig.height = 3.5}
+```{r, fig.id = "bias-kernel-boxcar", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Boxcar kernel function", fig.height = 6}
 gg_appendix$g_value[[3]]
 ```
 
-```{r, fig.id = "bias-kernel-bs", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Bi-square kernel function", fig.height = 3.5}
+```{r, fig.id = "bias-kernel-bs", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Bi-square kernel function", fig.height = 6}
 gg_appendix$g_value[[4]]
 ```
 
-```{r, fig.id = "bias-kernel-tricube", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios (5.44 (low), 6.56 (middle), and 7.67 (high) $ kg^(-1)  / $ kg^(-1)), using Tri-cube kernel function", fig.height = 3.5}
+```{r, fig.id = "bias-kernel-tricube", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Tri-cube kernel function", fig.height = 6}
 gg_appendix$g_value[[5]]
 ```
+
+`r run_pagebreak()`
+
+# References
+
+<br />
+
+<div id="refs"></div>
 

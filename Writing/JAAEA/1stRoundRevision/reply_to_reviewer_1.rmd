@@ -1,0 +1,61 @@
+---
+output:
+  html_document: default
+---
+
+# Reply to reviewer 1
+
+Blur blur, . Your comments are in blue, and our responses are in black.
+
+## Major Conern
+
+<span style = "color: blue;"> The data generating process (d.g.p.) assumptions maintained by the authors for all models is incorrect. Since the d.g.p. are wrong, generation of a "true" field for parameters is also wrong, which renders the model comparisons incorrect and the conclusions erroneous. There are other issues related to the Monte Carlo experimental design that are also problematic. I mention these problems, below. </span>
+
+None of them are incorrect. Please see our response to your comments below.
+
+<span style = "color: blue;"> 1. The authors generate the "true" site-specific parameters using a Gaussian random field. It doesn't appear that the authors allowed for correlations between the model parameters. In practice, response parameters are typically correlated. </span>
+
+They are spatially correlated. I am not sure how you get this impression. If they are not correlated, then the true optimal EONR would not have been spatially correlated either.
+
+<span style = "color: blue;"> 2. If the authors want to compare the performance of competing estimators, then the correct d.g.p.'s for each model should be used to generate yield data. Each competing model would use the data from its challengers to estimate the parameters. These results would then be compared to the “true” parameter values. If you have three competing models, A, B, and C, you would have 6 comparisons. On the diagonal, you'd compare A with A, B with B, etc. This gives you a "type-I" error comparison. The other comparison would give you "type-II" error comparisons (i.e., using the wrong model to estimate yields from a competitor's d.g.p.). These comparisons would show you how well a given estimator works when it is paired with the "wrong" d.g.p. </span>
+
+It may not be clear, but the main objective of this paper is to point out the problem/danger of applying GWR with quadratic functional form when the true yield data generating process follows the quadratic-plateau functional form as for many crop-input relationships like corn and nitrogen. Our objective is NOT purely evaluating the value of the ability of GWR itself. If that is the case, I completely agree with you that we should have used the same functional form in GWR estimation as the true yield response function.  
+
+<span style = "color: blue;"> 3. The autho's choose a quadratic response with plateau model as the yield d.g.p model. Yet, the GWR and GAM models are linear-quadratic. Thus, the theoretical yield model is inconsistent with the one used to estimate the model parameters. </span>
+
+As mentioned above, that is the whole point of this paper. Previous studies that promoted the use of GWE for VRA recommendation used GWR with quadratic funcitonal form when the overwhelming agronomic evidence exists to suppor that corn-nitrogen relationship is better represented by quadratic-linear functional form. This is likley because non-linear GWR is not readily estimable using exisiting stastical packages at the time of publication of those studies. We are pointing out the danger of applying GWR with mis-specified model for VRA recommendation. This very important because Trevisan et al (2019) especially touted GWR as a very promising way to generate VRA recommendation with economic profit of VRA over URA surpassing $50/ha. Our finding indicates that GWR with quadratic functional form has a strong tendency to significantly over-estimate the value of VRA over URA. Basically, their numbers are not reliable and the real value of GWR tends to be much much smaller than its estimated value.
+
+<span style = "color: blue;"> 4. The authors use a sample of n=1 to compare estimator performance. What needs to be done is to run the MC some number of times (say, 1,000), to generate bias and mean squared error (MSE). One could find the MSE and bias in profitability estimates for each comparison. </span>
+
+That is simply not true. We do run 1000 simulations. The results we presented are summary of all the simulation rounds.
+
+<span style = "color: blue;"> 5. See Leung, Y., Mei, C. L., & Zhang, W. X. (2000), Statistical tests for spatial nonstationarity based on the geographically weighted regression model. Environment and Planning A, 32(1), 9–32 for the GWR d.g.p. There are two ways to generate GWR yields for a MC simulation. The first generates GWR yields as: y* = (I – L)-1e*, where L is the GWR “hat” matrix. You would choose a weighting kernel for GWR, L, and then draw e* from, say a N(0, σ2) distribution. You would hold L fixed (it is “truth”) and then pull e* from this distribution 1,000 times to generate 1,000 data sets. Use these data sets to find estimates, and then use the estimates to calculate profitability. The second approach uses “true” GWR betas as a reference. Here, you need to find a known y (for example, from an experiment, or simulated as a spatial random field), and then simulate yields as y* = X(X’W(s)X)-1X’W(s)y + e*, with W(s) GWR weights. Similar procedures apply to “hybrid GWR” models, which allow some parameters to vary spatially while others are not. I have not worked out your GAM d.g.p., but the logic would be similar. </span>
+
+First of all, for our objective mentioned above, quadratic-plateau function has to be the true yield response function because we are trying to examine the danger of applying GWR with quadratic fuctional form (due to technical limitations). Second, your suggested data generating process cannot be applied to non-linear yield response functions. Third, there is no reason to generate data based on the GWR way. Our data generating process is just as valid (or invalid) as your suggested way of generating data in terms of representing site-specific yield-response functions of a field. As we mentioned earlier, we are not testing the pure ability of GWR in estimating site-specific yield response functions. We are not writing a pure statistics paper. This is a paper about precision agriculture, not just about GWR estiation accuracy.  
+
+<span style = "color: blue;"> 6. Your use of the Gaussian random field you generated as "truth" (if the parameters were correlated), corresponds with a Bayesian kriging estimator, but not GWR. </span>
+
+We do not see the problem with it for the reason we mentioned right above.
+
+<span style = "color: blue;"> 7. GWR kernels matters. You use a Gaussian kernel that assumes all observations are correlated. Kernels that are more parsimonious include the Epanechnikov and bi-square kernels, which are local, rather than global, smoothers. Yield response to inputs is probably more aptly modeled as local spatial processes or local moving averages, but not global ones. </span>
+
+Both Trevisan and Rakshit use Gaussian kernels. So, we use Gaussian kernels as our main results. Even though the Gaussian kernel is global, it give almost negligible weights to observations that are far. For other kernels, please see the supplementary appendix, which provides the results using the Bi-square, Exponential, Boxcar, and Tri-cube kernels. Our most important qualitative findings are unchanged: GWR with quadratic funcitonal form significantly over-estiamtes its true value as a method to generate VRA recommendation. The Epanechnikov kernel is not available at the moment for GWR regression either in the GWmodel pacakge or .
+
+## Minor issues:
+
+<span style = "color: blue;">
+I encourage the authors to undertake a through technical editing of the manuscript. In several places, the authors make assertions that should be backed up with references. Some examples are: Page 5, line 90; page 8, line 162. These are two examples, but there are more.
+</span>
+
+1. <span style = "color: blue;">Page 1, line 10: incomplete sentence.</span>
+1. <span style = "color: blue;">Page 1, line 13: delete “large”</span>
+1. <span style = "color: blue;">Page 2, lune 27: delete “etc.”</span>
+1. <span style = "color: blue;">Page 2, line 35: delete “efficient”</span>
+1. <span style = "color: blue;">Page 2, line 37: delete “,” after methods</span>
+1. <span style = "color: blue;">Page 3, line 47: insert “the” before development </span>
+1. <span style = "color: blue;">Page 4, line 71: insert “,” after surprising</span>
+1. <span style = "color: blue;">Page 8, line 161: “assumes”</span>
+1. <span style = "color: blue;">Page 7, line 137. What needs to be rewritten???? </span>
+1. <span style = "color: blue;">Page 10, line 212: e_jk </span>
+
+We overhauled the Intorduction. Consequently, the first 7 items are no longer relevant. Items 8 through 10 are fixed.

@@ -17,6 +17,7 @@ Writing/*.tex
 Writing/*.bbl
 Writing/*.log
 Writing/*.gz
+Writing/*.html
 Writing/*.blg
 Writing/*.out
 Writing/manuscript_*/*

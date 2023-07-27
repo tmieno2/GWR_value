@@ -1,9 +1,11 @@
 ---
-output:
-  html_document: default
+title: "Reply"
+output: 
+  html_document:
+    theme:
+      version: 4
+bibliography: PA.bib
 ---
-
-# Reply to reviewer 1
 
 Your comments are in blue.  Our responses are in black.
 

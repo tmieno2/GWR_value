@@ -1,9 +1,11 @@
 ---
-output:
-  html_document: default
+title: "Reply to the editor"
+output: 
+  html_document:
+    theme:
+      version: 4
 bibliography: PA.bib
 ---
-# Reply to the editor
 
 Thank you for your thoughtful comments. Addressing them has made our paper much stronger. Below, your comments are in blue, and our responses are in black.
 

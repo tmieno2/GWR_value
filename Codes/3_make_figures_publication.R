@@ -1,6 +1,52 @@
-# /*===========================================================
-#' # Visualization the field and spatial units
-# /*===========================================================
+## ------------------------------
+theme_fig <-
+  theme_bw() +
+  theme(
+    axis.title.x =
+      element_text(
+        size = 12, angle = 0, hjust = .5, vjust = -0.3, family = "Times"
+      ),
+    axis.title.y =
+      element_text(
+        size = 12, angle = 90, hjust = .5, vjust = .9, family = "Times"
+      ),
+    axis.text.x =
+      element_text(
+        size = 9, angle = 0, hjust = .5, vjust = 1.5, family = "Times"
+      ),
+    axis.text.y =
+      element_text(
+        size = 9, angle = 0, hjust = 1, vjust = 0, family = "Times"
+      ),
+    axis.ticks =
+      element_line(
+        linewidth = 0.3, linetype = "solid"
+      ),
+    axis.ticks.length = unit(.15, "cm"),
+    #--- legend ---#
+    legend.text =
+      element_text(
+        size = 12, angle = 0, hjust = 0, vjust = 0.5, family = "Times"
+      ),
+    legend.title =
+      element_text(
+        size = 12, angle = 0, hjust = 0, vjust = 0, family = "Times"
+      ),
+    legend.key.size = unit(0.5, "cm"),
+    #--- strip (for faceting) ---#
+    strip.text = element_text(size = 12, family = "Times"),
+    #--- plot title ---#
+    plot.title = element_text(family = "Times", face = "bold", size = 12),
+    #--- margin ---#
+    # plot.margin = margin(0, 0, 0, 0, "cm"),
+    #--- panel ---#
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(fill = NA)
+  )
+
+
+## ------------------------------
 # fig.id = "field-layout",
 # fig.cap = "Simulated field layout with spatial unit definitions",
 # fig.dim = c(6, 6)
@@ -32,25 +78,27 @@ block_text_sf <- st_centroid(block_sf)
 g_field <-
   ggplot() +
   geom_sf(data = plot_sf, size = 0.2, fill = NA) +
-  geom_sf(data = filter(plot_sf, plot_id == 264), fill = "red", alpha = 0.5) +
-  geom_sf(data = block_sf, fill = NA, size = 1.5) +
-  annotate("text", x = 830, y = 74, label = "plot", color = "red", size = 5) +
+  geom_sf(data = dplyr::filter(plot_sf, plot_id == 264), fill = "red", alpha = 0.5) +
+  geom_sf(data = block_sf, fill = NA, linewidth = 1.5) +
+  annotate("text", x = 830, y = 74, label = "plot", color = "red", size = 4, family = "Times") +
   geom_segment(
     aes(x = 830, xend = 830, y = 30, yend = -80),
     arrow = arrow(length = unit(0.5, "cm")),
-    size = 1,
+    linewidth = 1,
     color = "red"
   ) +
   geom_sf_text(
     data = block_text_sf,
     aes(label = paste0("block ", block_id)),
-    size = 5
+    size = 5,
+    family = "Times"
   ) +
   theme_void() +
+  theme(plot.title = element_text(family = "Times")) +
   ggtitle("Panel (a): Plots and blocks in an experimental field")
 
 ## inside a plot
-plot_sf_focus <- filter(field_sf, plot_id == 1)
+plot_sf_focus <- dplyr::filter(field_sf, plot_id == 1)
 
 subplot_sf <-
   plot_sf_focus %>%
@@ -74,23 +122,36 @@ site_sf <- plot_sf_focus[7, ]
 g_inside_plot <-
   ggplot() +
   geom_sf(data = plot_sf_focus, size = 0.2, fill = NA) +
-  geom_sf_text(data = subplot_text_sf, aes(label = label), size = 4) +
-  geom_sf(data = subplot_sf, size = 1.2, fill = NA) +
+  geom_sf_text(
+    data = subplot_text_sf,
+    aes(label = label),
+    size = 3,
+    family = "Times"
+  ) +
+  geom_sf(data = subplot_sf, linewidth = 1.2, fill = NA) +
   geom_sf(data = site_sf, fill = "red", alpha = 0.3) +
-  annotate("text", x = 39, y = 429, label = "cell") +
+  annotate("text", x = 39, y = 429, label = "cell", family = "Times") +
   scale_fill_discrete(name = "") +
   theme_void() +
   theme(
     legend.position = "bottom",
-    legend.text = element_text(size = 12)
+    legend.text = element_text(size = 12),
+    plot.title = element_text(family = "Times")
   ) +
   ggtitle("Panel (b): Subplots, buffers, and sites in a single plot")
 
 g_layout <- g_field / g_inside_plot
 
-# /*===========================================================
-#' # Experimental Design
-# /*===========================================================
+ggsave(
+  "GitControlled/Writing/Figures/g_layout.png",
+  g_layout,
+  width = 6,
+  dpi = 600
+)
+
+
+## ------------------------------
+
 # fig.id = "field-N-design",
 # fig.cap = "Experiment design of nitrogen (N) rates"
 
@@ -123,24 +184,47 @@ g_exp <-
   scale_fill_viridis_d(name = "N rate (kg/ha)", direction = -1) +
   theme_void() +
   theme(
-    plot.title = element_text(hjust = 0.5),
+    plot.title = element_text(hjust = 0.5, family = "Times"),
+    legend.title = element_text(hjust = 0.5, family = "Times"),
     legend.position = "bottom",
     legend.key.size = unit(0.4, "cm"),
-    legend.text = element_text(size = 10)
+    legend.text = element_text(size = 10, family = "Times")
   )
 
-# /*===========================================================
-#' # The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T
-# /*===========================================================
+ggsave(
+  "GitControlled/Writing/Figures/g_exp.png",
+  g_exp,
+  width = 6,
+  dpi = 600
+)
+
+
+## ------------------------------
+results <-
+  here("Shared/Results/gaussian/pi_data.rds") %>%
+  readRDS() %>%
+  .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
+  .[, bias := pi_diff_est - pi_diff] %>%
+  # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
+  .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+  # === label price ratio
+  .[, pLabelName := "Price Ratio (N/corn)"] %>%
+  .[pRatio == 5.44, pLabel := "Low"] %>%
+  .[pRatio == 6.56, pLabel := "Middle"] %>%
+  .[pRatio == 7.67, pLabel := "High"] %>%
+  .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
 # fig.id = "pi-dif-dist",
 # fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
+
+## ------------------------------
 mean_data_value <-
   results %>%
   .[, .(pi_diff = median(pi_diff)),
     by = c("field_col", "pLabel", "type")
-  ] %>%
-  print()
+  ]
+
+# saveRDS(mean_data_value, "Shared/Results/mean_data_value.rds")
 
 g_value <-
   results %>%
@@ -150,13 +234,13 @@ g_value <-
     fill = NA,
     color = "blue",
     bins = 50,
-    size = 0.2
+    linewidth = 0.2
   ) +
   geom_vline(
     data = mean_data_value,
     aes(xintercept = pi_diff),
     color = "red",
-    size = 0.5
+    linewidth = 0.5
   ) +
   geom_text(
     data = mean_data_value, color = "red",
@@ -164,19 +248,29 @@ g_value <-
       x = ifelse(pi_diff < 65, pi_diff + 5, pi_diff - 20), y = 150,
       label = paste0("Median = ", round(pi_diff, 2))
     ),
-    angle = 0, hjust = -0.1, vjust = 0, size = 3
+    angle = 0,
+    hjust = -0.1,
+    vjust = 0,
+    size = 3,
+    family = "Times"
   ) +
   facet_grid(pLabel ~ type) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
   xlab("The value of VRA over URA ($ per ha)") +
-  ylab("Number of Simulation Cases")
+  ylab("Number of Simulation Cases") +
+  theme_fig
+
+ggsave(
+  "GitControlled/Writing/Figures/g_value.png",
+  g_value,
+  width = 6,
+  height = 5,
+  dpi = 600
+)
 
 
-# /*===========================================================
-#' # EONR estimation tendency
-# /*===========================================================
-
+## ------------------------------
 # ggplot(est_data) +
 # geom_histogram(aes(x = opt_N_scam)) +
 # facet_grid(round(pN, digits = 2) ~ .)
@@ -211,13 +305,21 @@ g_eonr_bias <-
   ) +
   geom_vline(xintercept = 1, color = "red") +
   facet_grid(pLabel ~ type) +
-  xlab("Number of Simulation Cases") +
-  xlab("Average Ratio of Estimated EONR to true EONR")
+  ylab("Number of Simulation Cases") +
+  xlab("Average Ratio of Estimated EONR to true EONR") +
+  theme_fig
+
+ggsave(
+  "GitControlled/Writing/Figures/g_eonr_bias.png",
+  g_eonr_bias,
+  width = 6,
+  height = 5,
+  dpi = 600
+)
 
 
-# /*===========================================================
-#' # Comparison of Estimated and True Coefficients
-# /*===========================================================
+## ------------------------------
+
 # fig.id = "true-vs-estimated-coef-gwr-r",
 # fig.cap = "Comparison of Estimated and True Coefficients"
 
@@ -249,13 +351,13 @@ g_b2 <-
   geom_point(aes(y = Estimated, x = True), size = 0.3) +
   geom_hline(yintercept = 0, color = "red") +
   xlim(NA, 0.1) +
-  ylim(NA, 0.1)
+  ylim(NA, 0.1) +
+  theme_fig
 
 g_comp_coef <- g_b1 / g_b2
 
-# /*===========================================================
-#' # Comparison of Estimated and True EONR
-# /*===========================================================
+
+## ------------------------------
 # fig.id = "true-vs-estimated-optn-gwr-r",
 # fig.cap = "Comparison of Estimated and True EONR"
 
@@ -273,11 +375,19 @@ g_comp_eonr <-
   xlab("True Optimal Nitrogen Rate (kg/ha)") +
   ylab("Estimated Optimal Nitrogen Rate (kg/ha)") +
   facet_grid(. ~ type) +
+  theme_fig +
   coord_equal()
 
-# /*===========================================================
-#' # Bias in the estimation of the value of GWR-based VRA over SCAM-based URA
-# /*===========================================================
+ggsave(
+  "GitControlled/Writing/Figures/g_comp_eonr.png",
+  g_comp_eonr,
+  width = 6,
+  height = 5,
+  dpi = 600
+)
+
+
+## ------------------------------
 # fig.id = "bias-est-pi",
 # fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
@@ -312,20 +422,28 @@ g_bias <-
     data = median_bias_data, color = "red",
     aes(
       x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
-      label = paste0("Median = ", round(bias, 2))
+      label = paste0("Median = ", round(bias, 2)),
+      family = "Times"
     ),
     angle = 0, hjust = -0.1, vjust = 0, size = 3
   ) +
   facet_grid(pLabel ~ type) +
   scale_y_continuous(expand = c(0, 0)) +
   xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
-  ylab("Number of Simulation Cases")
+  ylab("Number of Simulation Cases") +
+  theme_fig
+
+ggsave(
+  "GitControlled/Writing/Figures/g_bias.png",
+  g_bias,
+  width = 6,
+  height = 5,
+  dpi = 600
+)
 
 
+## ------------------------------
 
-# /*===========================================================
-#' # The cause of significant over-estimation of the value of GWR-based VRA
-# /*===========================================================
 # fig.id = "why-bias-many",
 # fig.cap = "The cause of significant over-estimation of the value of GWR-based VRA"
 
@@ -405,14 +523,22 @@ g_why_bias_many <-
   ) +
   ylab("Estimated Yield (ton/ha)") +
   xlab("Nitrogen Rate (kg/ha)") +
+  theme_fig +
   theme(
     legend.position = "bottom"
   ) +
   scale_color_discrete(name = "Estimated EONR")
 
-# /*===========================================================
-#' # An illustration of over-estimation of the value of GWR-based VRA over SCAM-based URA
-# /*===========================================================
+ggsave(
+  "GitControlled/Writing/Figures/g_why_bias_many.png",
+  g_why_bias_many,
+  width = 6,
+  height = 5,
+  dpi = 600
+)
+
+
+## ------------------------------
 # fig.id = "why-bias-single",
 # fig.cap = "An illustration of over-estimation of the value of GWR-based VRA over SCAM-based URA",
 # fig.dim = c(6, 7)
@@ -482,7 +608,8 @@ g_yield <-
   scale_color_discrete(name = "EONR") +
   scale_shape_discrete(name = "EONR") +
   scale_linetype_discrete(name = "Yield Response Fnctions") +
-  ggtitle("(a) Estimated and True Yields")
+  ggtitle("(a) Estimated and True Yields") +
+  theme_fig
 
 g_profit <-
   ggplot() +
@@ -500,6 +627,15 @@ g_profit <-
   scale_color_discrete(name = "EONR") +
   scale_shape_discrete(name = "EONR") +
   scale_linetype_discrete(name = "Profit Response Fnctions") +
-  ggtitle("(b) Estimated and True Profits")
+  ggtitle("(b) Estimated and True Profits") +
+  theme_fig
 
 g_why_bias_single <- g_yield / g_profit
+
+ggsave(
+  "GitControlled/Writing/Figures/g_why_bias_single.png",
+  g_why_bias_single,
+  width = 6.5,
+  dpi = 600
+)
+

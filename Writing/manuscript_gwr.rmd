@@ -166,7 +166,7 @@ The primary objective of this study is to examine the degree and direction of bi
 # Background: Estimation of Yield-to-input Response Relationships Using OFPE Data
 
 ## Conceptual Framework
-On-farm precision experimentation (OFPE) can provide detailed as-applied input and yield data at dense resolutions over entire fields, which if well analyzed may provide valuable information that can improve site-specific input application recommendations [@bullock2019data; @lacoste2021farm]. Consider a yield response function $y = f(\textbf{x}, \textbf{c})$, where following @bullock2000agronomic, $\textbf{x}$ is a vector of input management variables and $\textbf{c}$ is a vector of spatial variables describing field and soil characteristics^[For simplicity, we suppress discussion of the need to bring variance in weather data into yield response estimation.  Obviously, generation and use of weather data is necessary to provide meaningful probabilistic analysis and input management advice.]. Letting a field site $i$ be defined as a contiguous area characterized uniformly by a value $\textbf{c}_i$ of the vector of field and soil characteristics, its *site-specific yield response function* is the reduced form of the field's yield response function created when the value of the vector of characteristics variables is set at the site's value, $\textbf{c}_i$:  $f_i(\textbf{x}) \equiv f(\textbf{x}, \textbf{c}_i)$.  This conceptualization suggests two methods of estimating a field's site-specific yield responses. The first is to estimate a "map" of the field characteristics, for example thought of as a set of the field's $n \geq 1$ sites' values of the characteristics vector: $\{\textbf{c}_1,\dots, \textbf{c}_n\}$.  With that map, regressing yield on $\textbf{x}$ and $\textbf{c}$ generates an estimated "field-specific" yield response function $\hat{f}_(\textbf{x},\textbf{c})$. Estimates of site-specific yield response functions can then be obtained by inserting the value of the site's characteristic variables into the estimate of the field-specific response function: $\hat{f}_i(\textbf{x}) \equiv \hat{f}(\textbf{x},\textbf{c}_i)$. Alternatively, a site-specific yield response function might be estimated simply by taking (input rate, yield) data from points around a site of interest, and regressing yield on input application rates to attain the estimate $\tilde{f}_i (\textbf{x})$. Stated roughly, using GWR takes the latter approach, which has the advantage of not needing a costly map of field characteristics values.
+On-farm precision experimentation (OFPE) can provide detailed as-applied input and yield data at dense resolutions over entire fields, which if well analyzed may provide valuable information that can improve site-specific input application recommendations [@bullock2019data; @lacoste2021farm]. Consider a yield response function $y = f(\textbf{x}, \textbf{c})$, where following @bullock2000agronomic, $\textbf{x}$ is a vector of input management variables and $\textbf{c}$ is a vector of spatial variables describing field and soil characteristics^[For simplicity, we suppress discussion of the need to bring variance in weather data into yield response estimation.  Obviously, generation and use of weather data is necessary to provide meaningful probabilistic analysis and input management advice.]. Letting a field site $i$ be defined as a contiguous area characterized uniformly by a value $\textbf{c}_i$ of the vector of field and soil characteristics, its *site-specific yield response function* is the reduced form of the field's yield response function created when the value of the vector of characteristics variables is set at the site's value, $\textbf{c}_i$:  $f_i(\textbf{x}) \equiv f(\textbf{x}, \textbf{c}_i)$.  This conceptualization suggests two methods of estimating a field's site-specific yield responses. The first is to estimate a "map" of the field characteristics, for example thought of as a set of the field's $n \geq 1$ sites' values of the characteristics vector: $\{\textbf{c}_1,\dots, \textbf{c}_n\}$.  With that map, regressing yield on $\textbf{x}$ and $\textbf{c}$ generates an estimated "field-specific" yield response function $\hat{f}(\textbf{x},\textbf{c})$. Estimates of site-specific yield response functions can then be obtained by inserting the value of the site's characteristic variables into the estimate of the field-specific response function: $\hat{f}_i(\textbf{x}) \equiv \hat{f}(\textbf{x},\textbf{c}_i)$. Alternatively, a site-specific yield response function might be estimated simply by taking (input rate, yield) data from points around a site of interest, and regressing yield on input application rates to attain the estimate $\hat{f}_i (\textbf{x})$. Stated roughly, using GWR takes the latter approach, which has the advantage of not needing a costly map of field characteristics values.
 
 ## Costs of Field Characteristics Data and the Appeal of GWR
 
@@ -203,7 +203,7 @@ y_{j,i} = f_{j,i} (N) = f(N, c_{j,i}) =
 \end{equation}
 $$
 
-where $c_{j,i} = (\alpha_{j,i},\beta_{j,i},\gamma_{j,i},\tau_{j,i})$ is the vector of yield response function parameters. $\tau_{j,i}$ can be interpreted as the critical value of N rate at which cell $(j, i)$'s yield reaches its plateau, where yield no longer increases with N rate. $\varepsilon_{j, i}$ is a stochastic error term. The quadratic-plateau functional form implies a diminishing marginal product of N until a yield plateau, which are desirable properties for a yield response function [@frank1990comparison] and a pattern commonly observed in agronomic studies. Note that the cell-specific yield response function $f_{j, i} (N)$ is the reduced form of the meta response function $f$ when the characteristics vector takes on the value $c_{j, i}$. In other words, all the soil or field properties that could affect yield response to N are embedded in the simulated parameters.
+where $\textbf{c}_{j,i} = (\alpha_{j,i},\beta_{j,i},\gamma_{j,i},\tau_{j,i})$ is the vector of yield response function parameters. $\tau_{j,i}$ can be interpreted as the critical value of N rate at which cell $(j, i)$'s yield reaches its plateau, where yield no longer increases with N rate. $\varepsilon_{j, i}$ is a stochastic error term. The quadratic-plateau functional form implies a diminishing marginal product of N until a yield plateau, which are desirable properties for a yield response function [@frank1990comparison] and a pattern commonly observed in agronomic studies. Note that the cell-specific yield response function $f_{j, i} (N)$ is the reduced form of the meta response function $f$ when the characteristics vector takes on the value $\textbf{c}_{j, i}$. In other words, all the soil or field properties that could affect yield response to N are embedded in the simulated parameters.
 
 The spatial distributions of cell-level parameters $\alpha_{j, i}$, $\beta_{j, i}$, $\gamma_{j,i}$, $\tau_{j, i}$, and the error term $\varepsilon_{j, i}$ were simulated by generating spatially correlated random fields using unconditional Gaussian geostatistical simulation based on the specified variograms [@dietrich1996fast; @wood1994simulation]. The simulation processes were conducted using the R package gstat [@graler16]. Specifically, the model is spherical, the nugget variance is zero, and the range is 600 meters. The nugget value of zero means that infinitesimally close observations have a zero covariance (i.e., they are identical). The range of 600m means that observations separated by more than 600m are spatially uncorrelated. A higher range value indicates increased spatial dependence, meaning that less abrupt differences tend to be observed between the production function parameters of neighboring cells. The mean and sill variance of each parameter were specified to result in a realistic mean yield of $11,416$ kg ha$^{-1}$, and such that the cells' true economically optimal N rates ranged from $113$ kg ha$^{-1}$ to $273$ kg ha$^{-1}$ across all the simulations, a range into which most real-world N rate recommendations fall [e.g., @sawyer2018]. Note that the range of the optimal N rates of individual rounds of simulations are narrower. In defining the magnitude of the error term, we utilized the experimental data generated through eight on-farm randomized N field trials conducted by the Data-Intensive Farm Management Project (DIFM) project in 2018 [@bullock2019data]. Using the data from each of the eight actual trials, separate regressions of yield on N were run, and standard deviations of the residuals were calculated. The mean value of the eight standard deviations was $1370$ kg ha$^{-1}$, which was the square root value of the sill variances assigned to the simulations' error terms.
 
@@ -222,7 +222,7 @@ In each simulation, six trial N rates were assigned by calculating the 0%, 20%, 
 
 ## Yield Data Generation
 
-In each simulation, for each cell $(j, i)$, the simulation's true yield $y_{j, i}$ was generated based on the cell's assigned application rate $N_{j,i}$, true response parameters $\textbf{c}_{j,i} = (\alpha_{j,i}, \beta_{j,i}, \gamma_{j,i}, \tau_{j,i})$, and error term $\varepsilon_{j,i}$. This procedure generated a field-level, cell-specific data set, $\{(y_{j, i},N_{j, i} ):j=1,\dots,1440;k=1,\dots, 6 \}$. To maintain consistency with real-world OFPEs, it was assumed that harvesting equipment could only record yields accurately at an 18m $\times$ 12m (subplot) resolution. Since every cell in a plot received the same N application rate, then so did every cell within a subplot, and therefore $N_{j,1} = N_{j,2}= \dots = N_{j,6} = N_j$ for each subplot $j$. Letting $\mu_j$ denote the mean of the yields of the cells in subplot $j$, the analysis of each round's data was based on 1440 $(\mu_j,N_j )$ observations.
+In each simulation, for each cell $(j, i)$, the simulation's true yield $y_{j, i}$ was generated based on the cell's assigned application rate $N_{j,i}$, true response parameters $\textbf{c}_{j,i} = (\alpha_{j,i}, \beta_{j,i}, \gamma_{j,i}, \tau_{j,i})$, and error term $\varepsilon_{j,i}$. This procedure generated a field-level, cell-specific data set, $\{(y_{j, i},N_{j, i} ):j=1,\dots,1440;i=1,\dots, 6 \}$. To maintain consistency with real-world OFPEs, it was assumed that harvesting equipment could only record yields accurately at an 18m $\times$ 12m (subplot) resolution. Since every cell in a plot received the same N application rate, then so did every cell within a subplot, and therefore $N_{j,1} = N_{j,2}= \dots = N_{j,6} = N_j$ for each subplot $j$. Letting $\mu_j$ denote the mean of the yields of the cells in subplot $j$, the analysis of each round's data was based on 1440 $(\mu_j,N_j )$ observations.
 
 ## Estimation of Yield Response Functions and EONRs
 
@@ -238,7 +238,7 @@ where $g_k(\cdot)$ is the $k$th spline basis and $\beta_k$ is its coefficient to
 
 Let $\hat{f}^{SCAM}(\cdot)$ represent the estimated whole-yield yield response function ($\hat{\alpha} + \sum_{k=1}^K \hat{\beta}_k g_k(\cdot)$). Given the information derived from the SCAM approach, the estimate of the economically optimal uniform N rate is,
 
-$$\hat{N}^{*SCAM} \equiv argmax_N⁡ \big[p\cdot \hat{f}^{SCAM} (N)-w\cdot N\big]$$
+$$\hat{N}^{*SCAM} \equiv argmax_N⁡ \big[p\cdot \hat{f}^{SCAM} (N)-w\cdot N\big].$$
 
 ### GWR-Rakshit (GWRR)
 
@@ -254,7 +254,7 @@ $$\hat{N}^{*GWRR}_j \equiv argmax_N⁡[ p \cdot \hat{f}^{GWRR}_j (N) - w\cdot N]
 
 The GWRT model is also called as "mixed" GWR in the literature [@brunsdon1999some], where some parameters are fixed globally while others vary geographically. We estimated the coefficient on $N^2$ as a global parameter and the coefficient on $N$ subplot-specifically. For each subplot $j \in {1, 2, \dots, 1440}$, the assumed yield response was,
 
-$$y_j= \alpha_j+ \beta N_j + \eta N_j^2+ \varepsilon_j ,$$
+$$y_j= \alpha_j+ \beta_j N_j + \eta N_j^2+ \varepsilon_j ,$$
 
 where $\eta$ was assumed invariant among subplots.
 
@@ -268,13 +268,13 @@ The Gaussian kernel function was used when estimating both GWR models (other ker
 
 ## The value of GWR-based VRA over SCAM-based URA
 
-To estimate the bias in the estimation of the economic value of GWR-based VRA, the true per-ha net revenues ("profits") of the SCAM-based URA and GWR-based VRA were calculated by substituting the estimated optimal nitrogen rates into the "true" yield response functions. Profits from the SCAM approach were
+To estimate the bias in the estimation of the economic value of GWR-based VRA, the true per-ha net revenues ("profits") of the SCAM-based URA and GWR-based VRA were calculated by substituting the estimated optimal nitrogen rates into the "true" yield response functions. Profits from the SCAM approach were:
 
-$$\Pi^{SCAM} = \frac{1}{8640} \sum_{j=1}^{1440} \sum_{k=1}^6 \big[p \cdot f_{j, i} (\hat{N}^{*SCAM})-w \cdot \hat{N}^{*SCAM}\big]$$
+$$\Pi^{SCAM} = \frac{1}{8640} \sum_{j=1}^{1440} \sum_{i=1}^6 \big[p \cdot f_{j, i} (\hat{N}^{*SCAM})-w \cdot \hat{N}^{*SCAM}\big]$$
 
-and profits from the GWR approach (either GWRR or GWRT) were,
+and profits from the GWR approach (either GWRR or GWRT) were:
 
-$$\Pi^{GWR}=\frac{1}{8640} \sum_{j=1}^{1440} \sum_{k=1}^6 [p \cdot f_{j, i} (\hat{N}^{*GWR}_j)-w \cdot \hat{N}^{*GWR}_j]$$
+$$\Pi^{GWR}=\frac{1}{8640} \sum_{j=1}^{1440} \sum_{i=1}^6 [p \cdot f_{j, i} (\hat{N}^{*GWR}_j)-w \cdot \hat{N}^{*GWR}_j]$$
 
 where $f_{j, i}(\cdot)$ denotes the true yield response function at cell $(j, i)$.
 
@@ -284,18 +284,18 @@ $$\Delta^{GWR} = \Pi^{GWR} - \Pi^{SCAM} .$$
 
 To find the bias in estimating the value of VRA, the estimated profits of the SCAM-based URA and GWR-based VRA were calculated by substituting the estimated optimal nitrogen rates into the cell-specific yield response functions estimated by GWR:
 
-$$\hat{\Pi}^{SCAM} = \frac{1}{8640} \sum_{j=1}^{1440} \sum_{k=1}^6 \big[p \cdot \hat{f}^{GWR}_{j, i} (\hat{N}^{*SCAM} )-w \cdot \hat{N}^{*SCAM}\big]$$
+$$\hat{\Pi}^{SCAM} = \frac{1}{8640} \sum_{j=1}^{1440} \sum_{i=1}^6 \big[p \cdot \hat{f}^{GWR}_{j, i} (\hat{N}^{*SCAM} )-w \cdot \hat{N}^{*SCAM}\big]$$
 
-$$\hat{\Pi}^{GWR}=\frac{1}{8640} \sum_{j=1}^{1440} \sum_{k=1}^6 [p \cdot \hat{f}^{GWR}_{j, i} (\hat{N}^{*GWR}_{j} )-w \cdot \hat{N}^{*GWR}_{j}]$$
+$$\hat{\Pi}^{GWR}=\frac{1}{8640} \sum_{j=1}^{1440} \sum_{i=1}^6 [p \cdot \hat{f}^{GWR}_{j, i} (\hat{N}^{*GWR}_{j} )-w \cdot \hat{N}^{*GWR}_{j}]$$
 where $\hat{f}^{GWR}_{j, i}(\cdot) = \hat{f}^{GWR}_j(\cdot)$ denotes the estimated yield response function by GWR (either GWRR or GWRT) at cell $(j, i)$ within subplot $j$.
 
-The estimated value of the GWR-based VRA compared to the SCAM-based URA is defined as
+The estimated value of the GWR-based VRA compared to the SCAM-based URA is defined as:
 
-$$\hat{\Delta}^{GWR} = \hat{\Pi}^{GWR} - \hat{\Pi}^{SCAM}$$
+$$\hat{\Delta}^{GWR} = \hat{\Pi}^{GWR} - \hat{\Pi}^{SCAM}.$$
 
-The bias in the estimation of the value of GWR-based VRA was calculated as follows:
+Finally, the bias in the estimation of the value of GWR-based VRA was calculated as follows:
 
-$$bias = \hat{\Delta}^{GWR} - \Delta^{GWR}$$
+$$bias = \hat{\Delta}^{GWR} - \Delta^{GWR}.$$
 
 # Results
 
@@ -348,22 +348,22 @@ g_layout
 g_exp
 ```
 
-```{r, fig.id = "pi-dif-dist", fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWRR and GWRT", out.width = "6.5in", fig.width = 6}
+```{r, fig.id = "pi-dif-dist", fig.cap = "The true economic value of GWR-based VRA over SCAM-based URA by two GWR models (GWRR and GWRT) and at three nitrogen-corn price ratios", out.width = "6.5in", fig.width = 6}
 # knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_value.png"))
 g_value
 ```
 
-```{r fig.id = "bias-est-eonr", fig.cap = "Average bias in the estimation of EONR by GWRR and GWRT", fig.width = 6}
+```{r fig.id = "bias-est-eonr", fig.cap = "Average bias in the estimation of EONR by two GWR models (GWRR and GWRT) and at three nitrogen-corn price ratios", fig.width = 6}
 # knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_eonr_bias.png"))
 g_eonr_bias
 ```
 
-```{r fig.id = "true-vs-estimated-optn-gwr-r", fig.cap = "Comparison of Estimated and True EONR at the middle price ratio of 6.56", fig.width = 6}
+```{r fig.id = "true-vs-estimated-optn-gwr-r", fig.cap = "Comparison of GWR-Estimated and True EONR at the middle price ratio of 6.56", fig.width = 6}
 # knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_comp_eonr.png"))
 g_comp_eonr
 ```
 
-```{r fig.id = "bias-est-pi", fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWRR and GWRT", fig.width = 6}
+```{r fig.id = "bias-est-pi", fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA by two GWR models (GWRR and GWRT) and at three nitrogen-corn price ratios", fig.width = 6}
 # knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_bias.png"))
 g_bias
 ```

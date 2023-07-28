@@ -1,0 +1,143 @@
+Reply to Reviewer 2:
+
+This study examines the economic value associated with three statistical methods used to generate site-specific nitrogen application rates: 1) geographically weighted regressions using the method of Rakshit et al. (2020) denoted as GWR-R, 2) geographically weighted regressions using the method of Trevisan et al. (2021) denoted as GWR-T, and 3) shape-constrained additive models (SCAM). Using straightforward Monte Carlo simulations, the two GWR methods are used to determine the economically optimal nitrogen rate (EONR) and profits from variable rate applications (VRA), while the SCAM methodology is used to determine the EONRs and profits for uniform rate applications (URA). These rates are based on estimations of site-specific corn yield functions for six cells across 1,440 subplots. The authors find the GWR-T outperforms GWR-R when the nitrogen price (relative to corn) is low, but GWR-R outperforms GWR-T when the nitrogen price is relatively high. This is because of the relative over- and underestimation of the EONRs. The study also finds that both GWR-T and GWR-R may have substantially overestimated the economic value of VRA; the net benefit of VRA over URA is much smaller, roughly $2 per acre (just over $5 per hectare, on average). For convenience, my review below is organized into a set of general comments, specific comments, and comments related to the exposition and writing, with each being arranged in order of page number. All comments are designed to strengthen the research.
+
+Reply: We would like to express our sincere gratitude for the reviewer’s careful examination and critique of our manuscript. The insightful comments and suggestions have significantly contributed to the paper’s clarity, detail, and overall strength. In return, we have attempted to carefully address each of the comments and revise the manuscript in response.
+
+
+
+General Comments
+
+To some extent, this research is related to studies that examine the “value” of forecasting models by assessing their measure of inaccuracy. Given that determining the value of general regression methodologies is not overly common in the relevant literature here, why not add 1-2 paragraphs that ties your study to other studies that measure the “value” of certain econometric techniques?
+
+Reply: Thank you for bringing up this important point. What makes this study differ from previous studies is that the model “value” is not measured by the statistical accuracy of parameter estimates, but rather by the ultimate economic return. To emphasize this aspect, we have included an additional paragraph in the “5. Discussion and Conclusions” section (page 22, lines 419-432). It is worth noting that we are unable to identify a specific body of literature that exclusively focuses on assessing the value of general regression models. However, it is customary in the development of econometric models to evaluate their performance using statistical accuracy measures such as bias, mean squared error, and type I error, based on simulation data. We have referenced a few relevant studies of this nature to underscore the distinction of our economic value assessment approach.
+
+One of the most important questions in the literature relates to how variable rate technologies (VRT) can reduce negative externalities like fertilizer and chemical runoff and leaching. Clearly, this is not the research objective, and addressing a much more burning question in the literature would involve additional terms in the equation on p. 10, line 294 that represent the negative environmental externalities. The authors should clarify early on that “economically optimal” means “privately optimal” rather than “socially optimal.”
+
+Reply: Thank you for the suggestion. We have explicitly stated the following in a footnote at the end of the Introduction section of the revised manuscript (page 5): “While the environmental impacts of fertilizer management are of great social importance, for simplicity we confine our analysis to its private economic impacts.”
+
+It strikes me as odd that, even with a minor clause on line 207 of p. 10, there is no real discussion of the corn price or nitrogen price in the methods section. What are the summary statistics and/or assumptions about p and w? What is the underlying intuition regarding the dependence of the relative performance of GWRR/GWRT to the corn-to-nitrogen price ratio (though this is partially explained in the paragraph on pages 15-16)? Any intuition about the ratios of 4.2, 5.4, and 10.4?
+
+Reply: Thank you for bringing up this point. We have included a brief discussion of the historical corn and nitrogen prices in the first paragraph of the Results section 4.1 (page 18, lines 336-343). Additionally, we have included Appendix I: Historical Corn and Nitrogen Prices in the supplementary material to provide a more detailed description of the collection, calculation, and summary statistics of the historical price data. We also apologize for the typos of the price ratios 4.16, 5.44 and 10.35 in the previous version of the manuscript. The correct price ratios 5.44, 6.56, and 7.67 are used in the revised manuscript. The intuition underlying the dependence of the relative performances of GWRR and GWRT to the nitrogen-corn price ratio was explained in the paragraphs on pages 15-16 of the original manuscript, and that discussion has been included in the revised manuscript (page 19, lines 352-366). The main difference arises from the models’ specifications of the coefficient on N2. The GWRR model allows for varying coefficient on N2, leading to a wider range of estimated EONRs, while the GWRT model restricts the coefficient on N2 to be constant, leading to a narrower range of estimated EONRs. When nitrogen is expensive relative to corn, the true range of EONRs should be larger, and therefore the economic penalty of GWRR’s over-estimation of EONR range will be smaller. When the nitrogen-corn price ratio is lower, the true EONR range will be smaller, and GWRT’s under-estimation of the EONR range is less of an issue. At the reviewer’s request, we will be happy to further enhance the manuscript’s discussion of this topic.
+
+Where is there no in-text reference to, or explanation of, Figure 4? I do not know what to make of this lone figure.
+
+Reply: We apologize for the confusion. That figure was meant to compare the estimated and true GWR coefficients β1 and β2. But since we have already compared the estimated and true EONR’s in another figure, the figure 4 was redundant. We have removed it from the revised manuscript.
+
+
+
+Specific Comments
+P. 1, line 23: Site-specific farming, these days, does not have to be very precise, although the early literature conflated precision ag and site-specific farming. More importantly, VRT is just one component of precision ag; they are not synonymous.
+
+Reply: We agree with the reviewer’s comment that precision agriculture, site-specific farming, and variable-rate technology are not synonymous. Although in the literature those terms are often used interchangeably, they are not strictly speaking equivalent. We removed the statement in the parentheses “also known as site-specific farming, or variable-rate technology” to avoid misleading the audiences.
+
+P. 5, lines 89-90: By this point, it would have been useful to add 1-2 sentences or a footnote about parallels with nonparametric estimators. Using multiple data points to derive local estimates, as in kernel density estimation, is nothing new. It would be helpful to provide more background on this. More broadly, at this point, besides the economics, why should we care about GWR relative to other spatial statistics methods?
+
+Reply: We agree with the reviewer’s comment that GWR is only one of many nonparametric estimators of local yield responses. But our research goal was not to compare GWR with other estimators, nor to advocate the use of GWR. We have tried to make this much more clear in the Introduction of the revised manuscript. We explain as background that the GWR model has gained attention in developing site-specific input recommendations due to its minimal requirement of costly field characteristics data (pages 7-8, lines 116-127). We explain that our intent is to further test the value of having GWR available as a tool for the analysis of on-farm precision experimentation data and consequential input management recommendations. We do not intend to involve other spatial statistics methods in the current paper. But we do plan to conduct similar simulation-based economic evaluations of other local response estimation methods (such as the spatial kriging smoothing) in future research.
+
+P. 9, line 192: Here, do you mean that you set the 1370 kg ha-1 to be the square root of the sill variances?
+
+Reply: Thanks for pointing out the typo. Yes, it should be the square root of the sill variances since 1370 kg ha−1 was the mean of the standard deviations. We have corrected that typo in the revised manuscript at the end of section 3.2 (page 12, line 224).
+
+P. 11, line 220: At the first mention of shape-constrained additive models (SCAM), there should be a few sentences of explanation, either in the body or as a footnote. Even after the partial explanation on lines 232-233, it is still somewhat unclear and warrants more detail. The general readers of JAAEA are likely to not know, either.
+
+Reply: Thank you for the suggestion. In section 3.5.1 (pages 14-15) of the revised manuscript we have expanded our explanation of SCAM to clarify that it is a regression model that can fit a more flexible and non-linear response relationship and also allows for shape constraints that can incorporate prior knowledge or theories.
+
+Pp. 11-12, lines 238-245: To check, l=K, i.e., the total number of splines from the equation on line 238 equals the total number of splines used for f ̂_SCAM (∙)? If so, use the same notation.
+
+Reply:  Yes, the l and k should have been the same. We use k in the revised manuscript (page 15, lines 275, 279).
+
+P. 13, lines 268-270: How robust are the N^*_{GWR-T,j} rates to variations in the AIC-chosen bandwidth parameters? More information about this needs to be provided.
+
+Reply:  If we understand the question correctly, you are asking about the robustness of GWR estimates to bandwidth selection. Choosing bandwidth is indeed a crucial step in GWR estimation, and there are many different bandwidth selection methods in the literature. In this study we used the corrected version of AIC approach (Fotheringham, Yang, and Kang 2017; Lu et al. 2017) to determine the optimal bandwidth. It is a commonly used approach in practice, and also the same approach used by Rakshit et al. (2020) and Trevisan, Bullock, and Martin (2021) which can make our simulation evaluations consistent. Since the corrected AIC method generates a unique bandwidth, we did not conduct any robustness check to bandwidths. We agree the GWR results could vary when choosing different bandwidths, but the choices of other bandwidth values other than the AIC-chosen one may be arbitrary. We added more discussions about bandwidth selection at the end of section 3.5.3 of the revised manuscript (page 16, lines 303-310).
+
+P. 15, lines 303-305: Why are the numbers from these sentences blank? In particular, the median benefit of VRA under GWRR is ? and the median benefit of VRA under GWRT is…?
+
+Reply:  Our apologies for the typos. We have corrected them and filled in the correct numbers. They can be found in the end of the 2nd paragraph of section 4.1 of the revised manuscript (page 19, lines 348-351).
+
+P. 15: You first discuss figure 6 and then move to figure 5. Put all figures in order.
+
+Reply:  Thank you for identifying the incorrect order of figures. We apologize for the mistake, and we have corrected the order of the figures accordingly. The revised manuscript now reflects the correct sequence of the two figures. Note that since the original Figure 4 was removed, the two figures are now the new Figure 4 and Figure 5.
+
+
+
+Writing
+P. 2, line 45: This should be “data are”, not “data is”.
+
+Reply:  This grammar error was corrected. The new sentence is now on section 2.2, page 6, line 98 of the revised manuscript.
+
+P. 2, line 52: Basically or actually? Vagueness here makes it difficult to assess the degree to which OSU’s calculators are being used directly.
+
+Reply:  We removed the word “basically” in the pertinent part of the revised manuscript.
+
+P. 2, line 54: To avoid confusing a general agricultural economics audience, I would use an abbreviation other than Rx for site-specific recommendations.
+
+Reply:  In precision agriculture, the site-specific input management recommendation map is commonly called “prescription” or “Rx” by researchers and the industry. While we are certainly willing to defer to the editor’s judgment, we have elected to keep this abbreviation in the revised manuscript, but have added a brief explanation of the notation (in the 1st paragraph of section 2.2, page 7, line 103). In the USA, at least, it is widely known that “Rx” means “prescription,” and it is chiefly used in conversations about medicines and pharmacies.
+
+P. 2, lines 49-60: All of these current commercial examples would work better as a footnote as they may become inaccurate in the next 3-10 years (or fewer).
+
+Reply:  Thank you for the suggestion. We agree that precision agriculture technologies are advancing rapidly. However, we believe that those commercial examples are essential to illustrate the current state of site-specific field data collection technologies, which will help readers understand the benefits of the GWR method. Therefore, we prefer to retain these examples in the main text. Nonetheless, we acknowledge that these contents may be a little lengthy, so we have moved them from the Introduction section to the Background section of 2.2 (1st paragraph, page 7, lines 104-115).
+
+P. 5, lines 91-114: This page-long paragraph should be split up into at least two paragraphs. The length is taxing. I would consider starting a new paragraph with the sentence beginning on line 97.
+
+Reply:  This paragraph’s contents were broken into two pieces in the revised manuscript, one piece in the last paragraph of Introduction section (pages 4-5, lines 64-73), and the other piece in the first paragraph of section 2.3 (pages 8-9, lines 130-153).
+
+P. 7, line 137: This comment should have been removed by the authors prior to manuscript submission.
+
+Reply:  This typo has been removed. Thank you for bringing it to our attention.
+
+P. 9, line 189: The acronym DIFM is used before it’s spelled out in the sentence, but you should spell it out first and then use the acronym.
+
+Reply:  Thank you for pointing out this writing issue. We have placed the acronym DIFM after the full name in the revised manuscript.
+
+P. 10, line 212: The (j,k) index should be subscripted here.
+
+Reply:  We greatly appreciate the reviewer’s meticulous review of the manuscript and for finding this typo. We have corrected it to use subscript notation (see section 3.4, page 13, line 244). Furthermore, to eliminate the duplication of the spline index k, we have updated the cell index notation to (j,i) both in this section and throughout the rest of the manuscript.
+
+P. 11, line 221: The second “and” should be “an”.
+
+Reply:  The typo is corrected. Thank you so much for finding this typo.
+
+P. 11, line 232: Are you using one shape constraint or more than one shape constraint? The language here really matters so as to avoid confusion on the part of the readers.
+
+Reply:  Here we are modeling a “full-field” response function. That is, the model assumes that yield response is uniform across the field. We agree that the language used could cause confusion about whether we were referring to the yield response function or the shape constraint as “single.” We removed the term “single” from the revised manuscript. Please see section 3.5.1 of the revised manuscript (page 14, lines 261-266).
+
+P. 11, line 235: It seems that 1-2 citations could be added (or are missing) after “well substantiated by agronomic research.”
+
+Reply:  We have cited two additional of agronomic studies (Bullock and Bullock, 1994; Cerrato and Blackmer, 1990) to support the statement in section 3.5.1 of the revised manuscript (page 14, line 271).
+
+P. 12, line 253: I know what you mean by the notation f ̂_(GWR-R,j) (N), but the hyphen in the notation almost seems like a subtraction sign. I would recommend changing GWR-R and GWR-T to GWRR and GWRT and then having superscripts here. That is, f ̂_j^GWRR (∙) and f ̂_j^GWRT (∙).
+
+Reply:  Thank you for the recommendation. We have changed GWR-R and GWR-T GWRR and GWRT throughout the revised manuscript. We have also put all model names (GWR and SCAM) in superscripts in the pertinent equations.
+
+P. 13, line 271: In keeping with your past usage, you should make sure the acronym SCAM is in uppercase throughout the text.
+
+Reply:  Thank you for pointing out this formatting error. We have corrected the issue by ensuring that the acronym “SCAM” is consistently written in uppercase throughout the text. Additionally, we have capitalized all acronyms in equations as well.
+
+P. 15, line 304: “but the its benefit is even negative at when the” should have the typos/redundant wording removed.
+
+Reply:  Thank you for pointing out those typos. They have all been corrected end of the 2nd paragraph of section 4.1 of the revised manuscript (page 19, lines 348-351).
+
+P. 17, line 335: Figure 0?
+
+Reply:  Our apologies for the typo. It should have been Figure 5 and this problem is fixed in our new manuscript (see the 2nd paragraph of section 4.2, page 20, line 379).
+
+P. 18, line 362: Section title should just be “Discussion”.
+
+Reply:  We have combined what were the two final sections of the original manuscript into one section, headed “Discussion and Conclusions.”
+
+P. 34, Figure 8 horizontal axis label: “Estiamated” should be “Estimated”.
+
+Reply:  We greatly appreciate the reviewer for identifying this typo. It was corrected in the revised manuscript (now Figure 7).
+
+Pp. 19-20, lines 398-400: Can this sentence be sharpened? Right now, it is a bit too vague to be completely useful as a guide to researchers in this area. Specifically, what other statistical estimators should be reconsidered and how (specifically) should they be reassessed?
+
+Reply:  We have edited the sentence in the revised manuscript (section 5, page 24, lines 457-462), adding details to explain that other statistical methods commonly used for site-specific yield response estimation literature include regression on field characteristics variables as interaction terms, machine learning, etc. The common assessment approach is to use simulation-based evaluation, much as we do in our study.
+
+
+References:
+
+Fotheringham, A Stewart, Wenbai Yang, and Wei Kang. 2017. “Multiscale Geographically Weighted Regression (MGWR).” Annals of the American Association of Geographers 107 (6): 1247–65.
+Lu, Binbin, Chris Brunsdon, Martin Charlton, and Paul Harris. 2017. “Geographically Weighted Regression with Parameter-Specific Distance Metrics.” International Journal of Geographical Information Science 31 (5): 982–98.
+Rakshit, Suman, Adrian Baddeley, Katia Stefanova, Karyn Reeves, Kefei Chen, Zhanglong Cao, Fiona Evans, and Mark Gibberd. 2020. “Novel Approach to the Analysis of Spatially-Varying Treatment Effects in on-Farm Experiments.” Field Crops Research 255: 107783.
+Trevisan, RG, DS Bullock, and NF Martin. 2021. “Spatial Variability of Crop Responses to Agronomic Inputs in on-Farm Precision Experimentation.” Precision Agriculture 22 (2): 342–63.

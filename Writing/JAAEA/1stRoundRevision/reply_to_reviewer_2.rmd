@@ -116,7 +116,7 @@ Here we are modeling a "full-field" response function.  That is, the model assum
 
 <span style = "color: blue;">P. 11, line 235: It seems that 1-2 citations could be added (or are missing) after "well substantiated by agronomic research."</span>  
 
-We have cited two additional of agronomic studies (Bullock and Bullock, 1994; Cerrato and Blackmer, 1990) to support the statement in section 5.5.1 of the revised manuscript.
+We have cited two additional of agronomic studies (Bullock and Bullock, 1994; Cerrato and Blackmer, 1990) to support the statement in section 3.5.1 of the revised manuscript.
 
 <span style = "color: blue;">P. 12, line 253: I know what you mean by the notation f ̂_(GWR-R,j) (N), but the hyphen in the notation almost seems like a subtraction sign. I would recommend changing GWR-R and GWR-T to GWRR and GWRT and then having superscripts here. That is, f ̂_j^GWRR (∙) and f ̂_j^GWRT (∙).</span>  
 

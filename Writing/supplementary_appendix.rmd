@@ -289,11 +289,11 @@ Figure A\@ref(fig:price) illustrates the historical prices of corn ($p$) and nit
 g_prices
 ```
 
-Corn prices were sourced from the USDA National Agricultural Statistics Service [@NASS2022] in monthly frequency from 2002 to 2022. As shown in the top panel of Figure A1, the corn prices fluctuated between \$0.07/kg and \$0.30/kg, with an average of $0.15/kg. 
+Corn prices were sourced from the USDA National Agricultural Statistics Service [@NASS2022] in monthly frequency from 2002 to 2022. As shown in the top panel of Figure A\@ref(fig:price), the corn prices fluctuated between \$0.07/kg and \$0.30/kg, with an average of $0.15/kg. 
 
-Nitrogen prices were collected from two sources. The USDA National Agricultural Statistics Service provided yearly nitrogen fertilizer prices for the period 2002 to 2014. The DTN Retail Fertilizer Trends [@DTN2022] provided weekly nitrogen fertilizer prices from 2015 to 2022. To align with the monthly corn price data, the nitrogen price data from both sources were combined and converted into monthly data. Three most commonly used nitrogen fertilizer types were included: Liquid urea-ammonium nitrate with 28 percent nitrogen (UAN28), Liquid urea-ammonium nitrate with 32 percent nitrogen (UAN32), and anhydrous ammonia (ANHYD). All prices were all converted to the per kilogram (kg) of nitrogen basis. As shown in the middle panel of Figure A1, the nitrogen prices ranged from \$0.34/kg to \$2.37/kg, with an average of \$0.98/kg.
+Nitrogen prices were collected from two sources. The USDA National Agricultural Statistics Service [@NASS2022] provided yearly nitrogen fertilizer prices for the period 2002 to 2014. The DTN Retail Fertilizer Trends [@DTN2022] provided weekly nitrogen fertilizer prices from 2015 to 2022. To align with the monthly corn price data, the nitrogen price data from both sources were combined and converted into monthly data. Three most commonly used nitrogen fertilizer types were included: Liquid urea-ammonium nitrate with 28 percent nitrogen (UAN28), Liquid urea-ammonium nitrate with 32 percent nitrogen (UAN32), and anhydrous ammonia (ANHYD). All prices were converted to the per kilogram (kg) of nitrogen basis. As shown in the middle panel of Figure A\@ref(fig:price), the nitrogen prices ranged from \$0.34/kg to \$2.37/kg, with an average of \$0.98/kg.
 
-The nitrogen-corn price ratios were calculated as the nitrogen fertilizer price ($w$) divided by corn price ($p$), and the results were shown in the bottom panel of Figure A1. This study took the values at the 25th, 50th, and 75th percentiles of the historical monthly price ratios (pooled over the three types of nitrogen fertilizer) from 2002 to 2022. These three values were used to represent the low (5.44), middle (6.56), and high (7.67) price ratio scenarios. For consistency purposes, in the profitability calculations the corn price was selected at approximately the Spring 2022 price of \$0.28/kg. Consequently, the corresponding nitrogen prices for the three price ratio scenarios were approximately 5.44×0.28 = \$1.52/kg, 6.56×0.28 = \$1.84/kg, and 10.35×0.28 = \$2.15/kg. It is important to note that when different corn prices are used, the resulting profits of GWR will vary accordingly, but the variation will be proportional to the result of selected corn price and does not qualitatively alter the final conclusions.
+The nitrogen-corn price ratios were calculated as the nitrogen fertilizer price ($w$) divided by corn price ($p$), and the results were shown in the bottom panel of Figure A\@ref(fig:price). This study took three values at the 25th, 50th, and 75th percentiles of the historical monthly price ratios (pooled over the three types of nitrogen fertilizer) from 2002 to 2022 to represent the low (5.44), middle (6.56), and high (7.67) price ratio scenarios. For consistency purposes, in the profitability calculations the corn price was selected at approximately the Spring 2022 price of \$0.28/kg. Consequently, the corresponding nitrogen prices for the three price ratio scenarios were approximately 5.44×0.28 = \$1.52/kg, 6.56×0.28 = \$1.84/kg, and 10.35×0.28 = \$2.15/kg. It is important to note that when different corn prices are used, the resulting profits of GWR will vary accordingly, but the variation will be proportional to the result of selected corn price and does not qualitatively alter the final conclusions.
 
 
 # Appendix II: Results with Alternative Kernel Functions {-}
@@ -319,10 +319,10 @@ Overall, the economic evaluation results of GWR models presented in this study a
 
 ## Comparing the values of GWR-based VRA and SCAM-based URA {-}
 
-Figures A\@ref(fig:value-kernel-exp) through A\@ref(fig:value-kernel-tricube) show the distribution of the true economic value of GWR using four different kernels: Exponential, Boxcar, Bi-square, and Tri-cube.
+Figures A\@ref(fig:value-kernel-exp) through A\@ref(fig:value-kernel-tricube) show the distributions of the true economic value of GWR using four different kernels (Exponential, Boxcar, Bi-square, and Tri-cube):
 
 \begin{equation}
-\Delta^{GWR}=\Pi^{GWR}-\Pi^{SCAM}
+\Delta^{GWR}=\Pi^{GWR}-\Pi^{SCAM}.
 (\#eq:label)
 \end{equation}
 

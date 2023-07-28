@@ -1,22 +1,22 @@
-## ------------------------------
+## -----------------------------------------------------
 theme_fig <-
   theme_bw() +
   theme(
     axis.title.x =
       element_text(
-        size = 12, angle = 0, hjust = .5, vjust = -0.3, family = "Times"
+        size = 11, angle = 0, hjust = .5, vjust = -0.3, family = "Times"
       ),
     axis.title.y =
       element_text(
-        size = 12, angle = 90, hjust = .5, vjust = .9, family = "Times"
+        size = 11, angle = 90, hjust = .5, vjust = .9, family = "Times"
       ),
     axis.text.x =
       element_text(
-        size = 9, angle = 0, hjust = .5, vjust = 1.5, family = "Times"
+        size = 8, angle = 0, hjust = .5, vjust = 1.5, family = "Times"
       ),
     axis.text.y =
       element_text(
-        size = 9, angle = 0, hjust = 1, vjust = 0, family = "Times"
+        size = 8, angle = 0, hjust = 1, vjust = 0, family = "Times"
       ),
     axis.ticks =
       element_line(
@@ -26,17 +26,17 @@ theme_fig <-
     #--- legend ---#
     legend.text =
       element_text(
-        size = 12, angle = 0, hjust = 0, vjust = 0.5, family = "Times"
+        size = 11, angle = 0, hjust = 0, vjust = 0.5, family = "Times"
       ),
     legend.title =
       element_text(
-        size = 12, angle = 0, hjust = 0, vjust = 0, family = "Times"
+        size = 11, angle = 0, hjust = 0, vjust = 0, family = "Times"
       ),
     legend.key.size = unit(0.5, "cm"),
     #--- strip (for faceting) ---#
-    strip.text = element_text(size = 12, family = "Times"),
+    strip.text = element_text(size = 8, family = "Times"),
     #--- plot title ---#
-    plot.title = element_text(family = "Times", face = "bold", size = 12),
+    plot.title = element_text(family = "Times", face = "bold", size = 11),
     #--- margin ---#
     # plot.margin = margin(0, 0, 0, 0, "cm"),
     #--- panel ---#
@@ -46,7 +46,7 @@ theme_fig <-
   )
 
 
-## ------------------------------
+## -----------------------------------------------------
 # fig.id = "field-layout",
 # fig.cap = "Simulated field layout with spatial unit definitions",
 # fig.dim = c(6, 6)
@@ -150,7 +150,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 
 # fig.id = "field-N-design",
 # fig.cap = "Experiment design of nitrogen (N) rates"
@@ -199,7 +199,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 results <-
   here("Shared/Results/gaussian/pi_data.rds") %>%
   readRDS() %>%
@@ -209,15 +209,15 @@ results <-
   .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
   # === label price ratio
   .[, pLabelName := "Price Ratio (N/corn)"] %>%
-  .[pRatio == 5.44, pLabel := "Low"] %>%
-  .[pRatio == 6.56, pLabel := "Middle"] %>%
-  .[pRatio == 7.67, pLabel := "High"] %>%
-  .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
+  .[pRatio == 5.44, pLabel := "Low (5.44)"] %>%
+  .[pRatio == 6.56, pLabel := "Middle (6.56)"] %>%
+  .[pRatio == 7.67, pLabel := "High (7.67)"] %>%
+  .[, pLabel := factor(pLabel, levels = c("Low (5.44)", "Middle (6.56)", "High (7.67)"))]
+
+
+## -----------------------------------------------------
 # fig.id = "pi-dif-dist",
 # fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
-
-
-## ------------------------------
 mean_data_value <-
   results %>%
   .[, .(pi_diff = median(pi_diff)),
@@ -270,7 +270,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 # ggplot(est_data) +
 # geom_histogram(aes(x = opt_N_scam)) +
 # facet_grid(round(pN, digits = 2) ~ .)
@@ -279,7 +279,7 @@ est_data <-
   readRDS(here("Shared/Results/Gaussian/est_data.rds")) %>%
   unnest() %>%
   data.table() %>%
-  .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
+  .[, type := ifelse(transfer == 0, "GWRR", "GWRT")]
 
 eorn_ratio_data <-
   est_data %>%
@@ -288,10 +288,10 @@ eorn_ratio_data <-
   .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
   # === label price ratio
   .[, pLabelName := "Price Ratio (N/corn)"] %>%
-  .[pRatio == 5.44, pLabel := "Low"] %>%
-  .[pRatio == 6.56, pLabel := "Middle"] %>%
-  .[pRatio == 7.67, pLabel := "High"] %>%
-  .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>%
+  .[pRatio == 5.44, pLabel := "Low (5.44)"] %>%
+  .[pRatio == 6.56, pLabel := "Middle (6.56)"] %>%
+  .[pRatio == 7.67, pLabel := "High (7.67)"] %>%
+  .[, pLabel := factor(pLabel, levels = c("Low (5.44)", "Middle (6.56)", "High (7.67)"))] %>%
   .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
 
 g_eonr_bias <-
@@ -318,7 +318,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 
 # fig.id = "true-vs-estimated-coef-gwr-r",
 # fig.cap = "Comparison of Estimated and True Coefficients"
@@ -327,11 +327,11 @@ ggsave(
 single_sim <-
   here("Shared/Results/Gaussian/aunit_sim_single.rds") %>%
   readRDS() %>%
-  .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
+  .[, type := ifelse(transfer == 0, "GWRR", "GWRT")]
 
 plot_data <-
   single_sim %>%
-  .[type == "GWR-R", ] %>%
+  .[type == "GWRR", ] %>%
   .[, .(aunit_id, b1, b2, b1_hat, b2_hat)] %>%
   melt(id.var = "aunit_id") %>%
   .[, type := ifelse(str_detect(variable, "hat"), "Estimated", "True")] %>%
@@ -357,12 +357,12 @@ g_b2 <-
 g_comp_coef <- g_b1 / g_b2
 
 
-## ------------------------------
+## -----------------------------------------------------
 # fig.id = "true-vs-estimated-optn-gwr-r",
 # fig.cap = "Comparison of Estimated and True EONR"
 
 # est_data[sim == 1 & pn_pc == 10.35, ] %>%
-#   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
+#   .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
 #   ggplot(data = .) +
 #     geom_histogram(aes(x = opt_N_gwr)) +
 #     facet_grid(. ~ type)
@@ -387,11 +387,11 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 # fig.id = "bias-est-pi",
 # fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-# mean_data_bias[type == "GWR-T" & pLabel == 10.35, bias] %>% hist
+# mean_data_bias[type == "GWRT" & pLabel == 10.35, bias] %>% hist
 
 median_bias_data <-
   results %>%
@@ -442,7 +442,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 
 # fig.id = "why-bias-many",
 # fig.cap = "The cause of significant over-estimation of the value of GWR-based VRA"
@@ -479,30 +479,37 @@ n_data <-
     )
   )
 
-set.seed(710527)
-aunit_id_ls <- sample(il_data_oe$aunit_id, 50)
 
 gwr_curv_data <-
   expand_grid_df(il_data_oe, n_data) %>%
   .[, yield := (b0_hat + b1_hat * N + b2_hat * N^2) / 1000] %>%
   .[, profit := pCorn * yield * 1000 - pN * N] %>%
-  .[aunit_id %in% aunit_id_ls, ]
+  .[, y_hat_gwr := (b0_hat + b1_hat * opt_N_gwr + b2_hat * opt_N_gwr^2) / 1000] %>%
+  .[, y_hat_scam := (b0_hat + b1_hat * opt_N_scam + b2_hat * opt_N_scam^2) / 1000]
+
+single_aunit <- 
+  gwr_curv_data[abs(opt_N-150) < 10, ] %>%
+  .[which.max(yield), aunit_id]
+
+set.seed(710527)
+aunit_id_ls <- c(sample(il_data_oe$aunit_id, 49), single_aunit)
+
+gwr_curv_data <- gwr_curv_data[aunit_id %in% aunit_id_ls, ]
 
 # /*+++++++++++++++++++++++++++++++++++
 #' # Prepare point data
 # /*+++++++++++++++++++++++++++++++++++
 
 point_data <-
-  il_data_oe %>%
-  .[, y_hat_gwr := (b0_hat + b1_hat * opt_N_gwr + b2_hat * opt_N_gwr^2) / 1000] %>%
-  .[, y_hat_scam := (b0_hat + b1_hat * opt_N_scam + b2_hat * opt_N_scam^2) / 1000] %>%
+  gwr_curv_data %>%
   .[aunit_id %in% aunit_id_ls, ] %>%
   .[, .(aunit_id, y_hat_gwr, y_hat_scam, opt_N_gwr, opt_N_scam)] %>%
+  unique(by = "aunit_id") %>%
   melt(id.var = "aunit_id") %>%
   .[, var_type := fifelse(str_detect(variable, "y_hat"), "yield", "N")] %>%
   .[, type := fifelse(str_detect(variable, "gwr"), "GWR", "SCAM")] %>%
   .[, variable := NULL] %>%
-  dcast(aunit_id + type ~ var_type, value.var = "value") %>%
+  data.table::dcast(aunit_id + type ~ var_type, value.var = "value") %>%
   .[, profit := pCorn * yield * 1000 - pN * N]
 
 # /*+++++++++++++++++++++++++++++++++++
@@ -538,7 +545,7 @@ ggsave(
 )
 
 
-## ------------------------------
+## -----------------------------------------------------
 # fig.id = "why-bias-single",
 # fig.cap = "An illustration of over-estimation of the value of GWR-based VRA over SCAM-based URA",
 # fig.dim = c(6, 7)
@@ -546,9 +553,10 @@ ggsave(
 # /*+++++++++++++++++++++++++++++++++++
 #' # Preapare yeld response curves
 # /*+++++++++++++++++++++++++++++++++++
+
 true_curv_data <-
   il_data_oe %>%
-  .[aunit_id %in% aunit_id_ls[1], ] %>%
+  .[aunit_id %in% single_aunit, ] %>%
   expand_grid_df(., n_data) %>%
   .[, y_true_curve_raw := (b0 + b1 * N + b2 * N^2) / 1000] %>%
   .[, y_true_curve_pl := (b0 + b1 * Nk + b2 * Nk^2) / 1000] %>%
@@ -558,7 +566,7 @@ true_curv_data <-
   .[, type := "True"]
 
 gwr_curv_data_f <-
-  gwr_curv_data[aunit_id %in% aunit_id_ls[1], ] %>%
+  gwr_curv_data[aunit_id %in% single_aunit, ] %>%
   .[, .(yield, profit, N)] %>%
   .[, type := "GWR-estimated"]
 
@@ -571,7 +579,7 @@ curv_data <-
 # /*+++++++++++++++++++++++++++++++++++
 true_yield_data <-
   il_data_oe %>%
-  .[aunit_id %in% aunit_id_ls[1], ] %>%
+  .[aunit_id %in% single_aunit, ] %>%
   .[, .(b0, b1, b2, Nk, opt_N_gwr, opt_N_scam, opt_N)] %>%
   melt(id.vars = c("b0", "b1", "b2", "Nk")) %>%
   setnames("value", "N") %>%
@@ -587,7 +595,7 @@ true_yield_data <-
   .[, .(yield, profit, N, type)]
 
 point_data_gwr <-
-  point_data[aunit_id %in% aunit_id_ls[1], ]
+  point_data[aunit_id %in% single_aunit, ]
 
 # /*+++++++++++++++++++++++++++++++++++
 #' # Figure

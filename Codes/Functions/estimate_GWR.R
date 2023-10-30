@@ -118,7 +118,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
     .[, .(aunit_id, pCorn, pN, b0_hat, b1_hat, b2_hat, opt_N_gwr)]
 
   gwr_beta_tr <- copy(gwr_beta) %>% 
-    .[, transfer := 1]
+    .[, model := "GWR-T"]
   
   
 
@@ -198,7 +198,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
     .[, .(aunit_id, pCorn, pN, b0_hat, b1_hat, b2_hat, opt_N_gwr)] 
 
   gwr_beta_org <- copy(gwr_beta) %>% 
-    .[, transfer := 0]
+    .[, model := "GWR-R"]
 
   
   
@@ -206,7 +206,7 @@ estimate_GWR <- function(reg_data_sp, N_levels, price_ls) {
   ## Return data
   ## ====================
   gwr_beta <- rbind(gwr_beta_tr, gwr_beta_org) 
-    # dcast(., pCorn + pN + aunit_id ~ transfer, 
+    # dcast(., pCorn + pN + aunit_id ~ model, 
     #       value.var = c("b0_hat", "b1_hat", "b2_hat", "opt_N_gwr"))
   
   return(gwr_beta)

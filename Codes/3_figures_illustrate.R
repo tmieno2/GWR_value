@@ -36,15 +36,13 @@ setwd(here())
 # =================================#
 # choose the kernel used for GWR
 # choices: "gaussian", "exponential", "boxcar", "bisquare", "tricube"
-kernel_choice = "tricube"
+kernel_choice = "gaussian"
 # =================================#
 
 # load estimation results
 results <-
     here("Shared", "Results", kernel_choice, "pi_data.rds") %>%
     readRDS() %>%
-    .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
-    .[, bias := pi_diff_est - pi_diff] %>%
     # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
     .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
     # === label price ratio
@@ -52,7 +50,9 @@ results <-
     .[pRatio == 5.44, pLabel := "Low"] %>%
     .[pRatio == 6.56, pLabel := "Middle"] %>%
     .[pRatio == 7.67, pLabel := "High"] %>%
-    .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))]
+    .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>% 
+    .[, model := factor(model, levels = c("QD", "GWR-R", "GWR-T"))]
+
 
 # /*===========================================================
 #' # The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T
@@ -63,7 +63,7 @@ results <-
 mean_data_value <-
     results %>%
     .[, .(pi_diff = median(pi_diff)),
-      by = c("field_col", "pLabel", "type")
+      by = c("field_col", "pLabel", "model")
     ] %>%
     print()
 ggplot(data = results) +
@@ -88,10 +88,11 @@ ggplot(data = results) +
         ),
         angle = 0, hjust = -0.1, vjust = 0, size = 3
     ) +
-    facet_grid(pLabel ~ type) +
+    facet_grid(pLabel ~ model) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
-    xlab("The value of VRA over URA ($ per ha)") +
+    # xlab("The value of VRA over URA ($ per ha)") +
+    xlab("Economic value of GWR over SCAM model ($ per ha)") +
     ylab("Number of Simulation Cases") +
     theme(
         panel.grid.major = element_blank(),
@@ -100,7 +101,8 @@ ggplot(data = results) +
         panel.border = element_rect(fill = NA)
     )
 ggsave(here("Shared", "Figures", paste0("g_value_", kernel_choice, ".png")),
-       height = 4, width = 5)
+       height = 4, width = 6.5)
+
 
 # /*===========================================================
 #' # Bias in the estimation of the value of GWR-based VRA over SCAM-based URA
@@ -108,13 +110,13 @@ ggsave(here("Shared", "Figures", paste0("g_value_", kernel_choice, ".png")),
 # fig.id = "bias-est-pi",
 # fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
 
-# mean_data_bias[type == "GWR-T" & pLabel == 10.35, bias] %>% hist
+# mean_data_bias[model == "GWR-T" & pLabel == 10.35, bias] %>% hist
 
 median_bias_data <-
     results %>%
     .[, bias := pi_diff_est - pi_diff] %>%
     .[, .(bias = median(bias)),
-      by = c("field_col", "pLabel", "type")
+      by = c("field_col", "pLabel", "model")
     ] %>%
     print()
 results %>%
@@ -141,7 +143,7 @@ results %>%
         ),
         angle = 0, hjust = -0.1, vjust = 0, size = 3
     ) +
-    facet_grid(pLabel ~ type) +
+    facet_grid(pLabel ~ model) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_x_continuous(breaks = 30 * (-1:8), limits = c(-20, 160)) +
     xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
@@ -153,7 +155,7 @@ results %>%
         panel.border = element_rect(fill = NA)
     )
 ggsave(here("Shared", "Figures", paste0("g_bias_", kernel_choice, ".png")),
-       height = 4, width = 5)
+       height = 4, width = 6.5)
 
 
 # /*===========================================================
@@ -205,8 +207,7 @@ ggsave(here("Shared", "Figures", "kernel_functions.png"),
 est_data <-
     readRDS(here("Shared", "Results", kernel_choice, "est_data.rds")) %>%
     unnest() %>%
-    data.table() %>%
-    .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] 
+    data.table()
 
 eorn_ratio_data <-
     est_data %>%
@@ -219,7 +220,7 @@ eorn_ratio_data <-
     .[pRatio == 6.56, pLabel := "Middle"] %>%
     .[pRatio == 7.67, pLabel := "High"] %>%
     .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>% 
-    .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
+    .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(model, sim, pLabel)]
 
 ggplot(data = eorn_ratio_data) +
     geom_histogram(
@@ -230,7 +231,7 @@ ggplot(data = eorn_ratio_data) +
         size = 0.2
     ) +
     geom_vline(xintercept = 1, color = "red") +
-    facet_grid(pLabel ~ type) +
+    facet_grid(pLabel ~ model) +
     xlab("Number of Simulation Cases") +
     xlab("Average Ratio of Estimated EONR to true EONR")
 ggsave(here("Shared", "Figures", paste0("g_eonr_bias_", kernel_choice, ".png")),
@@ -245,12 +246,11 @@ ggsave(here("Shared", "Figures", paste0("g_eonr_bias_", kernel_choice, ".png")),
 #* read the simulation data for a sigle simulationused for illustration
 single_sim <-
     here("Shared", "Results", "aunit_sim_single.rds") %>%
-    readRDS() %>%
-    .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")]
+    readRDS()
 
 plot_data <-
     single_sim %>%
-    .[type == "GWR-R", ] %>%
+    .[model == "GWR-R", ] %>%
     .[, .(aunit_id, b1, b2, b1_hat, b2_hat)] %>%
     melt(id.var = "aunit_id") %>%
     .[, type := ifelse(str_detect(variable, "hat"), "Estimated", "True")] %>%
@@ -281,10 +281,9 @@ g_comp_coef <- g_b1 / g_b2
 # fig.cap = "Comparison of Estimated and True EONR"
 
 # est_data[sim == 1 & pn_pc == 10.35, ] %>%
-#   .[, type := ifelse(transfer == 0, "GWR-R", "GWR-T")] %>%
 #   ggplot(data = .) +
 #     geom_histogram(aes(x = opt_N_gwr)) +
-#     facet_grid(. ~ type)
+#     facet_grid(. ~ model)
 
 g_comp_eonr <-
     single_sim %>%
@@ -359,7 +358,7 @@ point_data <-
     .[, var_type := fifelse(str_detect(variable, "y_hat"), "yield", "N")] %>%
     .[, type := fifelse(str_detect(variable, "gwr"), "GWR", "SCAM")] %>%
     .[, variable := NULL] %>%
-    dcast(aunit_id + type ~ var_type, value.var = "value") %>%
+    dcast(aunit_id + model ~ var_type, value.var = "value") %>%
     .[, profit := pCorn * yield * 1000 - pN * N]
 
 # /*+++++++++++++++++++++++++++++++++++
@@ -375,7 +374,7 @@ g_why_bias_many <-
     ) +
     geom_point(
         data = point_data,
-        aes(y = yield, x = N, color = type),
+        aes(y = yield, x = N, color = model),
         size = 0.6
     ) +
     ylab("Estimated Yield (ton/ha)") +

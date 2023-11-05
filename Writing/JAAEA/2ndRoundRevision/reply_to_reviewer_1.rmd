@@ -32,7 +32,7 @@ This comment clearly shows that this reviewer did not pay attention to our repli
 
 **Response**:
 
-Site-specific parameters and errors were generated for each of the 1000 MC iterations. So all simulation instanes have different spatial patterns of EONR. Parameters of the variogram (nugget, sill, etc) stays the same across the simulations, meaning that the spatial dependence of the site-specific parameters are the same. 
+Site-specific parameters and errors were generated for each of the 1,000 Monte Carlo iterations, resulting in distinct spatial patterns of Economic Optimum Nitrogen Rate (EONR) for each simulation instance. However, the parameters of the variogram (such as nugget and sill) remain consistent across simulations, ensuring that the spatial dependence of the site-specific parameters is the same.
 
 6. <span style = "color: blue;">Replicability. How would one proceed if one were to replicate what the authors did? For example, "Note that the range of the optimal N rates of individual rounds were narrower." What does this mean? Yield Data generation. What distribution were the e's? The Methods need to be more clearly documented if others want to replicate the study.</span>
 

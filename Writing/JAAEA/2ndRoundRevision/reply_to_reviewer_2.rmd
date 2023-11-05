@@ -136,6 +136,6 @@ Response: We followed your suggestion.
 
 + <span style = "color: blue;">P. 24, lines 468-474: Remove the clause "After the development of software that..." Additionally, you should add quotation marks to both instances of "pure" in this paragraph.</span>
 
-Response: We followed your suggestion.
+Response: No longer relevant as the entire paragraph was deleted based on the editor's suggestion.
 
 

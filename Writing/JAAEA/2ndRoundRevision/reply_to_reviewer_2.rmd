@@ -73,7 +73,7 @@ Response:
 
 + <span style = "color: blue;"> P. 15, lines 277-279: Add a sentence (perhaps in a footnote) mentioning how this shape constraint is actually imposed. </span> 
 
-Response:
+Response: 
 
 + <span style = "color: blue;">PP. 22-23, lines 439-441: This sentence should be removed because it seems speculative. More importantly, researchers do not "have" to implement a methodology because it is conveniently available in standard software; instead, they could code their own models, methods, etc.  </span> 
 

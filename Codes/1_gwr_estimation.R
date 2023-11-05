@@ -55,22 +55,24 @@ field_with_design <- readRDS(here("Shared/Data/field_with_design.rds"))
 #   "gaussian", "bisquare", "exponential", "tricube", "boxcar"
 #*************************************
 
-kernel_choice <- "gaussian"
-obw_choice <-
-  ifelse(
-    kernel_choice %in% c("gaussian", "exponential"),
-    # continuous kernel
-    18,
-    # discontinuous kernel
-    100
-  )
-
-mc_sim_results <-
-  lapply(
-    1:nrow(field_with_design),
-    function(x) run_mc_sim(x, field_with_design)
-  ) %>%
-  rbindlist()
-
-#* save the field parameters
-saveRDS(mc_sim_results, here("Shared", "Results", kernel_choice, "mc_sim_results.rds"))
+for(kernel_choice in c("gaussian", "bisquare", "exponential", "tricube", "boxcar")){
+    
+    obw_choice <-
+        ifelse(
+            kernel_choice %in% c("gaussian", "exponential"),
+            # continuous kernel
+            18,
+            # discontinuous kernel
+            100
+        )
+    
+    mc_sim_results <-
+        lapply(
+            1:nrow(field_with_design),
+            function(x) run_mc_sim(x, field_with_design)
+        ) %>%
+        rbindlist()
+    
+    #* save the field parameters
+    saveRDS(mc_sim_results, here("Shared", "Results", kernel_choice, "mc_sim_results.rds"))
+}

@@ -65,7 +65,7 @@ cell_data <- field_parameters %>%
 # choose the kernel used for GWR from:
 #   "gaussian", "bisquare", "exponential", "tricube", "boxcar"
 #*************************************
-kernel_choice = "boxcar"
+kernel_choice = "gaussian"
 mc_sim_results <- readRDS(here("Shared", "Results", kernel_choice, "mc_sim_results.rds"))
 
 #* aunit-level estimated data
@@ -128,24 +128,22 @@ for (i in 1:nrow(est_data)) {
           #--- True optimal profit ---#
           .[, yield_opt := gen_yield_QP(b0, b1, b2, Nk, opt_N)] %>%
           .[, pi_opt := pCorn * yield_opt - pN * opt_N] %>%
-          ## ======based on true response parameters======##
-          ## ======based on true response parameters======##
-          #--- SCAM ---#
+          ##======true profit gain based on true response parameters======##
+          #--- SCAM (baseline) ---#
           .[, yield_scam := gen_yield_QP(b0, b1, b2, Nk, opt_N_scam)] %>%
           .[, pi_scam := pCorn * yield_scam - pN * opt_N_scam] %>%
           .[, pi_scam := pi_scam - pi_opt] %>%
-          #--- GWR ---#
+          #--- GWR (& QD) ---#
           .[, yield_gwr := gen_yield_QP(b0, b1, b2, Nk, opt_N_gwr)] %>%
           .[, pi_gwr := pCorn * yield_gwr - pN * opt_N_gwr] %>%
           .[, pi_gwr := pi_gwr - pi_opt] %>%
           #--- GWR gain over SCAM ---#
           .[, pi_diff := pi_gwr - pi_scam] %>%
-          ## ======based on estimated response parameters======##
-          ## ======based on estimated response parameters======##
-          #--- SCAM ---#
+          ##======estimated profit gain based on estimated response parameters======##
+          #--- SCAM (baseline) ---#
           .[, yield_scam_est := gen_yield_QD(b0_hat, b1_hat, b2_hat, opt_N_scam)] %>%
           .[, pi_scam_est := pCorn * yield_scam_est - pN * opt_N_scam] %>%
-          #--- GWR ---#
+          #--- GWR (& QD) ---#
           .[, yield_gwr_est := gen_yield_QD(b0_hat, b1_hat, b2_hat, opt_N_gwr)] %>%
           .[, pi_gwr_est := pCorn * yield_gwr_est - pN * opt_N_gwr] %>%
           #--- GWR gain over SCAM ---#
@@ -166,16 +164,14 @@ for (i in 1:length(econ_data_ls)) {
     mutate(
       data = list(
         data[, lapply(.SD, mean),
-          by = .(sim, transfer),
-          .SDcols = c(
-            "pi_diff", "pi_diff_est", "opt_N_scam"
-          )
+          by = .(sim, model),
+          .SDcols = c("pi_diff", "pi_diff_est", "opt_N_scam")
         ]
       )
     )
 }
 
-# === convert to data table format ===#
+#=== convert to data table format ===#
 pi_data <-
   rbindlist(pi_data_ls) %>%
   unnest(data) %>%
@@ -363,5 +359,5 @@ pi_data %>%
   ggplot(data = ., aes(x = opt_N_scam, y = pi_diff_est, group = type)) +
   geom_point() +
   facet_wrap(~type, ncol = 2) +
-  xlab("Estimated optimal N rate by SCAM") +
+  xlab("Estimated optimal uniform N rate") +
   ylab("GWR benefit, estimated")

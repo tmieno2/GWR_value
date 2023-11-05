@@ -1,63 +1,69 @@
 ---
 title: "Reply"
 output: 
-  html_document:
-    theme:
-      version: 4
-bibliography: PA.bib
+  html_document: default
 ---
 
-Your comments are in blue.  Our responses are in black.
+Your comments are in blue, and our responses are in black.
 
-## Major Conern
+1. <span style = "color: blue;"> The statement in the Abstract "...because no readily available statistical packages exist for GWR estimation with nonlinear functional forms" is inaccurate. A 2022 Precision Agriculture article includes a Linear Response Plateau GWR package in the supplemental materials. </span>
 
-<span style = "color: blue;"> The data generating process (d.g.p.) assumptions maintained by the authors for all models is incorrect. Since the d.g.p. are wrong, generation of a "true" field for parameters is also wrong, which renders the model comparisons incorrect and the conclusions erroneous. There are other issues related to the Monte Carlo experimental design that are also problematic. I mention these problems, below. </span>
+**Response**: This is good to know because the authors do not mention this at all in the paper. But, they only provide bare matlab codes without any readme file. I would not call this readily available. However, we will drop the sentence. (We understand that you told us we cannot ignore this comment, but we just wanted to point this out because we are keeping that sentence.)
 
-We maintain that our dgp does not have any problem. Please see our arguments further below. 
+2. <span style = "color: blue;">A flat response could have produced the "high values" of VRA reported by Trevisan et al., not the method used to estimate yield response. A quadratic functional form (and even a quad-response with a plateau) will likely produce optimal n-rates outside the experimental n-rates if the response is flat.</span>
 
-<span style = "color: blue;"> 1. The authors generate the "true" site-specific parameters using a Gaussian random field. It doesn't appear that the authors allowed for correlations between the model parameters. In practice, response parameters are typically correlated. </span>
+**Response**: We completely agree with the first part. We, however, limit the estimated optimal N rates to be inside the range of the experimental range (e.g., if higher than the highest experimental rate, then the EONR was set to the highest experimental rate). Therefore, the second statement is no corret. With that said, if we were to allow the optimal N rate to go beyond the range of the experimental rates, then the bias would have been even greater than what we report in the manuscript. Finally, as we mentioned, we do not intend to isolate the impact of functional misspecification and the use of GWR in causing bias in estimating the value of VRA. 
 
-The simulated parameters are indeed correlated.  We can provide the code that created them to the editor upon request.  If they were not correlated, neither would have the true optimal EONR been spatially correlated, but it is correlated, as well.
+We realized that we did not state thaa we limited the estimted EONR to the range of the experimental rates. We added the following sentence to the manuscript on page ??, line ??":
 
-<span style = "color: blue;"> 2. If the authors want to compare the performance of competing estimators, then the correct d.g.p.'s for each model should be used to generate yield data. Each competing model would use the data from its challengers to estimate the parameters. These results would then be compared to the “true” parameter values. If you have three competing models, A, B, and C, you would have 6 comparisons. On the diagonal, you'd compare A with A, B with B, etc. This gives you a "type-I" error comparison. The other comparison would give you "type-II" error comparisons (i.e., using the wrong model to estimate yields from a competitor's d.g.p.). These comparisons would show you how well a given estimator works when it is paired with the "wrong" d.g.p. </span>
+"It should be noted that in some locations the estimated EONRs would be below or above the bound of trial N rates. For those locations, the minimum or maximum trial N rate was used as the corner solution of that location’s EONR. For example, if the estimated EONR was 40 kg/ha, the minimum trial N rate 80 kg/ha will be used as the EONR instead."
 
-We think that the confusion here comes from failure to make our actual objective clear in the previous manuscript.  We apologize. If our objective had been to evaluate the value of having the ability to apply GWR to data from on-farm precision experimentation, we would agree with you that we should have used the functional form of the true yield response function in our GWR estimations.  We make clear in the revised manuscript that our main objective is to point out the problem/danger of applying GWR assuming the quadratic functional form when the true yield data generating process follows the quadratic-plateau functional form, as is the case for many crop-input relationships like corn and nitrogen. We have endeavored to make this much clearer in the revision of the manuscript.
+3. <span style = "color: blue;">The quad-response with plateau "true" d.g.p is a red herring. One would arrive at the same result if a regular quadratic response function was used. If a QRP were ESTIMATED, the results would be different from a standard quad-response function if the data exhibited a plateau.</span> 
 
-<span style = "color: blue;"> 3. The autho's choose a quadratic response with plateau model as the yield d.g.p model. Yet, the GWR and GAM models are linear-quadratic. Thus, the theoretical yield model is inconsistent with the one used to estimate the model parameters. </span>
+**Response**: Ignored as suggested.
 
-As mentioned above, that is the whole point of our paper.  Again, we apologize for not making this clearer in the original manuscript.   Previous studies that promoted the use of GWR for VRA recommendations used GWR assuming a quadratic form of the yield response function.  But, a consensus has been reached in the agronomic literature that the corn-nitrogen relationship is better represented by the quadratic-plateau functional form. We feel confident that previous studies assumed the quadratic because non-linear GWR was not readily estimable using statistical packages available when the research behind those publications was conducted.  Our paper points out the danger of estimating economically optimal, site-specific input application management by applying GWR with a mis-specified yield response model. This very important in the case of Trevisan et al.'s work (2019), because they touted GWR as a very promising way to generate very profitable VRA recommendations that could derive profits from VRA over $50/ha greater than could be obtained from economically optimal uniform rate application. Our finding indicates that using GWR with quadratic functional form has a strong tendency to significantly over-estimate the value of VRA over URA.  Basically, the implication is that Tervisan, et al.'s numbers should be received with great caution.  We believe strongly that this is an important message that needs to be established in the literature.
+4. <span style = "color: blue;"> The authors generate the "true" site-specific parameters using a Gaussian random field. It does not appear that the authors allowed correlations between the model parameters. In practice, response parameters are typically correlated. How does this affect the simulation results? It is unclear if the simulated random field ensured that parameters of the linear and quadratic n-rates were constrained to be positive and negative, respectively. How was this verified?</span> 
 
-<span style = "color: blue;"> 4. The authors use a sample of n=1 to compare estimator performance. What needs to be done is to run the MC some number of times (say, 1,000), to generate bias and mean squared error (MSE). One could find the MSE and bias in profitability estimates for each comparison. </span>
+**Response**:
 
-We ran and reported one thousand simulations in the research behind our originally submitted manuscript, and we ran one thousand simulations in the research behind the revised manuscript.  Please let us know if it is not abundantly clear in the revised manuscript that we are reporting the results of one thousand simulations.
+This comment clearly shows that this reviewer did not pay attention to our replies to his comments. In our reply to his comments, we clearly stated that the site-specific parameters are indeed spatially correlated. We also ensured that the coefficients on the linear and quadratic n-rates were constrained to be positive and negative. This is not a hard task. We share all the codes written in R on a publicly accessible repository. Anybody can check how this was done in our paper.
 
-<span style = "color: blue;"> 5. See Leung, Y., Mei, C. L., & Zhang, W. X. (2000), Statistical tests for spatial nonstationarity based on the geographically weighted regression model. Environment and Planning A, 32(1), 9–32 for the GWR d.g.p. There are two ways to generate GWR yields for a MC simulation. The first generates GWR yields as: y* = (I – L)-1e*, where L is the GWR “hat” matrix. You would choose a weighting kernel for GWR, L, and then draw e* from, say a N(0, σ2) distribution. You would hold L fixed (it is “truth”) and then pull e* from this distribution 1,000 times to generate 1,000 data sets. Use these data sets to find estimates, and then use the estimates to calculate profitability. The second approach uses “true” GWR betas as a reference. Here, you need to find a known y (for example, from an experiment, or simulated as a spatial random field), and then simulate yields as y* = X(X’W(s)X)-1X’W(s)y + e*, with W(s) GWR weights. Similar procedures apply to “hybrid GWR” models, which allow some parameters to vary spatially while others are not. I have not worked out your GAM d.g.p., but the logic would be similar. </span>
+5. <span style = "color: blue;">Page 11, Line 206: was this random field generated once and then used for 1,000 MC iterations, or was the field generated for each MC iteration? What about the errors? What were the nugget, sill, etc., for each simulated parameter?  </span>
 
-We apologize again for not making our objective clear in the original manuscript.  Given the objective, which we have clarified above, the quadratic-plateau function has to be the true yield response function;  after all, we are trying to examine the danger of applying GWR under the assumption of a quadratic functional form when the true functional form is quadratic-plateau, and so not linear in its coefficients, and so not readily estimable with current software packages provided GWR.  The  dgp you suggest cannot be applied to non-linear yield response functions. Third, there is no reason to generate data based on the GWR way. Our dgp can be used to represent site-specific yield-response functions that are just as valid (or invalid) as those generated by yours. Again, we are not testing the “pure ability” of GWR to estimate site-specific yield response functions.  We are not writing a pure statistics paper. Our paper focuses on the application of GWR to data from on-farm precision experimentation, and is not just about GWR estimation accuracy.
+**Response**:
 
-<span style = "color: blue;"> 6. Your use of the Gaussian random field you generated as "truth" (if the parameters were correlated), corresponds with a Bayesian kriging estimator, but not GWR. </span>
+Site-specific parameters and errors were generated for each of the 1000 MC iterations. So all simulation instanes have different spatial patterns of EONR. Parameters of the variogram (nugget, sill, etc) stays the same across the simulations, meaning that the spatial dependence of the site-specific parameters are the same. 
 
-For the reasons discussed above, we maintain that our procedures are valid. We have tried to make the narrative in our manuscript to discuss those procedures more clearly.
+6. <span style = "color: blue;">Replicability. How would one proceed if one were to replicate what the authors did? For example, "Note that the range of the optimal N rates of individual rounds were narrower." What does this mean? Yield Data generation. What distribution were the e's? The Methods need to be more clearly documented if others want to replicate the study.</span>
 
-<span style = "color: blue;"> 7. GWR kernels matters. You use a Gaussian kernel that assumes all observations are correlated. Kernels that are more parsimonious include the Epanechnikov and bi-square kernels, which are local, rather than global, smoothers. Yield response to inputs is probably more aptly modeled as local spatial processes or local moving averages, but not global ones. </span>
+**Response**: 
 
-Both Trevisan, et al. and Rakshit, et al. use Gaussian kernels. Therefore, we report results from of use Gaussian kernels as our main results. For other kernels, please see the supplementary appendix, in which we provide the results from using the Bi-square, Exponential, Boxcar, and Tri-cube kernels. Our most important qualitative findings are unchanged: when the true functional form of the yield response function is quadratic-plateau, applying assuming a quadratic yield response function significantly over-estimates its true value of using GWR to generate VRA recommendations. We were not able to test Epanechnikov kernel as none of the R and Python statistical packages that implement GWR does not offer it. However, since the Epanechnikov kernel is very similar to the Bi-square kernel, it is not hard to imagine that the results with the Epanechnikov kernel will be similar to that with the Bi-square kernel.
+We agree that we can provide more information on how the data is generated. The error term is follows the normal distribution with spatial correlation (a sentence on this added on page ??, line ??). 
 
-## Minor issues:
+However, we emphasize that we are dedicated for reproducibility of our work and all the computer programs are made publicly available at the GitHub repository dedicated for this project (The url of this repository is shared in the manuscript in page ??, line??). It is simply impossible to describe all the details of the simulations. Reproducibility can be achieved only when the full computer programs are shared, which we do.
 
-<span style = "color: blue;">
-I encourage the authors to undertake a through technical editing of the manuscript. In several places, the authors make assertions that should be backed up with references. Some examples are: Page 5, line 90; page 8, line 162. These are two examples, but there are more.
-</span>
+7. <span style = "color: blue;">Then correct d.g.p.'s for each model should be used to generate yield data, optimal EONR, and profit. Each competing model would use the data from its challengers to estimate the parameters. These results would then be compared to the "true" N* and profit values.</span>
 
-1. <span style = "color: blue;">Page 1, line 10: incomplete sentence.</span>
-1. <span style = "color: blue;">Page 1, line 13: delete “large”</span>
-1. <span style = "color: blue;">Page 2, lune 27: delete “etc.”</span>
-1. <span style = "color: blue;">Page 2, line 35: delete “efficient”</span>
-1. <span style = "color: blue;">Page 2, line 37: delete “,” after methods</span>
-1. <span style = "color: blue;">Page 3, line 47: insert “the” before development </span>
-1. <span style = "color: blue;">Page 4, line 71: insert “,” after surprising</span>
-1. <span style = "color: blue;">Page 8, line 161: “assumes”</span>
-1. <span style = "color: blue;">Page 7, line 137. What needs to be rewritten???? </span>
-1. <span style = "color: blue;">Page 10, line 212: e_jk </span>
+**Response**: Ignored as suggested
 
-Our significant revision of the paper's Introduction has made points 1-6 above no longer pertinent. Items 7 through 10 are fixed.
+8. <span style = "color: blue;"> Consider Page 17, line 328. You have f_GWR(N_SCAM) and f_GWR(N_GWR). However, what of f_SCAM(N_SCAM) and f_SCAN(N_GWR)? Why is a whole field, uniform-rate type model used as a benchmark?</span>
+
+**Response**: Ignored as suggested
+
+9. <span style = "color: blue;"> The cost of committing a type-II error would indicate the value of information lost using GWR. The PiHat comparisons are a step forward toward this, but the comparisons are incomplete. The logic of using SCAM needs to be argued more convincingly. One could re-do the analysis using a different, less complicated whole-field response model without loss of generality. </span>
+
+**Response**: Ignored as suggested
+
+10. <span style = "color: blue;">Why was SCAM used to estimate a whole-field response? Why not QRP? The SCAM comparison with GWR (and with a quad-response) is not apples-to-apples.</span>
+
+**Response**: Ignored as suggested
+
+11. <span style = "color: blue;">If the GWR d.g.p., was used as the true d.g.p., for example, y* = X(X'W(s)X)-1X'W(s)y + e*, with W(s) GWR weights and e~N(0, sig2e), then GWR should perform better. The manuscript needs a scenario that finds GWR bias in profit when the true d.g.p. is GWR.</span>
+
+<span style = "color: blue;">Other notes:
+The text had no figure numbers, so it was hard to tell which figures we were supposed to see. What did appear in the manuscript was "Error! Reference source not found."</span> 
+
+**Response**: Ignored as suggested
+
+
+

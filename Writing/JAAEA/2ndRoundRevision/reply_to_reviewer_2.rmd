@@ -60,7 +60,7 @@ Response: It follows a normal distribution in a way it is spatially correlated. 
 
 + <span style = "color: blue;">P. 12, line 212: It would be useful to add a footnote here explaining why the range of 600m was chosen.</span> 
 
-Response:
+Response: We added an explanation that the 600m range was chosen based on empirical data of our existing on-farm trials (see page ??, lines ??).
 
 + <span style = "color: blue;">P. 12, line 229: Given that JAAEA is an economics journal and not an agronomy journal, you should rewrite "Latin square trial design schema" as "trial design" here, and at the end of the next sentence, write "each column of the block (i.e., a Latin square)." </span> 
 
@@ -70,14 +70,13 @@ Response: We followed your suggestions and texts were modified accordingly.
 
 Response:
 
-
 + <span style = "color: blue;"> P. 15, lines 277-279: Add a sentence (perhaps in a footnote) mentioning how this shape constraint is actually imposed. </span> 
 
-Response: 
+Response: Expalining how the shape constraint is imposed would take more than a page of mathematical explanations. We added a footnote that  cites Pya's journal article titled "Shape constrained additive models" published in Statistics and computing.
 
 + <span style = "color: blue;">PP. 22-23, lines 439-441: This sentence should be removed because it seems speculative. More importantly, researchers do not "have" to implement a methodology because it is conveniently available in standard software; instead, they could code their own models, methods, etc.  </span> 
 
-Response:
+Response: There is no speculation in this sentence. We are stating a drawback of linear-plateau model. What we state is a irrefutable fact and important in real world practice of estimating yield response function.
 
 + <span style = "color: blue;">P. 33, Figure 2: In the notes to this figure, you should add that the 1,440 subplots are illustrated as 24 rows x 12 columns, each containing 5 subplots (24 x 12 x 5 = 1,440). Also add that there are 72 rows x 120 columns of cells (72 x 120 = 8,640).  </span> 
 
@@ -86,61 +85,60 @@ Response:
 
 Writing
 
-+ P. 4, line 45: Replace "dramatic" with "seemingly implausibly large"
++ <span style = "color: blue;">P. 4, line 45: Replace "dramatic" with "seemingly implausibly large"</span> 
 
-Response:
+Response: We followed your suggestion.
 
-+ P. 4, line 54: Replace "suspect" with "hypothesize"
-o Same comment for "suspect" on P. 9, line 153
++ <span style = "color: blue;">P. 4, line 54: Replace "suspect" with "hypothesize". Same comment for "suspect" on P. 9, line 153</span>
 
-Response:
+Response: We followed your suggestion.
 
-+ P. 5, line 77: You do not need to write (OFPE) again here since you have already introduced
-the acronym.
++ <span style = "color: blue;">P. 5, line 77: You do not need to write (OFPE) again here since you have already introduced
+the acronym.</span>
 
-Response:
+Response: We followed your suggestion.
 
-+ P. 8, line 124: You should place the first instance of "(EONR)" here after "economically
-optimal nitrogen rates" rather than line 132.
++ <span style = "color: blue;">P. 8, line 124: You should place the first instance of "(EONR)" here after "economically
+optimal nitrogen rates" rather than line 132.</span>
 
-Response:
+Response: We followed your suggestion.
 
-+ P. 8, line 130: Replace "dangerous" with "problematic"
-o Same comment for P. 22, line 438
++ <span style = "color: blue;">P. 8, line 130: Replace "dangerous" with "problematic" Same comment for P. 22, line 438 </span>
 
-Response:
+Response: We followed your suggestion.
 
 + P. 8, line 145: Remove the word "the" in front of "step"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 11, lines 200-201: Replace "are desirable properties" with "is a desirable property"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 13, line 233: Replace "due the" with "due to the"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 14, line 262: This is the first and only mention in the paper of a benchmark. Given that,
 what is a "lower" benchmark?
 
-Response:
+Response: We have changed the wording to "In this scenario."
 
 + P. 16, line 295: Replace "as" with "the"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 19, line 269: Replace "truea" with "true"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 22, line 453: Remove the word "please"
 
-Response:
+Response: We followed your suggestion.
 
 + P. 24, lines 468-474: Remove the clause "After the development of software that..."
 Additionally, you should add quotation marks to both instances of "pure" in this paragraph.
-Response:
+
+Response: We followed your suggestion.
 
 

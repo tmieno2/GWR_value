@@ -252,6 +252,8 @@ The coefficients $\alpha_j$, $\beta_j$, and $\eta_j$ were continuous functions o
 
 $$\hat{N}^{*GWRR}_j \equiv argmax_N⁡[ p \cdot \hat{f}^{GWRR}_j (N) - w\cdot N], \;\; j \in 1, 2, \dots, 1440.$$
 
+It should be noted that in some locations the estimated EONRs would be below or above the bound of trial N rates. For those locations, the minimum or maximum trial N rate was used as the corner solution of that location’s EONR. For example, if the estimated EONR was 40 kg/ha, the minimum trial N rate 80 kg/ha will be used as the EONR instead. 
+
 ### GWR-Trevisan (GWRT)
 
 The GWRT model is also called the "mixed" GWR in the literature [@brunsdon1999some], where some parameters are fixed globally while others vary geographically. We estimated the coefficient on $N^2$ as a global parameter and the coefficient on $N$ subplot-specifically. For each subplot $j \in {1, 2, \dots, 1440}$, the assumed yield response was,

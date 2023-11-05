@@ -82,8 +82,7 @@ Response: There is no speculation in this sentence. We are stating a drawback of
 
 Response:
 
-
-Writing
+# Writing
 
 + <span style = "color: blue;">P. 4, line 45: Replace "dramatic" with "seemingly implausibly large"</span> 
 
@@ -107,37 +106,35 @@ Response: We followed your suggestion.
 
 Response: We followed your suggestion.
 
-+ P. 8, line 145: Remove the word "the" in front of "step"
++ <span style = "color: blue;">P. 8, line 145: Remove the word "the" in front of "step"</span>
 
 Response: We followed your suggestion.
 
-+ P. 11, lines 200-201: Replace "are desirable properties" with "is a desirable property"
++ <span style = "color: blue;">P. 11, lines 200-201: Replace "are desirable properties" with "is a desirable property" </span>
 
 Response: We followed your suggestion.
 
-+ P. 13, line 233: Replace "due the" with "due to the"
++ <span style = "color: blue;">P. 13, line 233: Replace "due the" with "due to the"</span>
 
 Response: We followed your suggestion.
 
-+ P. 14, line 262: This is the first and only mention in the paper of a benchmark. Given that,
-what is a "lower" benchmark?
++ <span style = "color: blue;">P. 14, line 262: This is the first and only mention in the paper of a benchmark. Given that, what is a "lower" benchmark?</span>
 
 Response: We have changed the wording to "In this scenario."
 
-+ P. 16, line 295: Replace "as" with "the"
++ <span style = "color: blue;">P. 16, line 295: Replace "as" with "the"</span>
 
 Response: We followed your suggestion.
 
-+ P. 19, line 269: Replace "truea" with "true"
++ <span style = "color: blue;">P. 19, line 269: Replace "truea" with "true"</span>
 
 Response: We followed your suggestion.
 
-+ P. 22, line 453: Remove the word "please"
++ <span style = "color: blue;">P. 22, line 453: Remove the word "please"</span>
 
 Response: We followed your suggestion.
 
-+ P. 24, lines 468-474: Remove the clause "After the development of software that..."
-Additionally, you should add quotation marks to both instances of "pure" in this paragraph.
++ <span style = "color: blue;">P. 24, lines 468-474: Remove the clause "After the development of software that..." Additionally, you should add quotation marks to both instances of "pure" in this paragraph.</span>
 
 Response: We followed your suggestion.
 

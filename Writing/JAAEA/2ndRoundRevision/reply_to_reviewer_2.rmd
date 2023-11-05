@@ -1,0 +1,163 @@
+---
+title: "Reply"
+output: 
+  html_document: default
+---
+
+Your comments are in blue.  Our responses are in black.
+
+# General Comments
+
++ <span style = "color: blue;">I still believe this research is related to studies that examine the economic value of forecasting models by assessing the economic effects stemming from inaccuracy (e.g.,
+reduction in a business’ profits by assuming a mean-squared-error loss function instead of an
+asymmetric loss, for example). Although there have been improvements in references to the
+agronomy and statistical literatures, it would still be useful to add 1-2 sentences in the
+conclusion that reference the broader economics literature on this topic. </span> 
+
+Response: We do not address this as you suggested.
+
++ <span style = "color: blue;"> As mentioned in my previous review, the term "economically optimal" has different meanings among agricultural economists. The new footnote (footnote 1 on p. 5) is appreciated, but here you should specify that "economically optimal" in the context of the article does not mean "socially optimal."</span> 
+
+Response:
+
++ <span style = "color: blue;"> None of the figure numbers appear in the text; instead, each figure reference is followed by "Error! Reference source not found." These all should be corrected. </span>
+
+Response: We apologize for these mistakes. We have corrected theses errors.
+
+
++ In Section 3, to reduce confusion, you should consider using the word "Simulated" in the
+section heads (i.e., 3.1 Simulated Field Layout, 3.2 Simulated True Cell-Specific Yield
+Response Function, 3.3 Simulated Trial Design, and 3.4 Simulated Yield Data).
+
+Response:
+
++ All of the figures have their dimensions and DPI listed (1422x812mm). This information is
+not necessary and should have been removed prior to submission.
+
+Response:
+
+Specific Comments
+
++ P. 4, lines 58-59: This statement, while perhaps likely, is just speculation. The authors should
+either check with Trevisan et al. (2021) that this was the reason (and then remove "It seems
+likely") or just delete the sentence entirely.
+o The same comment applies to P. 8, lines 134-136.
+
+Response:
+
++ P. 6, lines 91-95: Implicitly, you seem to be suggesting that the set of points from which you
+would take (input rate, yield) data is smaller than n, the total number of sites associated with
+the characteristics vector. Either way, this should be clarified in the text.
+
+Response:
+
++ P. 9, lines 146-148: This seems overly negative of Trevisan et al. (2021), as well as clunky
+wording ("provided an example at step 3"). Since you say this assumption is unavoidable, it is done by all studies, including the ones you mention above: Anselin et al, Bullock et al, Liu et al, and Swinton and Lowenberg-DeBoer. You should remove this sentence entirely because it really adds nothing. Later on in the paragraph, you address the thing that's more important: inaccurate estimation of yield response using GWR, because it exaggerates the true heterogeneity in the yield response functions, leads to comparatively worse bias.
+
+Response:
+
++ P. 10, lines 185-186: This almost sounds misleading; "were available for analysis" seems to
+suggest you were using real-world data. You should re-write this as "In total, simulated data from 1,440 subplots were used for analysis."
+
+Response:
+
++ P. 10, line 199: In this sentence, you should mention which specific statistical distribution the
+error term follows, despite the fact that you mention Gaussian random fields below.
+
+Response:
+
++ P. 12, line 212: It would be useful to add a footnote here explaining why the range of 600m
+was chosen.
+
+Response:
+
++ P. 12, line 229: Given that JAAEA is an economics journal and not an agronomy journal, you
+should rewrite "Latin square trial design schema" as "trial design" here, and at the end of the
+next sentence, write "each column of the block (i.e., a Latin square)."
+
+Response:
+
++ P. 14, line 254: For additional clarity, you could point out that the EOUNA rate is just the
+value of N that solves 𝑝 ⋅ 𝑓(𝑁) - 𝑤 ⋅ 𝑁, where 𝑓(𝑁) is SCAM-estimated.
+
+Response:
+
++ P. 15, lines 277-279: Add a sentence (perhaps in a footnote) mentioning how this shape
+constraint is actually imposed.
+
+Response:
+
++ PP. 22-23, lines 439-441: This sentence should be removed because it seems speculative.
+More importantly, researchers do not "have" to implement a methodology because it is
+conveniently available in standard software; instead, they could code their own models,
+methods, etc.
+
+Response:
+
++ P. 33, Figure 2: In the notes to this figure, you should add that the 1,440 subplots are
+illustrated as 24 rows x 12 columns, each containing 5 subplots (24 x 12 x 5 = 1,440). Also
+add that there are 72 rows x 120 columns of cells (72 x 120 = 8,640).
+
+Response:
+
+
+Writing
+
++ P. 4, line 45: Replace "dramatic" with "seemingly implausibly large"
+
+Response:
+
++ P. 4, line 54: Replace "suspect" with "hypothesize"
+o Same comment for "suspect" on P. 9, line 153
+
+Response:
+
++ P. 5, line 77: You do not need to write (OFPE) again here since you have already introduced
+the acronym.
+
+Response:
+
++ P. 8, line 124: You should place the first instance of "(EONR)" here after "economically
+optimal nitrogen rates" rather than line 132.
+
+Response:
+
++ P. 8, line 130: Replace "dangerous" with "problematic"
+o Same comment for P. 22, line 438
+
+Response:
+
++ P. 8, line 145: Remove the word "the" in front of "step"
+
+Response:
+
++ P. 11, lines 200-201: Replace "are desirable properties" with "is a desirable property"
+
+Response:
+
++ P. 13, line 233: Replace "due the" with "due to the"
+
+Response:
+
++ P. 14, line 262: This is the first and only mention in the paper of a benchmark. Given that,
+what is a "lower" benchmark?
+
+Response:
+
++ P. 16, line 295: Replace "as" with "the"
+
+Response:
+
++ P. 19, line 269: Replace "truea" with "true"
+
+Response:
+
++ P. 22, line 453: Remove the word "please"
+
+Response:
+
++ P. 24, lines 468-474: Remove the clause "After the development of software that..."
+Additionally, you should add quotation marks to both instances of "pure" in this paragraph.
+Response:
+
+

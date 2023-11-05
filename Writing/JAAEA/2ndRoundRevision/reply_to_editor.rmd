@@ -1,0 +1,14 @@
+---
+title: "Reply to the editor"
+output: 
+  html_document:
+    theme:
+      version: 4
+bibliography: PA.bib
+---
+
+
+I still find it difficult to understand the main conclusions from the paper. Please try to add some text to the introduction that states the key points as clearly as possible. Part of the challenge is that I find it difficult to remember all of the abbreviations that are used. I think your key results are as follows. First, you find that variable rate application using prescriptions from a model with spatially-varying coefficients of the incorrect functional form gives lower profits than a uniform rate application using prescriptions from a non-spatial model with a more flexible functional form. Second, you find that researchers could get the false impression that the variable rate application is much more profitable than uniform rate application if researchers assume the model with spatially-varying coefficients of an incorrect functional form is true.
+
+
+

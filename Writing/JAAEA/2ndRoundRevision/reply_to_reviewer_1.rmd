@@ -26,7 +26,7 @@ We realized that we did not state thaa we limited the estimted EONR to the range
 
 **Response**:
 
-This comment clearly shows that this reviewer did not pay attention to our replies to his comments. In our reply to his comments, we clearly stated that the site-specific parameters are indeed spatially correlated. We also ensured that the coefficients on the linear and quadratic n-rates were constrained to be positive and negative. This is not a hard task. We share all the codes written in R on a publicly accessible repository. Anybody can check how this was done in our paper.
+This comment clearly shows that this reviewer did not pay attention to our replies to his comments (the first round review, comment 1). In our reply to his comments, we clearly stated that the site-specific parameters are indeed spatially correlated. We also ensured that the coefficients on the linear and quadratic N-rates were constrained to be positive and negative. This is not a hard task. We share all the codes written in R on a publicly accessible repository. Anybody can check how this was done in our paper.
 
 5. <span style = "color: blue;">Page 11, Line 206: was this random field generated once and then used for 1,000 MC iterations, or was the field generated for each MC iteration? What about the errors? What were the nugget, sill, etc., for each simulated parameter?  </span>
 
@@ -34,11 +34,13 @@ This comment clearly shows that this reviewer did not pay attention to our repli
 
 Site-specific parameters and errors were generated for each of the 1,000 Monte Carlo iterations, resulting in distinct spatial patterns of Economic Optimum Nitrogen Rate (EONR) for each simulation instance. However, the parameters of the variogram (such as nugget and sill) remain consistent across simulations, ensuring that the spatial dependence of the site-specific parameters is the same.
 
+Clarifying sentences were added to page ??, line ??.
+
 6. <span style = "color: blue;">Replicability. How would one proceed if one were to replicate what the authors did? For example, "Note that the range of the optimal N rates of individual rounds were narrower." What does this mean? Yield Data generation. What distribution were the e's? The Methods need to be more clearly documented if others want to replicate the study.</span>
 
 **Response**: 
 
-We agree that we can provide more information on how the data is generated. The error term is follows the normal distribution with spatial correlation (a sentence on this added on page ??, line ??). 
+We agree that we can provide more information on how the data is generated. The error term follows the normal distribution with spatial correlation (a sentence on this added on page ??, line ??). 
 
 However, we emphasize that we are dedicated for reproducibility of our work and all the computer programs are made publicly available at the GitHub repository dedicated for this project (The url of this repository is shared in the manuscript in page ??, line??). It is simply impossible to describe all the details of the simulations. Reproducibility can be achieved only when the full computer programs are shared, which we do.
 

@@ -8,11 +8,7 @@ Your comments are in blue.  Our responses are in black.
 
 # General Comments
 
-+ <span style = "color: blue;">I still believe this research is related to studies that examine the economic value of forecasting models by assessing the economic effects stemming from inaccuracy (e.g.,
-reduction in a business’ profits by assuming a mean-squared-error loss function instead of an
-asymmetric loss, for example). Although there have been improvements in references to the
-agronomy and statistical literatures, it would still be useful to add 1-2 sentences in the
-conclusion that reference the broader economics literature on this topic. </span> 
++ <span style = "color: blue;">I still believe this research is related to studies that examine the economic value of forecasting models by assessing the economic effects stemming from inaccuracy (e.g., reduction in a business’ profits by assuming a mean-squared-error loss function instead of an asymmetric loss, for example). Although there have been improvements in references to the agronomy and statistical literatures, it would still be useful to add 1-2 sentences in the conclusion that reference the broader economics literature on this topic. </span> 
 
 Response: We do not address this as you suggested.
 

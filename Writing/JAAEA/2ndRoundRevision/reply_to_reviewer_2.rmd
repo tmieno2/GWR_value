@@ -22,81 +22,63 @@ Response:
 
 + <span style = "color: blue;"> None of the figure numbers appear in the text; instead, each figure reference is followed by "Error! Reference source not found." These all should be corrected. </span>
 
-Response: We apologize for these mistakes. We have corrected theses errors.
+Response: 
 
 
-+ In Section 3, to reduce confusion, you should consider using the word "Simulated" in the
-section heads (i.e., 3.1 Simulated Field Layout, 3.2 Simulated True Cell-Specific Yield
-Response Function, 3.3 Simulated Trial Design, and 3.4 Simulated Yield Data).
++ <span style = "color: blue;"> In Section 3, to reduce confusion, you should consider using the word "Simulated" in the section heads (i.e., 3.1 Simulated Field Layout, 3.2 Simulated True Cell-Specific Yield Response Function, 3.3 Simulated Trial Design, and 3.4 Simulated Yield Data). </span> 
 
-Response:
+Response: Instead of making the suggested changes, we simply renamed the Methods section to "Methods: Monte Carlo Simulations," so that it is clear that all the subsequent sections are about simulations.
 
-+ All of the figures have their dimensions and DPI listed (1422x812mm). This information is
-not necessary and should have been removed prior to submission.
++ <span style = "color: blue;"> All of the figures have their dimensions and DPI listed (1422x812mm). This information is not necessary and should have been removed prior to submission. </span> 
 
-Response:
+Response: We apologize this mistake. This has been fixed in this version of the manuscript.
 
-Specific Comments
+# Specific Comments
 
-+ P. 4, lines 58-59: This statement, while perhaps likely, is just speculation. The authors should
-either check with Trevisan et al. (2021) that this was the reason (and then remove "It seems
-likely") or just delete the sentence entirely.
-o The same comment applies to P. 8, lines 134-136.
++ <span style = "color: blue;"> P. 4, lines 58-59: This statement, while perhaps likely, is just speculation. The authors should either check with Trevisan et al. (2021) that this was the reason (and then remove "It seems likely") or just delete the sentence entirely. The same comment applies to P. 8, lines 134-136. </span> 
 
-Response:
+Response: You are correct and we have removed the sentence entirely.
 
-+ P. 6, lines 91-95: Implicitly, you seem to be suggesting that the set of points from which you
-would take (input rate, yield) data is smaller than n, the total number of sites associated with
-the characteristics vector. Either way, this should be clarified in the text.
++ <span style = "color: blue;">P. 6, lines 91-95: Implicitly, you seem to be suggesting that the set of points from which you would take (input rate, yield) data is smaller than n, the total number of sites associated with the characteristics vector. Either way, this should be clarified in the text.</span> 
 
-Response:
+Response: We have modified the sentence to the following so that it describes what GWR does more accurately:
 
-+ P. 9, lines 146-148: This seems overly negative of Trevisan et al. (2021), as well as clunky
-wording ("provided an example at step 3"). Since you say this assumption is unavoidable, it is done by all studies, including the ones you mention above: Anselin et al, Bullock et al, Liu et al, and Swinton and Lowenberg-DeBoer. You should remove this sentence entirely because it really adds nothing. Later on in the paragraph, you address the thing that's more important: inaccurate estimation of yield response using GWR, because it exaggerates the true heterogeneity in the yield response functions, leads to comparatively worse bias.
+  - Old: "Alternatively, a site-specific yield response function might be estimated simply by taking (input rate, yield) data from points around a site of interest"
+  - New: "Alternatively, a site-specific yield response function might be estimated simply by giving greater weights to the points around a site of interest"
 
-Response:
++ <span style = "color: blue;"> P. 9, lines 146-148: This seems overly negative of Trevisan et al. (2021), as well as clunky wording ("provided an example at step 3"). Since you say this assumption is unavoidable, it is done by all studies, including the ones you mention above: Anselin et al, Bullock et al, Liu et al, and Swinton and Lowenberg-DeBoer. You should remove this sentence entirely because it really adds nothing. Later on in the paragraph, you address the thing that's more important: inaccurate estimation of yield response using GWR, because it exaggerates the true heterogeneity in the yield response functions, leads to comparatively worse bias. </span>
 
-+ P. 10, lines 185-186: This almost sounds misleading; "were available for analysis" seems to
-suggest you were using real-world data. You should re-write this as "In total, simulated data from 1,440 subplots were used for analysis."
+Response: We dropped the sentence.
 
-Response:
++ <span style = "color: blue;"> P. 10, lines 185-186: This almost sounds misleading; "were available for analysis" seems to suggest you were using real-world data. You should re-write this as "In total, simulated data from 1,440 subplots were used for analysis." </span>
 
-+ P. 10, line 199: In this sentence, you should mention which specific statistical distribution the
-error term follows, despite the fact that you mention Gaussian random fields below.
+Response: We edited the sentence according to your suggestion.
+
++ <span style = "color: blue;"> P. 10, line 199: In this sentence, you should mention which specific statistical distribution the error term follows, despite the fact that you mention Gaussian random fields below. </span> 
+
+Response: It follows a normal distribution in a way it is spatially correlated. This has been made clear in the manuscript (see page ??, line ??). 
+
++ <span style = "color: blue;">P. 12, line 212: It would be useful to add a footnote here explaining why the range of 600m was chosen.</span> 
 
 Response:
 
-+ P. 12, line 212: It would be useful to add a footnote here explaining why the range of 600m
-was chosen.
++ <span style = "color: blue;">P. 12, line 229: Given that JAAEA is an economics journal and not an agronomy journal, you should rewrite "Latin square trial design schema" as "trial design" here, and at the end of the next sentence, write "each column of the block (i.e., a Latin square)." </span> 
+
+Response: We followed your suggestions and texts were modified accordingly.
+
++ <span style = "color: blue;">P. 14, line 254: For additional clarity, you could point out that the EONR rate is just the value of N that solves $\\cdot f(N) - \omega\dcot N$, where $f(N)$ is SCAM-estimated. </span>
 
 Response:
 
-+ P. 12, line 229: Given that JAAEA is an economics journal and not an agronomy journal, you
-should rewrite "Latin square trial design schema" as "trial design" here, and at the end of the
-next sentence, write "each column of the block (i.e., a Latin square)."
++ <span style = "color: blue;"> P. 15, lines 277-279: Add a sentence (perhaps in a footnote) mentioning how this shape constraint is actually imposed. </span> 
 
 Response:
 
-+ P. 14, line 254: For additional clarity, you could point out that the EOUNA rate is just the
-value of N that solves 𝑝 ⋅ 𝑓(𝑁) - 𝑤 ⋅ 𝑁, where 𝑓(𝑁) is SCAM-estimated.
++ <span style = "color: blue;">PP. 22-23, lines 439-441: This sentence should be removed because it seems speculative. More importantly, researchers do not "have" to implement a methodology because it is conveniently available in standard software; instead, they could code their own models, methods, etc.  </span> 
 
 Response:
 
-+ P. 15, lines 277-279: Add a sentence (perhaps in a footnote) mentioning how this shape
-constraint is actually imposed.
-
-Response:
-
-+ PP. 22-23, lines 439-441: This sentence should be removed because it seems speculative.
-More importantly, researchers do not "have" to implement a methodology because it is
-conveniently available in standard software; instead, they could code their own models,
-methods, etc.
-
-Response:
-
-+ P. 33, Figure 2: In the notes to this figure, you should add that the 1,440 subplots are
-illustrated as 24 rows x 12 columns, each containing 5 subplots (24 x 12 x 5 = 1,440). Also
-add that there are 72 rows x 120 columns of cells (72 x 120 = 8,640).
++ <span style = "color: blue;">P. 33, Figure 2: In the notes to this figure, you should add that the 1,440 subplots are illustrated as 24 rows x 12 columns, each containing 5 subplots (24 x 12 x 5 = 1,440). Also add that there are 72 rows x 120 columns of cells (72 x 120 = 8,640).  </span> 
 
 Response:
 

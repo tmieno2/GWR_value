@@ -8,7 +8,132 @@ bibliography: PA.bib
 ---
 
 
-I still find it difficult to understand the main conclusions from the paper. Please try to add some text to the introduction that states the key points as clearly as possible. Part of the challenge is that I find it difficult to remember all of the abbreviations that are used. I think your key results are as follows. First, you find that variable rate application using prescriptions from a model with spatially-varying coefficients of the incorrect functional form gives lower profits than a uniform rate application using prescriptions from a non-spatial model with a more flexible functional form. Second, you find that researchers could get the false impression that the variable rate application is much more profitable than uniform rate application if researchers assume the model with spatially-varying coefficients of an incorrect functional form is true.
+
+
+Your comments are in blue, and our responses are in black.
+
+
+1. <span style = "color: blue;"> (Title) Please revise the title. When I read the title I assumed that using GWR is the source of mis-specification. I don't know that GWR even needs to be in the title. For example, "Economic Evaluation of Mis-specified Functional Form for Site-specific Nitrogen Management". </span>
+
+**Response**: We agree that the source of EONR estimation problems is the response functional form mis-specification, not from GWR itself. But the mis-specification issue is only confined to the GWR model, and there is no mis-specification issue in the uniform response model (SCAM model in this study). In addition, this study exclusively focuses on GWR model's performance. Our primary aim is to highlight the problems associated with the existing quadratic GWR specification, and advocate for the development of GWR models that allow more flexible functional forms. To that end, we believe the current title adequately conveys this study's main objective.
+
+
+2. <span style = "color: blue;"> (Lines 18-19) It seems like you need to emphasize again in the introduction that the ideal method is to use a method like GWR with the correct functional form. </span>
+
+**Response**: That you for the suggestion. We added a sentence "" in the introduction (page ??, lines ??) to emphasize the ideal method is QP GWR or more flexible GWR, but is not currently available.
+
+
+3. <span style = "color: blue;"> (Line 42) It is unclear to me what you mean by "costly spatial field and soil data." They are still using OFPE data, correct? This gets clearer later in the paper, but needs to be better explained in the intro. Why does GWR need less costly data than machine learning approaches? </span>
+
+**Response**: (they are field characteristics data; I thought it was clearly written...... need to think why Nathan is confused)
+
+OFPE data are not the costly data. Costly data refers to the detailed field information (e.g., yield mapping, soil sampling, remote sensing, etc.)
+
+
+4. <span style = "color: blue;"> (Line 44) Please be more specific about what you mean by "such data." </span>
+
+**Response**: (they are field characteristics data; I thought it was clearly written...... need to think why Nathan is confused)
+
+
+5. <span style = "color: blue;"> (Line 54) It seems that you put too much emphasis on this one study in this paragraph and the preceding paragraph. This is not a major article that deserves other papers written on it. I think the broader point that you are trying to make is about several articles that use GWR with quadratic response functions. I suggest you rewrite to be broader and clearer. </span>
+
+**Response**: (I don't think there are other papers using GWR quadratic for site-specific estimation; but we can rewrite from a broader point of view.)
+
+
+6. <span style = "color: blue;"> (Line 58) You don't need to speculate on why they made this assumption. You can simply state that no software packages allow nonlinear function form. </span>
+
+**Response**: (Good point.)
+
+
+7. <span style = "color: blue;"> (Line 73) functional form </span>
+
+**Response**: We removed "the" and added "functional form" as you suggested.
+
+
+8. <span style = "color: blue;"> (Line 128) This section seems like a repeat of your introduction and could be dropped after improving introduction. </span>
+
+**Response**: (I kind of agree. I also think we can merge section 2.2 to the introduction as well, and merge section 2.1 to the method section.)
+
+
+9. <span style = "color: blue;"> (Line 163) this language still sounds like GWR is the source of bias.  </span>
+
+**Response**: 
+
+
+10. <span style = "color: blue;"> Perhaps I am misunderstanding but it seems that you need N rates above the plateau to be able to estimate the plateau. Why not find the impact of applying 120% of the critical N rate so that they simulated data traces out the full plateau function. </span>
+
+**Response**: compromise to reality; farmers are not willing to be too aggresive in trial rates
+ 
+
+11. <span style = "color: blue;"> (Line 245) typo. </span>
+
+**Response**: 
+
+
+12. <span style = "color: blue;"> (Line 313) This sentence sounds like the bias is GWR. Please rewrite to be clear that bias of mis-specified functional form. Please read through the entire manuscript and make sure this is clear. </span>
+
+**Response**: 
+
+
+13. <span style = "color: blue;"> (Line 323) It seems to me that you should also do a comparison with the "true" site-specific model. For example, calculate the true optimal N rate and substitute this into the true function to give you the true profits of site-specific N application denoted as Pi^TRUE. Then you can calculate Pi^True - Pi^GWR and Pi^True - Pi^SCAM. These would tell you how much of the potential profits of site-specific N are missed due to functional form misspecification.  Is this what you did on line 354. It is unclear. </span>
+
+**Response**: 
+
+
+14. <span style = "color: blue;"> (Line 369) typo </span>
+
+**Response**: 
+
+
+15. <span style = "color: blue;"> (Line 397) Please revise this language through the manuscript. It sounds like it is a difference between GWR and SCAM. But it is really a difference between quadratic GWR and a more flexible functional form with no spatial heterogeneity. </span>
+
+**Response**: 
+
+
+16. <span style = "color: blue;"> (Line 399) please revise this language throughout the manuscript. It is a quadratic GWR. </span>
+
+**Response**: 
+
+
+16. <span style = "color: blue;"> (Lines 415-416) I suggest deleting this. Your results can't determine if there is any effect of this type of bias. </span>
+
+**Response**: 
+
+
+17. <span style = "color: blue;"> (Line 422) For the particular simulations that you conduct. </span>
+
+**Response**: 
+
+
+18. <span style = "color: blue;"> (Lines 424-426) I assume these studies evaluate the accuracy of GWR, but you are not testing the accuracy of GWR. I suggest rewording or deleting. </span>
+
+**Response**: 
+
+
+19. <span style = "color: blue;"> (Line 438) Choose a different word. </span>
+
+**Response**: 
+
+
+20. <span style = "color: blue;"> (Line 457) Remove "in reality". </span>
+
+**Response**: 
+
+
+21. <span style = "color: blue;"> (Lines 459-460) Again, too much emphasis on this one article. </span>
+
+**Response**: 
+
+
+22. <span style = "color: blue;"> (Line 464) Please reword. </span>
+
+**Response**: 
+
+
+23. <span style = "color: blue;"> (Lines 468-474) Delete this. You could already assess the performance of GWR if you assume the true model is quadratic and see how well GWR with the correct functional form does. But then that raises questions about how you chose the distribution of the parameter values. </span>
+
+**Response**: 
+
 
 
 

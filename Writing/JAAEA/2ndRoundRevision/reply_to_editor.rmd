@@ -76,47 +76,47 @@ We believe the confusion of using true optimal N rate may come from the $N^*_{j,
 
 14. <span style = "color: blue;"> (Line 369) typo </span>
 
-**Response**: 
+**Response**: The typo was corrected.
 
 
 15. <span style = "color: blue;"> (Line 397) Please revise this language through the manuscript. It sounds like it is a difference between GWR and SCAM. But it is really a difference between quadratic GWR and a more flexible functional form with no spatial heterogeneity. </span>
 
-**Response**: 
+**Response**: We revised this part of writing to make it more explicit that the estimated yield response is based on the mis-specified quadratic GWR (see page ??, lines ??). The remaining part of that paragraph's writing was also modified to more clearly illustrate the sources of the GWR value over-estimation.
 
 
 16. <span style = "color: blue;"> (Line 399) please revise this language throughout the manuscript. It is a quadratic GWR. </span>
 
-**Response**: 
+**Response**: We used a more explicit expression of "estimated yield response by the mis-specified quadratic GWR" in the revised writing (see page ??, line ??). [We also emphasized that point in the introduction (see page ??, line ??) to clarify this concept at the beginning of this manuscript.]
 
 
 16. <span style = "color: blue;"> (Lines 415-416) I suggest deleting this. Your results can't determine if there is any effect of this type of bias. </span>
 
-**Response**: 
+**Response**: [I tend to agree with the deletion.]
 
 
 17. <span style = "color: blue;"> (Line 422) For the particular simulations that you conduct. </span>
 
-**Response**: 
+**Response**: [under low to median nitrogen prices; ]
 
 
 18. <span style = "color: blue;"> (Lines 424-426) I assume these studies evaluate the accuracy of GWR, but you are not testing the accuracy of GWR. I suggest rewording or deleting. </span>
 
-**Response**: 
+**Response**: [that is one novelty of our study, we measure economic performance]
 
 
 19. <span style = "color: blue;"> (Line 438) Choose a different word. </span>
 
-**Response**: 
+**Response**: We changed it to "problematic" (see page ??, line ??)
 
 
 20. <span style = "color: blue;"> (Line 457) Remove "in reality". </span>
 
-**Response**: 
+**Response**: Removed in revised manuscript.
 
 
 21. <span style = "color: blue;"> (Lines 459-460) Again, too much emphasis on this one article. </span>
 
-**Response**: 
+**Response**: []
 
 
 22. <span style = "color: blue;"> (Line 464) Please reword. </span>

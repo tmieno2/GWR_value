@@ -7,16 +7,11 @@ output:
 bibliography: PA.bib
 ---
 
-
-
-
 Your comments are in blue, and our responses are in black.
-
 
 1. <span style = "color: blue;"> (Title) Please revise the title. When I read the title I assumed that using GWR is the source of mis-specification. I don't know that GWR even needs to be in the title. For example, "Economic Evaluation of Mis-specified Functional Form for Site-specific Nitrogen Management". </span>
 
-**Response**: We agree that the source of EONR estimation problems is the response functional form mis-specification, not from GWR itself. But the mis-specification issue is only confined to the GWR model, and there is no mis-specification issue in the uniform response model (SCAM model in this study). In addition, this study exclusively focuses on GWR model's performance. Our primary aim is to highlight the problems associated with the existing quadratic GWR specification, and advocate for the development of GWR models that allow more flexible functional forms. To that end, we believe the current title adequately conveys this study's main objective.
-
+**Response**: The title you suggested is to general because we do indeed test the bias in estimating the value of VRA over URA when mis-specified (quadratic when quadratic-plateau is true as is the case for many crop-input relationship including corn-nitrogen) GWR is used. We changed the title to "Bias in the Estimation of the Value of VRA over URA: A case of Mis-speficied Geographically Weighted Regression Models." 
 
 2. <span style = "color: blue;"> (Lines 18-19) It seems like you need to emphasize again in the introduction that the ideal method is to use a method like GWR with the correct functional form. </span>
 
@@ -52,7 +47,7 @@ OFPE data are not the costly data. Costly data refers to the detailed field info
 
 8. <span style = "color: blue;"> (Line 128) This section seems like a repeat of your introduction and could be dropped after improving introduction. </span>
 
-**Response**: (I kind of agree. I also think we can merge section 2.2 to the introduction as well, and merge section 2.1 to the method section.)
+**Response**: We intgegrated. 
 
 
 9. <span style = "color: blue;"> (Line 163) this language still sounds like GWR is the source of bias.  </span>

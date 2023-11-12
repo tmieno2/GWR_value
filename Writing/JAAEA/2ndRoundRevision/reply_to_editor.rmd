@@ -88,7 +88,7 @@ It might be that the confusion of using true optimal N rate may come from the $N
 
 1.  <span style = "color: blue;"> (Line 369) typo </span>
 
-**Response**: 
+**Response**: The typo was corrected.
 
 
 15. <span style = "color: blue;"> (Line 397) Please revise this language through the manuscript. It sounds like it is a difference between GWR and SCAM. But it is really a difference between quadratic GWR and a more flexible functional form with no spatial heterogeneity. </span>
@@ -97,7 +97,6 @@ It might be that the confusion of using true optimal N rate may come from the $N
 
 16. <span style = "color: blue;"> (Line 399) please revise this language throughout the manuscript. It is a quadratic GWR. </span>
 
-**Response**: We used a more explicit expression of "estimated yield response by the mis-specified quadratic GWR" in the revised writing (see page ??, line ??). [We also emphasized that point in the introduction (see page ??, line ??) to clarify this concept at the beginning of this manuscript.]
 
 
 16. <span style = "color: blue;"> (Lines 415-416) I suggest deleting this. Your results can't determine if there is any effect of this type of bias. </span>
@@ -122,7 +121,7 @@ It might be that the confusion of using true optimal N rate may come from the $N
 
 20. <span style = "color: blue;"> (Line 457) Remove "in reality". </span>
 
-**Response**: 
+**Response**: Removed in revised manuscript.
 
 
 21. <span style = "color: blue;"> (Lines 459-460) Again, too much emphasis on this one article. </span>

@@ -126,7 +126,7 @@ We believe the confusion of using true optimal N rate may come from the $N^*_{j,
 
 23. <span style = "color: blue;"> (Lines 468-474) Delete this. You could already assess the performance of GWR if you assume the true model is quadratic and see how well GWR with the correct functional form does. But then that raises questions about how you chose the distribution of the parameter values. </span>
 
-**Response**: 
+**Response**: We deleted the paragraph.
 
 
 

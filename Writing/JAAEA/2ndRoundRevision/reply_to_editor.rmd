@@ -11,38 +11,43 @@ Your comments are in blue, and our responses are in black.
 
 1. <span style = "color: blue;"> (Title) Please revise the title. When I read the title I assumed that using GWR is the source of mis-specification. I don't know that GWR even needs to be in the title. For example, "Economic Evaluation of Mis-specified Functional Form for Site-specific Nitrogen Management". </span>
 
-**Response**: Your suggested title seems too general. We indeed asess only GWR-based VRA. We have changed the title to the following:
+**Response**: Your suggested title is appreciated, but it might be perceived as overly broad. Our study specifically evaluates the biases inherent in Geographically Weighted Regression (GWR)-based Variable Rate Applications (VRA). We've adjusted the title to better reflect this focus:
 
 "Bias in the Estimation of the Value of VRA over URA: A Case of Mis-speficied Geographically Weighted Regression Models."
 
-Please note that we do include "mis-specified" (in the current and old title). So, we believe that the title does not suggest that we are examining the bias introduced by GWR per se.
+It's important to note that both the current and previous titles incorporate the term "mis-specified." This inclusion is deliberate to clarify that our investigation doesn't solely center on the bias introduced by GWR itself.
+
 
 2. <span style = "color: blue;"> (Lines 18-19) It seems like you need to emphasize again in the introduction that the ideal method is to use a method like GWR with the correct functional form. </span>
 
-**Response**: That you for the suggestion. We added sentences "Ideally, the GWR model should be specified with quadratic-plateau or more flexible functional forms. However, no software package is readily usable to estimate GWR with nonlinear functional form." in the introduction (page ??, lines ??) to emphasize the ideal method is QP GWR or more flexible GWR, but is not currently available.
+**Response**: Thank you for the suggestion. We added sentences "Ideally, the GWR model should be specified with quadratic-plateau or more flexible functional forms. However, no software package is readily usable to estimate GWR with nonlinear functional form." in the introduction (page ??, lines ??) to emphasize the ideal method is QP GWR or more flexible GWR, but is not currently available.
 
 
 3. <span style = "color: blue;"> (Line 42) It is unclear to me what you mean by "costly spatial field and soil data." They are still using OFPE data, correct? This gets clearer later in the paper, but needs to be better explained in the intro. Why does GWR need less costly data than machine learning approaches? </span>
 
-**Response**: Please note that the exact sentence is removed after modifying out introduction. However, we make this point clearer in the third pragraphr of the introduction. 
+**Response**: Please note that the exact sentence has been removed after modifying our introduction. However, we make this point clearer in the third pragraphr of the introduction (see page ??, lines ??). 
+
 
 4. <span style = "color: blue;"> (Line 44) Please be more specific about what you mean by "such data." </span>
 
-**Response**: We deleted the sentence while modifying the introduction.
+**Response**: We deleted the sentence while modifying the introduction. This point is now discussed with more clarity in the third pragraphr of the introduction (see page ??, lines ??)
 
 
 5. <span style = "color: blue;"> (Line 54) It seems that you put too much emphasis on this one study in this paragraph and the preceding paragraph. This is not a major article that deserves other papers written on it. I think the broader point that you are trying to make is about several articles that use GWR with quadratic response functions. I suggest you rewrite to be broader and clearer. </span>
 
-**Response**: Here, it is important to talk about Trevisan et al (2021) in the introduction. As written in the same paragraph, their estimates of the value of GWR-based VRA over URA are unreasonably higher compared to the previous studies (five times higher). Thjat's how we started to wonder what is causing this seemingly excessive value of VRA over URA. We hypothesize that this is caused by functional form misspecification and also potentially inaccuracy with coefficient estimation by GWR. We tested it and we showed that it is indeed the case that GWR with quadratic functional form when the true yield response is quadratic-plateau severely over-estimate the value of VRA over URA. While this paper may not be a major article, its implication to the precision agriculture is large. It is basically claiming that stop doins soil sampling because GWR can get you $50/ha more benefit using VRA rather than URA, where in reality its value is almost nascent. 
+**Response**: In our introduction, it is important to discuss Trevisan et al (2021) in the introduction. As mentioned in the same paragraph, their estimates of the value of GWR-based VRA over URA are notably higher compared to the previous studies (five times higher). This considerable difference prompted our inquiry into the reasons behind this seemingly exaggerated value disparity between VRA and URA. We hypothesize that this is caused by functional form misspecification and also potentially inaccuracy with coefficient estimation by GWR. We tested it and revealed that it is indeed the case that GWR with quadratic functional form when the true yield response is quadratic-plateau severely overestimates the value of VRA over URA. While the Trevisan et al (2021) paper may not be a major article, its implication to the precision agriculture is large. It is basically claiming that we can stop conducting soil sampling because GWR can get $50/ha more benefit using VRA rather than URA without soil data, where in reality its value is almost marginal. 
 
-However, we followed the suggestion and have removed 6 places that cited @trevisan2021spatial in the revised manuscript, and only mentioned the @trevisan2021spatial only when it's absolutely necessary (such as using it to name the GWRT model or discussing its results). The revised manuscript is also more broadly mentioning the general terms like "quadratic GWR" instead of the exact @trevisan2021spatial citation (for example, see the change from line 161 in previous manuscript to line ?? in the revised manuscript).
+However, we followed the suggestion and have removed 8 places that cited @trevisan2021spatial in the revised manuscript, and mentioned the @trevisan2021spatial only when it's absolutely necessary (such as using it to name the GWRT model, introducing the model specification, or comparing its results with our simulations). The revised manuscript also utilizes broader terms like "quadratic GWR" instead of the direct @trevisan2021spatial citation (for example, see the change from line 161 in previous manuscript to line ?? in the revised manuscript).
 
 
 6. <span style = "color: blue;"> (Line 58) You don't need to speculate on why they made this assumption. You can simply state that no software packages allow nonlinear function form. </span>
 
-**Response**: Thank you for the suggestion. We now have the following sentence (see updated writing in page ??, lines ??):
+**Response**: Thank you for the suggestion. We now have the following updated sentence:
 
-"Trevisan et al (2021) had to choose the quadratic functional form because no readily usable statistical software or package could be used to implement quadratic-plateau GWR at the time."
+"Previous studies estimating corn yield responses using GWR had to choose the quadratic functional form because no readily usable statistical software or package could be used to implement quadratic-plateau GWR at the time."
+
+which is also moved to the conclusions section (see page ??, lines ??).
+
 
 7. <span style = "color: blue;"> (Line 73) functional form </span>
 
@@ -51,26 +56,29 @@ However, we followed the suggestion and have removed 6 places that cited @trevis
 
 8. <span style = "color: blue;"> (Line 128) This section seems like a repeat of your introduction and could be dropped after improving introduction. </span>
 
-**Response**: We integrated the discussion of the source of bias in estimating the value of VRA over URA into the second paragraph of the introduction. We also moved the conceptual framework to Appendix.
+**Response**: We integrated the discussion of the source of bias in estimating the value of VRA over URA into the second paragraph of the introduction (see page ??, lines ??). We also moved the conceptual framework to Appendix I.
 
 
 9. <span style = "color: blue;"> (Line 163) this language still sounds like GWR is the source of bias.  </span>
 
-**Response**: We rewrote the paragraph to include the following sentence:
+**Response**: We rewrote the paragraph to include the following sentence: (see page ??, lines ??)
 
 "We cannot use real data to achieve this objective because we never observe the true site-specific yield response functions. But in the Monte Carlo simulations, we can specify yield response functions and generate data from those functions, which enables us to quantify the true economic value of the mis-specified GWR-based VRA over URA and the bias in the estimation of that value in the context of the simulations."
 
-We believe we no longer attribute bias to the use of GWR alone.
+By this modification of writing, we believe we no longer attribute bias solely to the use of GWR.
+
 
 10. <span style = "color: blue;"> (Lines 238-239) Perhaps I am misunderstanding but it seems that you need N rates above the plateau to be able to estimate the plateau. Why not find the impact of applying 120% of the critical N rate so that they simulated data traces out the full plateau function. </span>
 
 **Response**: This is a very good suggestion. In fact, we expanded the lower (0%) and upper (100%) bounds of trial N rates by 20 kg ha$^{-1}$ to ensure the range of trial N rates can fully cover all cells' plateau points. We added the following sentence (page ??, line ??):
 
-"We then subtract 20 kg ha$^{-1}$ from the 0% quantile and add 20 kg ha$^{-1}$ from the 100% quantile to ensure that the range of trial N rates fully encompass the true plateau points"
+"We then subtract 20 kg ha$^{-1}$ from the 0% quantile and add 20 kg ha$^{-1}$ from the 100% quantile to ensure that the range of trial N rates fully encompass the true plateau points."
+
 
 11. <span style = "color: blue;"> (Line 245) typo. </span>
 
 **Response**: We double checked and the period (.) is showed correctly in the Word document. This typo may happened in the PDF generating process from the Journal of AAEA submission website.
+
 
 12. <span style = "color: blue;"> (Line 313) This sentence sounds like the bias is GWR. Please rewrite to be clear that bias of mis-specified functional form. Please read through the entire manuscript and make sure this is clear. </span>
 
@@ -79,21 +87,26 @@ We believe we no longer attribute bias to the use of GWR alone.
 
 13. <span style = "color: blue;"> (Line 323) It seems to me that you should also do a comparison with the "true" site-specific model. For example, calculate the true optimal N rate and substitute this into the true function to give you the true profits of site-specific N application denoted as Pi^TRUE. Then you can calculate Pi^True - Pi^GWR and Pi^True - Pi^SCAM. These would tell you how much of the potential profits of site-specific N are missed due to functional form misspecification.  Is this what you did on line 354. It is unclear. </span>
 
-**Response**: First of all, you seem to think that the bias is only coming from functional form misspecification according to several of your comments. But, the bias we observe is a combination of functional form misspecifciation and also the use of GWR. Since we (anybody in practice) assume that the "estimated" site-specific yield response functions are true because we never know the truth, the use of GWR itself will cause bias in estimating the value of VRA over URA. This can be found if we can estimate GWR with quadratic plateau applied to data generatic process where yield reponse to nitrogen follows quadratic plateau. We are adding bias coming from assuming the wrong functional form of quadratic model to this bias. We will not be able to separate them out. But, the evaluation of this bias is important because as we found out it significantly over-estimates the value of VRA over URA.
+**Response**: There appears to be a misunderstanding that bias solely stems from functional form misspecification, as highlighted in several comments. However, the bias we're observing results from a combination of functional form misspecification and the utilization of GWR itself. In practical scenarios, we assume that the "estimated" site-specific yield response functions represent truth (because we never know the actual truth), the use of GWR itself will inherently cause bias in evaluating VRA over URA. This bias still exists even if we can use the correctly specified quadratic-plateau GWR model. Using the incorrectly specified quadratic GWR model will add more bias to the evalaution. But it is beyond the scope of this study to distinguish between the two sources of bias, and that topic is definitely in our future research agenda. Nonetheless, it's crucial to assess this total bias given its implication in precision farming application, and our findings reveal a significant positive bias by the misspecified GWR model.
 
 Note that our focus is more on the value of VRA over URA. $\Pi^{TRUE}$ will be cancelled out anyway when we calculate the true economic value of VRA over URA with $\Delta^{GWR} = (\Pi^{GWR} - \Pi^{TRUE}) - (\Pi^{SCAM} - \Pi^{TRUE}) = \Pi^{GWR} - \Pi^{SCAM}$. 
 
-It might be that the confusion of using true optimal N rate may come from the $N^*_{j,i}$ definition equation (page 13, line 237 of previous manuscript). The calculation of $N^*_{j,i}$ is solely for the purpose of comparing with the estimated optimal N rates to show the estimation performances. The $N^*_{j,i}$ themselves are never used in any profit calculation. We added a new statement "Note that the true $N^*_{j,i}$s are not observable by producers or researchers, and are not used in the profit calculation in this study." in the revised manuscript to clarify that (see page ??, lines ??). We also moved the equation ......... 
+It might be that the confusion of using true optimal N rate may come from the $N^*_{j,i}$ definition equation (page 13, line 237 of previous manuscript). The calculation of $N^*_{j,i}$ is solely for the purpose of comparing with the estimated optimal N rates to show the estimation performances. The $N^*_{j,i}$ themselves are never used in any profit calculation. We added a new statement "Note that the true $N^*_{j,i}$s are not observable by producers or researchers, and are not used in the profit calculation in this study." in the revised manuscript to clarify that (see page ??, lines ??). We also moved the $N^*_{j,i}$ definition equation to the section "True Cell-specific Yield Response Function" to avoid the confusion.
 
 
-1.  <span style = "color: blue;"> (Line 369) typo </span>
+14.  <span style = "color: blue;"> (Line 369) typo </span>
 
 **Response**: The typo was corrected.
 
 
 15. <span style = "color: blue;"> (Line 397) Please revise this language through the manuscript. It sounds like it is a difference between GWR and SCAM. But it is really a difference between quadratic GWR and a more flexible functional form with no spatial heterogeneity. </span>
 
-**Response**: We modify the sentence so that we are not generalizing our results.
+**Response**: We modify the sentence to: ()
+
+"Figure 5 panel (a) illustrates the true quadratic-plateau yield response curve and estimated yield response curve by the mis-specified quadratic GWR for a single cell." 
+
+We hope that modification can emphasize the 
+
 
 16. <span style = "color: blue;"> (Line 399) please revise this language throughout the manuscript. It is a quadratic GWR. </span>
 
@@ -141,5 +154,18 @@ It might be that the confusion of using true optimal N rate may come from the $N
 **Response**: We deleted the paragraph.
 
 
+<span style = "color: blue;"> Comments from the editor's email. </span>
+ 
+<span style = "color: blue;"> I still find it difficult to understand the main conclusions from the paper. Please try to add some text to the introduction that states the key points as clearly as possible. Part of the challenge is that I find it difficult to remember all of the abbreviations that are used. I think your key results are as follows. First, you find that variable rate application using prescriptions from a model with spatially-varying coefficients of the incorrect functional form gives lower profits than a uniform rate application using prescriptions from a non-spatial model with a more flexible functional form. Second, you find that researchers could get the false impression that the variable rate application is much more profitable than uniform rate application if researchers assume the model with spatially-varying coefficients of an incorrect functional form is true. </span>
 
+**Response**: We have made significant revisions to the introduction, underscoring the study's primary focus on "examine the degree and direction of bias in the estimation of the economic value of GWR-based variable nitrogen rate recommendations in corn production, especially when the yield response to nitrogen is incorrectly specified as quadratic in the GWR model instead of the correct quadratic-plateau function" (see page ??, lines ??). We appreciate your accurate summary of the key results of this study, and have reintroduced those findings in the conclusion (see page ??, lines ??).
+
+For the abbreviations (such as GWR, GWRR, GWRT, SCAM, VRA, URA, Rx), we have explored to use full names instead, but given their frequent occurrence, using full names could result in lengthy and redundant sentences. We have revised the entire manuscript to ensure the clarity of these abbreviations. Notably, the pivotal term "the quadratic GWR-based VRA" is reiterated many times throughout the manuscript, ensuring that readers retain a clear understanding of its meaning as they progress through the text.
+
+We also apologize for giving you the wrong idea that variable rate application from GWR gives lower profits than uniform rate application. The average GWR profit is still slightly higher than uniform rate application. We have revised the results section to make this clear (see page ??, lines ??).
+
+
+<span style = "color: blue;"> I would also like you to make sure that the revised paper is in the shorter format featured by the JAAEA. Note that the main manuscript should be less than 6,000 words with no more than 5 exhibits (tables and figures). Also, the abstract should be less than 100 words. When revising, please consider the main message of the paper and then streamline the text to convey that message. </span>
+
+**Response**: .
 

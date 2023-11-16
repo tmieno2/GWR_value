@@ -113,110 +113,118 @@ gg_appendix <-
   mutate(results = list(
     here("Shared/Results", kernel, "pi_data.rds") %>%
       readRDS() %>%
-      .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
-      .[, bias := pi_diff_est - pi_diff] %>%
-      # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
-      .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
-      # === label price ratio
-      .[, pLabelName := "Price Ratio (N/corn)"] %>%
-      .[pRatio == 5.44, pLabel := "Low"] %>%
-      .[pRatio == 6.56, pLabel := "Middle"] %>%
-      .[pRatio == 7.67, pLabel := "High"] %>%
-      .[, pLabel := factor(pLabel, levels = c("Low", "Middle", "High"))] %>%
-      .[, p_ratio_text := paste0("Price Ratio (N/Corn) \n = ", pRatio, " (", pLabel, ")")]
+    # === do not need QD result
+    .[model!="QD", ] %>% 
+    # === modify model names
+    .[model=="GWR-R", model := "GWRR"] %>% 
+    .[model=="GWR-T", model := "GWRT"] %>% 
+    # === only need  25% (5.44), 50% (6.56), 75% (7.67) price ratio
+    .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+    # === label prices
+    .[pRatio == 5.44, pLabel := "5.44 (Low)"] %>%
+    .[pRatio == 6.56, pLabel := "6.56 (Middle)"] %>%
+    .[pRatio == 7.67, pLabel := "7.67 (High)"] %>%
+    # === estimation bias
+    .[, bias := pi_diff_est - pi_diff]
   )) %>%
   #* ===========================================================
   #* Plots of the value of GWR
   #* ===========================================================
   mutate(median_data_value = list(
     results %>%
-      .[, .(pi_diff = median(pi_diff)),
-        by = .(field_col, p_ratio_text, type)
+      .[, .(pi_diff = median(pi_diff),
+      pi_diff_est = median(pi_diff_est),
+      bias = median(bias)),
+        by = .(field_col, pLabel, model)
       ]
   )) %>%
   mutate(g_value = list(
     results %>%
       ggplot(data = .) +
-      geom_histogram(
-        aes(x = pi_diff),
-        fill = NA,
-        color = "blue",
-        bins = 50,
-        size = 0.2
-      ) +
-      geom_vline(
-        data = median_data_value,
+          geom_histogram(
+        aes(x = pi_diff, fill = "True", color = "True"),
+        alpha = 0.1, bins = 80, size = 0.2
+    ) +
+    geom_histogram(
+        aes(x = pi_diff_est, fill = "Estimated", color = "Estimated"),
+        alpha = 0.4, bins = 80, size = 0.2
+    ) +
+    geom_vline(
+        data = mean_data_value,
         aes(xintercept = pi_diff),
-        color = "red",
-        size = 0.5
-      ) +
-      geom_text(
-        data = median_data_value, color = "red",
+        color = "blue", size = 0.5
+    ) +
+    geom_vline(
+        data = mean_data_value,
+        aes(xintercept = pi_diff_est),
+        color = "red", size = 0.5
+    ) +
+    geom_text(
+        data = mean_data_value, color = "blue",
         aes(
-          x = ifelse(pi_diff < 65, pi_diff + 5, pi_diff - 20),
-          y = 150,
-          label = paste0("Median = ", round(pi_diff, 2))
+            x = ifelse(pi_diff < 65, pi_diff - 5, pi_diff - 20), y = 100,
+            label = paste0("Median=", round(pi_diff, 2))
         ),
-        angle = 0, hjust = -0.1, vjust = 0, size = 3,
-        family = "Times"
-      ) +
-      facet_grid(p_ratio_text ~ type) +
-      scale_y_continuous(expand = c(0, 0), limits = c(NA, 200)) +
-      scale_x_continuous(breaks = 20 * (-2:4), limits = c(-45, 80)) +
-      theme(
-        panel.spacing.y = unit(0.3, "cm")
-      ) +
-      xlab("The value of VRA over URA ($ per ha)") +
-      ylab("Number of Simulation Cases")
-  )) %>%
-  #* ===========================================================
-  #* Plots of the bias in the value of GWR
-  #* ===========================================================
-  mutate(median_bias_data = list(
-    results %>%
-      .[, bias := pi_diff_est - pi_diff] %>%
-      .[, .(bias = median(bias)),
-        by = .(field_col, p_ratio_text, type)
-      ]
-  )) %>%
-  mutate(g_bias = list(
-    results %>%
-      .[, bias := pi_diff_est - pi_diff] %>%
-      .[bias < 150, ] %>%
-      ggplot(data = .) +
-      geom_histogram(
-        aes(x = bias),
-        fill = NA,
-        color = "blue",
-        size = 0.2,
-        bins = 50
-      ) +
-      geom_vline(
-        data = median_bias_data, aes(xintercept = bias),
-        color = "red",
-        size = 0.5
-      ) +
-      geom_text(
-        data = median_bias_data, color = "red",
+        angle = 0, hjust = 0.9, vjust = 0, size = 2.5
+    ) +
+    geom_text(
+        data = mean_data_value, color = "red",
         aes(
-          x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
-          label = paste0("Median = ", round(bias, 2))
+            x = ifelse(pi_diff_est < 65, pi_diff_est + 4, pi_diff_est - 20), y = 100,
+            label = paste0("Median=", round(pi_diff_est, 2))
         ),
-        angle = 0, hjust = -0.1, vjust = 0, size = 3,
-        family = "Times"
-      ) +
-      facet_grid(p_ratio_text ~ type) +
-      scale_y_continuous(expand = c(0, 0)) +
-      theme(
-        panel.spacing.y = unit(0.3, "cm")
-      ) +
-      xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
-      ylab("Number of Simulation Cases")
+        angle = 0, hjust = -0.1, vjust = 0, size = 2.5
+    ) +
+    scale_color_manual(name = "", values = c("True" = "blue", "Estimated" = "red"),
+                       breaks = c("True", "Estimated")) +
+    scale_fill_manual(name = "", values = c("True" = "blue", "Estimated" = "red"),
+                      breaks = c("True", "Estimated")) +
+    facet_grid(pLabel ~ model) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_x_continuous(breaks = 20 * (-2:4), limits = c(-30, 90)) +
+    scale_y_continuous(sec.axis = sec_axis(~ . , name = "Nitrogen-Corn Price Ratio", breaks = NULL, labels = NULL),
+                       expand = c(0, 0)) +
+    xlab("Economic value of VRA over URA ($ per ha)") +
+    ylab("Number of Simulation Cases") +
+    theme(
+        text = element_text(family = "Times New Roman"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(fill = NA),
+        legend.position='bottom',
+        legend.key.size = unit(0.3, 'cm')
+    )
   )) %>%
-  select(kernel, g_value, g_bias)
+    select(kernel, g_value)
 ```
 
-# Appendix I: Historical Corn and Nitrogen Prices {-}
+
+# Appendix I: Conceptual Framework of Estimating Yield-to-input Response Relationships Using OFPE Data {-}
+
+OFPE can provide detailed as-applied input and yield data at dense resolutions over entire fields, which if well analyzed may provide valuable information that can improve site-specific input application recommendations [@bullock2019data; @lacoste2021farm]. Consider a yield response function $y = f(\textbf{x}, \textbf{c})$, where following @bullock2000agronomic, $\textbf{x}$ is a vector of input management variables and $\textbf{c}$ is a vector of spatial variables describing field and soil characteristics^[For simplicity, we suppress discussion of the need to bring variance in weather data into yield response estimation.  Obviously, generation and use of weather data is necessary to provide meaningful probabilistic analysis and input management advice.]. Letting a field site $i$ be defined as a contiguous area characterized uniformly by a value $\textbf{c}_i$ of the vector of field and soil characteristics, its *site-specific yield response function* is the reduced form of the field's yield response function created when the value of the vector of characteristics variables is set at the site's value, $\textbf{c}_i$:  $f_i(\textbf{x}) \equiv f(\textbf{x}, \textbf{c}_i)$.  This conceptualization suggests two methods of estimating a field's site-specific yield responses. The first is to estimate a "map" of the field characteristics, for example thought of as a set of the field's $n \geq 1$ sites' values of the characteristics vector: $\{\textbf{c}_1,\dots, \textbf{c}_n\}$.  With that map, regressing yield on $\textbf{x}$ and $\textbf{c}$ generates an estimated "field-specific" yield response function $\hat{f}(\textbf{x},\textbf{c})$. Estimates of site-specific yield response functions can then be obtained by inserting the value of the site's characteristic variables into the estimate of the field-specific response function: $\hat{f}_i(\textbf{x}) \equiv \hat{f}(\textbf{x},\textbf{c}_i)$. Alternatively, a site-specific yield response function might be estimated simply by taking (input rate, yield) data from points around a site of interest $i$, and regressing yield on input application rates to attain the estimate $\hat{f}_i (\textbf{x})$. Stated roughly, using GWR takes the latter approach, which has the advantage of not needing a costly map of field characteristics values.
+
+
+# Appendix II: Maps of the Simulated On-farm Precision Experiment Field {-}
+
+This appendix section provides the detailed spatial maps for the field layout with spatial unit definitions, experiment design of nitrogen (N) rates, and spatial distribution of the true yield response parameters of the simulated on-farm precision experiment (OFPE) field.
+
+```{r fig.id = "field-layout", fig.cap = "Simulated field layout with spatial unit definitions", fig.width = 7}
+knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_layout.png"))
+g_layout
+```
+
+```{r fig.id = "field-N-design", fig.cap = "Experiment design of nitrogen (N) rates", out.width = "6in", fig.width = 7}
+knitr::include_graphics(here::here("GitControlled/Writing/Figures/g_exp.png"))
+g_exp
+```
+
+```{r fig.id = "field-N-design", fig.cap = "Spatial distribution of the true yield response parameters in one simulation", out.width = "6in", fig.width = 7}
+knitr::include_graphics(here::here("GitControlled/Writing/Figures/appendix/g_par.png"))
+g_par
+```
+
+# Appendix III: Historical Corn and Nitrogen Prices {-}
 
 ```{r price-history-plot, include = FALSE}
 # read the data
@@ -296,7 +304,7 @@ Nitrogen prices were collected from two sources. The USDA National Agricultural 
 The nitrogen-corn price ratios were calculated as the nitrogen fertilizer price ($w$) divided by corn price ($p$), and the results were shown in the bottom panel of Figure A\@ref(fig:price). This study took three values at the 25th, 50th, and 75th percentiles of the historical monthly price ratios (pooled over the three types of nitrogen fertilizer) from 2002 to 2022 to represent the low (5.44), middle (6.56), and high (7.67) price ratio scenarios. For consistency purposes, in the profitability calculations the corn price was selected at approximately the Spring 2022 price of \$0.28/kg. Consequently, the corresponding nitrogen prices for the three price ratio scenarios were approximately 5.44×0.28 = \$1.52/kg, 6.56×0.28 = \$1.84/kg, and 10.35×0.28 = \$2.15/kg. It is important to note that when different corn prices are used, the resulting profits of GWR will vary accordingly, but the variation will be proportional to the result of selected corn price and does not qualitatively alter the final conclusions.
 
 
-# Appendix II: Results with Alternative Kernel Functions {-}
+# Appendix IV: Results with Alternative Kernel Functions {-}
 
 There are many different kernel functions to define the distance-decay weightings for GWR model. In the main text, the Gaussian kernel function was use, which can be mathematically represented as follows:
 
@@ -310,59 +318,29 @@ where $d_{ab}$ denotes the Euclidean distance between observation $b$ and regres
 This appendix compares several other alternative kernel functions, including the Exponential, Boxcar, Bi-square, and Tri-cube, in additional to the Gaussian. The functional forms and graphical representations of these kernels can be found in Figure A\@ref(fig:kernel). The estimation results obtained using alternative kernel functions, apart from the Gaussian kernel, are presented in Figures A\@ref(fig:value-kernel-bs) through A\@ref(fig:bias-kernel-boxcar). 
 
 ```{r, fig.id = "kernel", fig.cap = "List of Kernel functions for GWR modeling. In the graphs of kernel function curves, the y-axis is the kernel weight, and the x-axis is the ratio of ($d_{ab}/h$). "}
-knitr::include_graphics("kernel_function_list.png")
+knitr::include_graphics(here::here("GitControlled/Writing/Figures/appendix/kernel_function_list.png"))
 ```
 
 For the case of Exponential kernel, which is a continuous kernel like the Gaussian, the optimal bandwidth selection follows a similar corrected AIC approach and results in a similar bandwidth of 18 meters. For the discontinuous kernels of Boxcar, Bi-square, and Tri-cube, however, the 18-meter bandwidth does not encompass a sufficient number of neighboring observations for reliable local regressions, resulting in unrealistic estimation outcomes. To address this issue, an empirical bandwidth of 100 meters is chosen for these discontinuous kernels to enable the inclusion of an adequate number of local observations. Other bandwidth values (such as 80 meters, 150 meters) are also conducted and the resulting estimation outcomes are found to be comparable. 
 
 Overall, the economic evaluation results of GWR models presented in this study are not significantly influenced by the selection of the kernel function in GWR estimation. Despite slight variations in calculated profit and bias among the different kernels, the qualitative consistency of the final conclusions remains intact regardless of the chosen kernel.
 
-## Comparing the values of GWR-based VRA and SCAM-based URA {-}
+Figures A\@ref(fig:value-kernel-exp) through A\@ref(fig:value-kernel-tricube) show the distributions of the true and estimated economic value of GWR-based VRA (\Delta^{GWR} and $\hat{\Delta}^{GWR}$) using four alternative kernels (Exponential, Boxcar, Bi-square, and Tri-cube). The true values are calculated using the true yield response functions, while the estimated values are calculated using the quadratic GWR-estimated yield response functions. Two GWR models (GWRR and GWRT) are used. The values are calculated at three nitrogen-corn price ratios ($/kg : $/kg) while the corn price is set at $0.28/kg. A substantial overestimation of the GWR-based VRA's economic value compared to its true value is present for all kernels, which is consistent with the Gaussian kernel result. Using the Gaussian kernel, GWRR performs better as the price ratio increases, and GWRT performs better as the price ratio decreases. This holds true across all the other kernel function choices as well. The presence of a similar fat tail in the GWRT value distribution is also evident. The magnitudes of the estimation bias vary across kernel function choices, but the differences are not substantial and do not affect qualitatively our conclusions drawn in the main text.
 
-Figures A\@ref(fig:value-kernel-exp) through A\@ref(fig:value-kernel-tricube) show the distributions of the true economic value of GWR using four different kernels (Exponential, Boxcar, Bi-square, and Tri-cube):
 
-\begin{equation}
-\Delta^{GWR}=\Pi^{GWR}-\Pi^{SCAM}.
-(\#eq:label)
-\end{equation}
-
-Using the Gaussian kernel, we found that GWRR performs better as the price ratio increases, and GWRT performs better as the price ratio decreases (see Figure 3 of the main text). This holds true across all the other kernel function choices. Although there are some variations in the magnitudes of $\Delta^{GWR}$ among different kernel function choices, these differences do not significantly affect the conclusions drawn in the main text.
-
-```{r, fig.id = "value-kernel-exp", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Exponential kernel function", fig.height = 6}
+ ```{r, fig.id = "value-kernel-exp", fig.cap = "The economic value of the quadratic GWR-based VRA over SCAM-based URA using the Exponential kernel function", fig.height = 7}
 gg_appendix$g_value[[2]]
 ```
 
-```{r, fig.id = "value-kernel-boxcar", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Boxcar kernel function", fig.height = 6}
+```{r, fig.id = "value-kernel-boxcar", fig.cap = "The economic value of the quadratic GWR-based VRA over SCAM-based URA using the Boxcar kernel function", fig.height = 7}
 gg_appendix$g_value[[3]]
 ```
 
-```{r, fig.id = "value-kernel-bs", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Bi-square kernel function", fig.height = 6}
+```{r, fig.id = "value-kernel-bs", fig.cap = "The economic value of the quadratic GWR-based VRA over SCAM-based URA using the Bi-square kernel function", fig.height = 7}
 gg_appendix$g_value[[4]]
 ```
 
-```{r, fig.id = "value-kernel-tricube", fig.cap = "The true economic value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Tri-cube kernel function", fig.height = 6}
-gg_appendix$g_value[[5]]
-```
-
-`r run_pagebreak()`
-
-## Bias in the estimation of the value of GWR-based VRA {-}
-
-Figures A\@ref(fig:bias-kernel-exp) through A\@ref(fig:bias-kernel-tricube) show the distribution of the bias in the estimated economic value of GWR. Similar to the findings from using the Gaussian kernel presented in Figure 6 under the Gaussian kernel, the GWRR consistently exhibits significant over-estimation of the value of GWR-based VRA across all other kernel function choices. Also, the GWRT demonstrates smaller over-estimation at low price ratios compared to GWRR, while the over-estimation increases as price ratio rises. The presence of a similar fat tail in the GWRT bias distribution is also evident. The magnitudes of the estimation bias vary across kernel function choices, but the differences are not substantial and do not affect qualitatively our conclusions drawn in the main text.
-
-```{r, fig.id = "bias-kernel-exp", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Exponential kernel function", fig.height = 6}
-gg_appendix$g_bias[[2]]
-```
-
-```{r, fig.id = "bias-kernel-boxcar", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Boxcar kernel function", fig.height = 6}
-gg_appendix$g_value[[3]]
-```
-
-```{r, fig.id = "bias-kernel-bs", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Bi-square kernel function", fig.height = 6}
-gg_appendix$g_value[[4]]
-```
-
-```{r, fig.id = "bias-kernel-tricube", fig.cap = "Bias in the estimation of the value of GWR-based VRA for two GWR models (GWRR and GWRT) and under three nitrogen-corn price ratios using the Tri-cube kernel function", fig.height = 6}
+```{r, fig.id = "value-kernel-tricube", fig.cap = "The economic value of the quadratic GWR-based VRA over SCAM-based URA using the Tri-cube kernel function", fig.height = 7}
 gg_appendix$g_value[[5]]
 ```
 

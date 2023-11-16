@@ -210,112 +210,140 @@ ggsave(
 results <-
   here("Shared/Results/gaussian/pi_data.rds") %>%
   readRDS() %>%
-  .[, type := ifelse(transfer == 0, "GWRR", "GWRT")] %>%
-  .[, bias := pi_diff_est - pi_diff] %>%
-  # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
-  .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
-  # === label price ratio
-  .[, pLabelName := "Price Ratio (N/corn)"] %>%
-  .[pRatio == 5.44, pLabel := "Low (5.44)"] %>%
-  .[pRatio == 6.56, pLabel := "Middle (6.56)"] %>%
-  .[pRatio == 7.67, pLabel := "High (7.67)"] %>%
-  .[, pLabel := factor(pLabel, levels = c("Low (5.44)", "Middle (6.56)", "High (7.67)"))]
+    # === do not need QD result
+    .[model!="QD", ] %>% 
+    # === modify model names
+    .[model=="GWR-R", model := "GWRR"] %>% 
+    .[model=="GWR-T", model := "GWRT"] %>% 
+    # === only need  25% (5.44), 50% (6.56), 75% (7.67) price ratio
+    .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+    # === label prices
+    .[pRatio == 5.44, pLabel := "5.44 (Low)"] %>%
+    .[pRatio == 6.56, pLabel := "6.56 (Middle)"] %>%
+    .[pRatio == 7.67, pLabel := "7.67 (High)"] %>%
+    # === estimation bias
+    .[, bias := pi_diff_est - pi_diff]
 ```
 
-# The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T
+# The value of GWR-based VRA over SCAM-based URA
 
 ```{r}
-# fig.id = "pi-dif-dist",
-# fig.cap = "The value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
+# fig.id = "value-vra",
+# fig.cap = "The economic value of the quadratic GWR-based VRA over SCAM-based URA"
 mean_data_value <-
-  results %>%
-  .[, .(pi_diff = median(pi_diff)),
-    by = c("field_col", "pLabel", "type")
-  ]
-
-# saveRDS(mean_data_value, "Shared/Results/mean_data_value.rds")
+    results %>%
+    .[, .(pi_diff = median(pi_diff),
+          pi_diff_est = median(pi_diff_est),
+          bias = median(bias)),
+      by = c("field_col", "pLabel", "model")
+    ]
 
 g_value <-
   results %>%
   ggplot(data = .) +
   geom_histogram(
-    aes(x = pi_diff),
-    fill = NA,
-    color = "blue",
-    bins = 50,
-    linewidth = 0.2
-  ) +
-  geom_vline(
-    data = mean_data_value,
-    aes(xintercept = pi_diff),
-    color = "red",
-    linewidth = 0.5
-  ) +
-  geom_text(
-    data = mean_data_value, color = "red",
-    aes(
-      x = ifelse(pi_diff < 65, pi_diff + 5, pi_diff - 20), y = 150,
-      label = paste0("Median = ", round(pi_diff, 2))
-    ),
-    angle = 0,
-    hjust = -0.1,
-    vjust = 0,
-    size = 3,
-    family = "Times"
-  ) +
-  facet_grid(pLabel ~ type) +
-  scale_y_continuous(expand = c(0, 0)) +
-  scale_x_continuous(breaks = 20 * (-2:3), limits = c(-45, 60)) +
-  xlab("The value of VRA over URA ($ per ha)") +
-  ylab("Number of Simulation Cases") +
+        aes(x = pi_diff, fill = "True", color = "True"),
+        alpha = 0.1, bins = 80, size = 0.2
+    ) +
+    geom_histogram(
+        aes(x = pi_diff_est, fill = "Estimated", color = "Estimated"),
+        alpha = 0.4, bins = 80, size = 0.2
+    ) +
+    geom_vline(
+        data = mean_data_value,
+        aes(xintercept = pi_diff),
+        color = "blue", size = 0.5
+    ) +
+    geom_vline(
+        data = mean_data_value,
+        aes(xintercept = pi_diff_est),
+        color = "red", size = 0.5
+    ) +
+    geom_text(
+        data = mean_data_value, color = "blue",
+        aes(
+            x = ifelse(pi_diff < 65, pi_diff - 5, pi_diff - 20), y = 100,
+            label = paste0("Median=", round(pi_diff, 2))
+        ),
+        angle = 0, hjust = 0.9, vjust = 0, size = 2.5
+    ) +
+    geom_text(
+        data = mean_data_value, color = "red",
+        aes(
+            x = ifelse(pi_diff_est < 65, pi_diff_est + 4, pi_diff_est - 20), y = 100,
+            label = paste0("Median=", round(pi_diff_est, 2))
+        ),
+        angle = 0, hjust = -0.1, vjust = 0, size = 2.5
+    ) +
+    scale_color_manual(name = "", values = c("True" = "blue", "Estimated" = "red"),
+                       breaks = c("True", "Estimated")) +
+    scale_fill_manual(name = "", values = c("True" = "blue", "Estimated" = "red"),
+                      breaks = c("True", "Estimated")) +
+    facet_grid(pLabel ~ model) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_x_continuous(breaks = 20 * (-2:4), limits = c(-30, 90)) +
+    scale_y_continuous(sec.axis = sec_axis(~ . , name = "Nitrogen-Corn Price Ratio", breaks = NULL, labels = NULL),
+                       expand = c(0, 0)) +
+    xlab("Economic value of VRA over URA ($ per ha)") +
+    ylab("Number of Simulation Cases") +
+    theme(
+        text = element_text(family = "Times New Roman"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(fill = NA),
+        legend.position='bottom',
+        legend.key.size = unit(0.3, 'cm')
+    ) +
   theme_fig
 
 ggsave(
   "GitControlled/Writing/Figures/g_value.png",
   g_value,
-  width = 6,
+  width = 7,
   height = 5,
   dpi = 600
 )
 ```
 
-# EONR estimation tendency
+# EONR estimation bias
 
 ```{r}
-# ggplot(est_data) +
-# geom_histogram(aes(x = opt_N_scam)) +
-# facet_grid(round(pN, digits = 2) ~ .)
-
 est_data <-
   readRDS(here("Shared/Results/Gaussian/est_data.rds")) %>%
   unnest() %>%
-  data.table() %>%
-  .[, type := ifelse(transfer == 0, "GWRR", "GWRT")]
+  data.table()
 
 eorn_ratio_data <-
   est_data %>%
   .[, pRatio := pN / pCorn] %>%
-  # only display the 25% (5.44), 50% (6.56), 75% (7.67) price ratio
-  .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
-  # === label price ratio
-  .[, pLabelName := "Price Ratio (N/corn)"] %>%
-  .[pRatio == 5.44, pLabel := "Low (5.44)"] %>%
-  .[pRatio == 6.56, pLabel := "Middle (6.56)"] %>%
-  .[pRatio == 7.67, pLabel := "High (7.67)"] %>%
-  .[, pLabel := factor(pLabel, levels = c("Low (5.44)", "Middle (6.56)", "High (7.67)"))] %>%
-  .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(type, sim, pLabel)]
+    # === do not need QD result
+    .[model!="QD", ] %>% 
+    # === modify model names
+    .[model=="GWR-R", model := "GWRR"] %>% 
+    .[model=="GWR-T", model := "GWRT"] %>% 
+    # === only need  25% (5.44), 50% (6.56), 75% (7.67) price ratio
+    .[pRatio %in% c(5.44, 6.56, 7.67), ] %>%
+    # === label prices
+    .[pRatio == 5.44, pLabel := "5.44 (Low)"] %>%
+    .[pRatio == 6.56, pLabel := "6.56 (Middle)"] %>%
+    .[pRatio == 7.67, pLabel := "7.67 (High)"] %>% 
+    .[, .(eonr_ratio = mean(opt_N_gwr / opt_N_scam)), by = .(model, sim, pLabel)]
 
 g_eonr_bias <-
   ggplot(data = eorn_ratio_data) +
   geom_histogram(
     aes(x = eonr_ratio),
-    color = "blue",
+    color = "black",
     fill = NA,
     bins = 50,
     size = 0.2
   ) +
-  geom_vline(xintercept = 1, color = "red") +
-  facet_grid(pLabel ~ type) +
+  geom_vline(xintercept = 1, color = "black") +
+  facet_grid(pLabel ~ model) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_y_continuous(sec.axis = sec_axis(~ . , name = "Nitrogen-Corn Price Ratio", breaks = NULL, labels = NULL),
+                       expand = c(0, 0)) +
   ylab("Number of Simulation Cases") +
   xlab("Average Ratio of Estimated EONR to true EONR") +
   theme_fig
@@ -401,65 +429,6 @@ ggsave(
   dpi = 600
 )
 ```
-
-# Bias in the estimation of the value of GWR-based VRA over SCAM-based URA
-
-```{r}
-# fig.id = "bias-est-pi",
-# fig.cap = "Bias in the estimation of the value of GWR-based VRA over SCAM-based URA for GWR-R and GWR-T"
-
-# mean_data_bias[type == "GWRT" & pLabel == 10.35, bias] %>% hist
-
-median_bias_data <-
-  results %>%
-  .[, bias := pi_diff_est - pi_diff] %>%
-  .[, .(bias = median(bias)),
-    by = c("field_col", "pLabel", "type")
-  ] %>%
-  print()
-
-g_bias <-
-  results %>%
-  .[, bias := pi_diff_est - pi_diff] %>%
-  .[bias < 150, ] %>%
-  ggplot(data = .) +
-  geom_histogram(
-    aes(x = bias),
-    fill = NA,
-    color = "blue",
-    size = 0.2,
-    bins = 50
-  ) +
-  geom_vline(
-    data = median_bias_data, aes(xintercept = bias),
-    color = "red",
-    size = 0.5
-  ) +
-  geom_text(
-    data = median_bias_data, color = "red",
-    aes(
-      x = ifelse(bias < 65, bias + 2, bias - 85), y = 100,
-      label = paste0("Median = ", round(bias, 2)),
-      family = "Times"
-    ),
-    angle = 0, hjust = -0.1, vjust = 0, size = 3
-  ) +
-  facet_grid(pLabel ~ type) +
-  scale_y_continuous(expand = c(0, 0)) +
-  xlab("Bias in the Estimation of the Value of VRA over URA ($ per ha)") +
-  ylab("Number of Simulation Cases") +
-  theme_fig
-
-ggsave(
-  "GitControlled/Writing/Figures/g_bias.png",
-  g_bias,
-  width = 6,
-  height = 5,
-  dpi = 600
-)
-```
-
-
 
 # The cause of significant over-estimation of the value of GWR-based VRA
 

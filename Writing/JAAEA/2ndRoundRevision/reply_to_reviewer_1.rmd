@@ -8,13 +8,13 @@ Your comments are in blue, and our responses are in black.
 
 1. <span style = "color: blue;"> The statement in the Abstract "...because no readily available statistical packages exist for GWR estimation with nonlinear functional forms" is inaccurate. A 2022 Precision Agriculture article includes a Linear Response Plateau GWR package in the supplemental materials. </span>
 
-**Response**: This is good to know because the authors do not mention this at all in the paper. But, they only provide bare matlab codes without any readme file. I would not call this readily available. However, we will drop the sentence. (We understand that you told us we cannot ignore this comment, but we just wanted to point this out because we are keeping that sentence.)
+**Response**: We appreciate your observation regarding the existing linear plateau GWR package. Upon reviewing the @lambert2022geographically paper, we found that their supplemental materials solely offer raw MATLAB code without a corresponding readme file, which might not qualify as readily available. Nevertheless, we have removed that sentence in the abstract. But we have retained this information in the main text, as the nonlinear GWR model is still not standard routines in many contemporary mainstream statistical packages.
 
-2. <span style = "color: blue;">A flat response could have produced the "high values" of VRA reported by Trevisan et al., not the method used to estimate yield response. A quadratic functional form (and even a quad-response with a plateau) will likely produce optimal n-rates outside the experimental n-rates if the response is flat.</span>
+2. <span style = "color: blue;"> A flat response could have produced the "high values" of VRA reported by Trevisan et al., not the method used to estimate yield response. A quadratic functional form (and even a quad-response with a plateau) will likely produce optimal n-rates outside the experimental n-rates if the response is flat.</span>
 
 **Response**: We completely agree with the first part. We, however, limit the estimated optimal N rates to be inside the range of the experimental range (e.g., if higher than the highest experimental rate, then the EONR was set to the highest experimental rate). Therefore, the second statement is no corret. With that said, if we were to allow the optimal N rate to go beyond the range of the experimental rates, then the bias would have been even greater than what we report in the manuscript. Finally, as we mentioned, we do not intend to isolate the impact of functional misspecification and the use of GWR in causing bias in estimating the value of VRA. 
 
-We realized that we did not state thaa we limited the estimted EONR to the range of the experimental rates. We added the following sentence to the manuscript on page ??, line ??":
+We realized that we did not state that we limited the estimted EONR to the range of the experimental rates. We added the following sentence to the manuscript on page ??, line ??":
 
 "It should be noted that in some locations the estimated EONRs would be below or above the bound of trial N rates. For those locations, the minimum or maximum trial N rate was used as the corner solution of that location’s EONR. For example, if the estimated EONR was 40 kg/ha, the minimum trial N rate 80 kg/ha will be used as the EONR instead."
 
@@ -24,25 +24,19 @@ We realized that we did not state thaa we limited the estimted EONR to the range
 
 4. <span style = "color: blue;"> The authors generate the "true" site-specific parameters using a Gaussian random field. It does not appear that the authors allowed correlations between the model parameters. In practice, response parameters are typically correlated. How does this affect the simulation results? It is unclear if the simulated random field ensured that parameters of the linear and quadratic n-rates were constrained to be positive and negative, respectively. How was this verified?</span> 
 
-**Response**:
-
-This comment clearly shows that this reviewer did not pay attention to our replies to his comments (the first round review, comment 1). In our reply to his comments, we clearly stated that the site-specific parameters are indeed spatially correlated. We also ensured that the coefficients on the linear and quadratic N-rates were constrained to be positive and negative. This is not a hard task. We share all the codes written in R on a publicly accessible repository. Anybody can check how this was done in our paper.
+**Response**: This comment indicates that the reviewer might have missed our responses to their initial comments (first-round review, comment 1). In our reply, we explicitly highlighted the site-specific parameters are indeed spatially correlated. Additionally, we also ensured that the coefficients on the linear and quadratic N-rates were constrained to be positive and negative. This was implemented transparently in our R code, accessible to anyone through our publicly available repository. We invite reviewers or interested parties to examine our paper's code for detailed insights into these implementations.
 
 5. <span style = "color: blue;">Page 11, Line 206: was this random field generated once and then used for 1,000 MC iterations, or was the field generated for each MC iteration? What about the errors? What were the nugget, sill, etc., for each simulated parameter?  </span>
 
-**Response**:
+**Response**: Site-specific parameters and errors were generated for each of the 1,000 Monte Carlo iterations, resulting in distinct spatial patterns of Economic Optimum Nitrogen Rate (EONR) for each simulation instance. However, the parameters of the variogram (such as nugget and sill) remain consistent across simulations, ensuring that the spatial dependence of the site-specific parameters is the same across all simulations.
 
-Site-specific parameters and errors were generated for each of the 1,000 Monte Carlo iterations, resulting in distinct spatial patterns of Economic Optimum Nitrogen Rate (EONR) for each simulation instance. However, the parameters of the variogram (such as nugget and sill) remain consistent across simulations, ensuring that the spatial dependence of the site-specific parameters is the same.
-
-Clarifying sentences were added to page ??, line ??.
+Clarifying sentences were added to page ??, lines ??.
 
 6. <span style = "color: blue;">Replicability. How would one proceed if one were to replicate what the authors did? For example, "Note that the range of the optimal N rates of individual rounds were narrower." What does this mean? Yield Data generation. What distribution were the e's? The Methods need to be more clearly documented if others want to replicate the study.</span>
 
-**Response**: 
+**Response**: We agree that we can provide more information on how the data is generated. The error term follows the normal distribution with spatial correlation (a sentence on this added on page ??, line ??). 
 
-We agree that we can provide more information on how the data is generated. The error term follows the normal distribution with spatial correlation (a sentence on this added on page ??, line ??). 
-
-However, we emphasize that we are dedicated for reproducibility of our work and all the computer programs are made publicly available at the GitHub repository dedicated for this project (The url of this repository is shared in the manuscript in page ??, line??). It is simply impossible to describe all the details of the simulations. Reproducibility can be achieved only when the full computer programs are shared, which we do.
+However, we emphasize that we are dedicated for reproducibility of our work and all the computer programs are made publicly available at the GitHub repository dedicated for this project (The url of this repository is shared in the manuscript in page ??, line??). It is impractical to describe all the simulations details in writing. Reproducibility can be achieved when running the full computer programs we shared.
 
 7. <span style = "color: blue;">Then correct d.g.p.'s for each model should be used to generate yield data, optimal EONR, and profit. Each competing model would use the data from its challengers to estimate the parameters. These results would then be compared to the "true" N* and profit values.</span>
 
@@ -62,10 +56,10 @@ However, we emphasize that we are dedicated for reproducibility of our work and 
 
 11. <span style = "color: blue;">If the GWR d.g.p., was used as the true d.g.p., for example, y* = X(X'W(s)X)-1X'W(s)y + e*, with W(s) GWR weights and e~N(0, sig2e), then GWR should perform better. The manuscript needs a scenario that finds GWR bias in profit when the true d.g.p. is GWR.</span>
 
-<span style = "color: blue;">Other notes:
-The text had no figure numbers, so it was hard to tell which figures we were supposed to see. What did appear in the manuscript was "Error! Reference source not found."</span> 
-
 **Response**: Ignored as suggested
 
 
+<span style = "color: blue;">Other notes:
+The text had no figure numbers, so it was hard to tell which figures we were supposed to see. What did appear in the manuscript was "Error! Reference source not found."</span> 
 
+**Response**: We apologize for the figure number errors. Those were generated by the online PDF compiling tool of JAAEA submision website. We will communicate with the journal editor and technician to solve the errors.

@@ -340,6 +340,14 @@ g_eonr_bias <-
     size = 0.2
   ) +
   geom_vline(xintercept = 1, color = "black") +
+  geom_text(
+        data = data.table(xintercept=1), color = "black",
+        aes(
+            x = xintercept, y = 80,
+            label = "Ratio = 1"
+        ),
+        angle = 0, hjust = 1.1, vjust = 0, size = 3
+    ) +
   facet_grid(pLabel ~ model) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_y_continuous(sec.axis = sec_axis(~ . , name = "Nitrogen-Corn Price Ratio", breaks = NULL, labels = NULL),
@@ -607,7 +615,7 @@ g_yield <-
   xlab("Nitrogen Rate (kg/ha)") +
   scale_color_discrete(name = "EONR") +
   scale_shape_discrete(name = "EONR") +
-  scale_linetype_discrete(name = "Yield Response Fnctions") +
+  scale_linetype_discrete(name = "Yield Response Functions") +
   ggtitle("(a) Estimated and True Yields") +
   theme_fig
 
@@ -626,7 +634,7 @@ g_profit <-
   xlab("Nitrogen Rate (kg/ha)") +
   scale_color_discrete(name = "EONR") +
   scale_shape_discrete(name = "EONR") +
-  scale_linetype_discrete(name = "Profit Response Fnctions") +
+  scale_linetype_discrete(name = "Profit Response Functions") +
   ggtitle("(b) Estimated and True Profits") +
   theme_fig
 
